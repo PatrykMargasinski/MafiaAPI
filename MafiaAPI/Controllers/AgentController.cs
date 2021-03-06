@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MafiaAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -6,16 +7,16 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using MafiaAPI.Models;
 
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MissionController : Controller
+    public class AgentController : Controller
     {
+
         private readonly IConfiguration _configuration;
-        public MissionController(IConfiguration configuration)
+        public AgentController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -24,7 +25,7 @@ namespace MafiaAPI.Controllers
         public JsonResult Get()
         {
             string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot from dbo.Mission";
+            select AgentId,BossId, LastName, FirstName, Strength,Income from dbo.Agent";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;
@@ -42,16 +43,23 @@ namespace MafiaAPI.Controllers
             return new JsonResult(table);
         }
 
-        [Route("/GetAvailableMissions")]
+        [Route("/GetAvailableAgents")]
         [HttpGet]
-        public JsonResult GetAvailableMissions()
+        public JsonResult GetAvailableAgents()
         {
             string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot 
-            from dbo.Mission
-            where MissionID not in
+            SELECT 
+	               AgentId
+                  ,BossId
+                  ,LastName
+                  ,FirstName
+                  ,Strength
+                  ,Income
+            FROM 
+	            dbo.Agent
+            WHERE AgentID not in
             (
-                select MissionId from dbo.PerformingMission
+	            Select AgentId from dbo.PerformingMission
             )";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
@@ -71,14 +79,16 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(Mission mis)
+        public JsonResult Post(Agent agent)
         {
             string query = @"
-            insert into dbo.Mission values ('" + 
-            mis.MissionName + "', " + 
-            mis.DifficultyLevel + ", " + 
-            mis.Loot+ 
-            @")";
+            insert into dbo.Agent values ('" +
+            agent.BossId + "', '" +
+            agent.LastName + "', '" +
+            agent.FirstName + "', " +
+            agent.Strength + ", " +
+            agent.Income +
+            ")";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
@@ -98,14 +108,15 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpPut]
-        public JsonResult Update(Mission mis)
+        public JsonResult Update(Agent agent)
         {
             string query = @"
-            update dbo.Mission set
-            MissionName ='" + mis.MissionName + @"',
-            DifficultyLevel="+mis.DifficultyLevel+@",
-            Loot = "+mis.Loot+@"
-            where MissionId=" + mis.MissionId;
+            update dbo.Agent set
+            LastName ='" + agent.LastName + @"',
+            FirstName='" + agent.FirstName + @"',
+            Strength = " + agent.Strength + @",
+            Income = " + agent.Income + @"
+            where AgentId=" + agent.AgentId;
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;
@@ -128,7 +139,7 @@ namespace MafiaAPI.Controllers
         public JsonResult Delete(int id)
         {
             string query = @"
-            delete from dbo.Mission where MissionId=" + id;
+            delete from dbo.Agent where AgentId=" + id;
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;

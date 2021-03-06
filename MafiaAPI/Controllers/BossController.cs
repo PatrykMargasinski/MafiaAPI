@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MafiaAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -6,16 +7,16 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using MafiaAPI.Models;
 
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MissionController : Controller
+    public class BossController : Controller
     {
+
         private readonly IConfiguration _configuration;
-        public MissionController(IConfiguration configuration)
+        public BossController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -24,35 +25,7 @@ namespace MafiaAPI.Controllers
         public JsonResult Get()
         {
             string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot from dbo.Mission";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult(table);
-        }
-
-        [Route("/GetAvailableMissions")]
-        [HttpGet]
-        public JsonResult GetAvailableMissions()
-        {
-            string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot 
-            from dbo.Mission
-            where MissionID not in
-            (
-                select MissionId from dbo.PerformingMission
-            )";
+            select BossID, LastName, FirstName, Money,LastSeen from dbo.Boss";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;
@@ -71,14 +44,15 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(Mission mis)
+        public JsonResult Post(Boss boss)
         {
             string query = @"
-            insert into dbo.Mission values ('" + 
-            mis.MissionName + "', " + 
-            mis.DifficultyLevel + ", " + 
-            mis.Loot+ 
-            @")";
+            insert into dbo.Boss values ('" +
+            boss.LastName + "', '" +
+            boss.FirstName + "', " +
+            boss.Money + ", '" +
+            DateTime.Now.ToString("s") +
+            "')";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
@@ -98,14 +72,15 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpPut]
-        public JsonResult Update(Mission mis)
+        public JsonResult Update(Boss boss)
         {
             string query = @"
-            update dbo.Mission set
-            MissionName ='" + mis.MissionName + @"',
-            DifficultyLevel="+mis.DifficultyLevel+@",
-            Loot = "+mis.Loot+@"
-            where MissionId=" + mis.MissionId;
+            update dbo.Boss set
+            LastName ='" + boss.LastName + @"',
+            FirstName=" + boss.FirstName + @",
+            Money = " + boss.Money + @",
+            LastSeen = " + DateTime.Now + @"
+            where BossId=" + boss.BossId;
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;
@@ -128,7 +103,7 @@ namespace MafiaAPI.Controllers
         public JsonResult Delete(int id)
         {
             string query = @"
-            delete from dbo.Mission where MissionId=" + id;
+            delete from dbo.Boss where BossId=" + id;
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;

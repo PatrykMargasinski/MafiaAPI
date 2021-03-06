@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MafiaAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -6,16 +7,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using MafiaAPI.Models;
 
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MissionController : Controller
+    public class PerformingMissionController : Controller
     {
         private readonly IConfiguration _configuration;
-        public MissionController(IConfiguration configuration)
+        public PerformingMissionController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -24,35 +24,7 @@ namespace MafiaAPI.Controllers
         public JsonResult Get()
         {
             string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot from dbo.Mission";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult(table);
-        }
-
-        [Route("/GetAvailableMissions")]
-        [HttpGet]
-        public JsonResult GetAvailableMissions()
-        {
-            string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot 
-            from dbo.Mission
-            where MissionID not in
-            (
-                select MissionId from dbo.PerformingMission
-            )";
+            select PerformingMissionId, MissionId, AgentId, CompletionTime from dbo.PerformingMission";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;
@@ -71,13 +43,13 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(Mission mis)
+        public JsonResult Post(PerformingMission mis)
         {
             string query = @"
-            insert into dbo.Mission values ('" + 
-            mis.MissionName + "', " + 
-            mis.DifficultyLevel + ", " + 
-            mis.Loot+ 
+            insert into dbo.PerformingMission values ('" +
+            mis.MissionId + "', " +
+            mis.AgentId + ", " +
+            mis.CompletionTime +
             @")";
 
             DataTable table = new DataTable();
@@ -98,14 +70,14 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpPut]
-        public JsonResult Update(Mission mis)
+        public JsonResult Update(PerformingMission mis)
         {
             string query = @"
-            update dbo.Mission set
-            MissionName ='" + mis.MissionName + @"',
-            DifficultyLevel="+mis.DifficultyLevel+@",
-            Loot = "+mis.Loot+@"
-            where MissionId=" + mis.MissionId;
+            update dbo.PerformingMission set
+            MissionId ='" + mis.MissionId + @"',
+            AgentId=" + mis.AgentId + @",
+            CompletionTime = " + mis.CompletionTime + @"
+            where PerformingMissionId=" + mis.PerformingMissionId;
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;
@@ -128,7 +100,7 @@ namespace MafiaAPI.Controllers
         public JsonResult Delete(int id)
         {
             string query = @"
-            delete from dbo.Mission where MissionId=" + id;
+            delete from dbo.PerformingMission where PerformingMissionId=" + id;
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
             SqlDataReader myReader;

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MafiaAPI.Models;
+using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using MafiaAPI.Models;
 
 namespace MafiaAPI.Controllers
 {
@@ -14,112 +15,39 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class MissionController : Controller
     {
-        private readonly IConfiguration _configuration;
-        public MissionController(IConfiguration configuration)
+        private readonly IMissionRepository _missionRepository;
+        public MissionController(IMissionRepository missionRepository)
         {
-            _configuration = configuration;
+            _missionRepository = missionRepository;
+        }
+
+        [Route("[controller]/id")]
+        [HttpGet("{id}")]
+        public JsonResult Get(int id)
+        {
+            var mission = _missionRepository.Get(id);
+            return new JsonResult(mission);
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult GetAll()
         {
-            string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot from dbo.Mission";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult(table);
+            var missions = _missionRepository.GetAll();
+            return new JsonResult(missions);
         }
-
+        
         [Route("/GetAvailableMissions")]
         [HttpGet]
         public JsonResult GetAvailableMissions()
         {
-            string query = @"
-            select MissionID, MissionName, DifficultyLevel, Loot 
-            from dbo.Mission
-            where MissionID not in
-            (
-                select MissionId from dbo.PerformingMission
-            )";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult(table);
-        }
-
-        [HttpPost]
-        public JsonResult Post(Mission mis)
-        {
-            string query = @"
-            insert into dbo.Mission values ('" + 
-            mis.MissionName + "', " + 
-            mis.DifficultyLevel + ", " + 
-            mis.Loot+ 
-            @")";
-
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult("Added successfully");
+            var missions = _missionRepository.GetAvailableMissions();
+            return new JsonResult(missions);
         }
 
         [HttpPut]
-        public JsonResult Update(Mission mis)
+        public JsonResult Update(Mission mission)
         {
-            string query = @"
-            update dbo.Mission set
-            MissionName ='" + mis.MissionName + @"',
-            DifficultyLevel="+mis.DifficultyLevel+@",
-            Loot = "+mis.Loot+@"
-            where MissionId=" + mis.MissionId;
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
+            _missionRepository.Update(mission);
             return new JsonResult("Updated successfully");
         }
 
@@ -127,22 +55,7 @@ namespace MafiaAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"
-            delete from dbo.Mission where MissionId=" + id;
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
+            _missionRepository.Delete(id);
             return new JsonResult("Deleted successfully");
         }
     }

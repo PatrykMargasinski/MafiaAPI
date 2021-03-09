@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+#nullable disable
 
 namespace MafiaAPI.Models
 {
-    public class PerformingMission
+    public partial class PerformingMission
     {
         public int PerformingMissionId { get; set; }
-        public int MissionId { get; set; }
-        public int AgentId { get; set; }
-        public string CompletionTime { get; set; }
+        public int? MissionId { get; set; }
+        public int? AgentId { get; set; }
+        public DateTime? CompletionTime { get; set; }
+
+        public virtual Agent Agent { get; set; }
+        public virtual Mission Mission { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MafiaAPI.Models;
+using MafiaAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -14,123 +15,47 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class AgentController : Controller
     {
-
-        private readonly IConfiguration _configuration;
-        public AgentController(IConfiguration configuration)
+        private readonly IAgentRepository _agentRepository;
+        public AgentController(IAgentRepository agentRepository)
         {
-            _configuration = configuration;
+            _agentRepository = agentRepository;
+        }
+
+        [Route("[controller]/id")]
+        [HttpGet("{id}")]
+        public JsonResult Get(int id)
+        {
+            var agent = _agentRepository.Get(id);
+            return new JsonResult(agent);
         }
 
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult GetAll()
         {
-            string query = @"
-            select AgentId,BossId, LastName, FirstName, Strength,Income from dbo.Agent";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult(table);
+            var agents = _agentRepository.GetAll();
+            return new JsonResult(agents);
         }
-
+        
         [Route("/GetAvailableAgents")]
         [HttpGet]
         public JsonResult GetAvailableAgents()
         {
-            string query = @"
-            SELECT 
-	               AgentId
-                  ,BossId
-                  ,LastName
-                  ,FirstName
-                  ,Strength
-                  ,Income
-            FROM 
-	            dbo.Agent
-            WHERE AgentID not in
-            (
-	            Select AgentId from dbo.PerformingMission
-            )";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult(table);
+            var agents = _agentRepository.GetAvailableAgents();
+            return new JsonResult(agents);
         }
 
-        [HttpPost]
-        public JsonResult Post(Agent agent)
+        [Route("/GetAgentsForRecruitent")]
+        [HttpGet]
+        public JsonResult GetAgentsForRecruitment()
         {
-            string query = @"
-            insert into dbo.Agent values ('" +
-            agent.BossId + "', '" +
-            agent.LastName + "', '" +
-            agent.FirstName + "', " +
-            agent.Strength + ", " +
-            agent.Income +
-            ")";
-
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
-            return new JsonResult("Added successfully");
+            var agents = _agentRepository.GetAgentsForRecruitment();
+            return new JsonResult(agents);
         }
 
         [HttpPut]
         public JsonResult Update(Agent agent)
         {
-            string query = @"
-            update dbo.Agent set
-            LastName ='" + agent.LastName + @"',
-            FirstName='" + agent.FirstName + @"',
-            Strength = " + agent.Strength + @",
-            Income = " + agent.Income + @"
-            where AgentId=" + agent.AgentId;
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
+            _agentRepository.Update(agent);
             return new JsonResult("Updated successfully");
         }
 
@@ -138,22 +63,7 @@ namespace MafiaAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            string query = @"
-            delete from dbo.Agent where AgentId=" + id;
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("MafiaAppCon");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader);
-                    myReader.Close();
-                    myCon.Close();
-                }
-            }
+            _agentRepository.Delete(id);
             return new JsonResult("Deleted successfully");
         }
     }

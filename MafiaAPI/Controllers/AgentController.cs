@@ -44,12 +44,19 @@ namespace MafiaAPI.Controllers
             return new JsonResult(agents);
         }
 
-        [Route("/GetAgentsForRecruitent")]
+        [Route("/GetAgentsForRecruitment")]
         [HttpGet]
         public JsonResult GetAgentsForRecruitment()
         {
             var agents = _agentRepository.GetAgentsForRecruitment();
             return new JsonResult(agents);
+        }
+
+        [HttpPost]
+        public JsonResult AddAgent(Agent agent)
+        {
+            _agentRepository.Post(agent);
+            return new JsonResult("Added successfully");
         }
 
         [HttpPut]

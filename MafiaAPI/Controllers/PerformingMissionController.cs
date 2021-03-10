@@ -23,7 +23,6 @@ namespace MafiaAPI.Controllers
 
         [Route("[controller]/id")]
         [HttpGet("{id}")]
-        [HttpGet]
         public JsonResult Get(int id)
         {
             var performingMission = _performingMissionRepository.Get(id);

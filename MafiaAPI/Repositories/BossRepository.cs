@@ -31,6 +31,9 @@ namespace MafiaAPI.Repositories
 
         public Boss Get()
         {
+            var boss = _context.Bosses.First();
+            boss.LastSeen = DateTime.Now;
+            _context.SaveChanges();
             return _context.Bosses.First();
         }
     }

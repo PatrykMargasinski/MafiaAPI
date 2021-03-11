@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,18 +20,29 @@ namespace MafiaAPI.Controllers
             _performingMissionRepository = performingMissionRepository;
         }
 
+        public static object PerformingMissionToSend(PerformingMission performingMission)
+        {
+            return new
+            {
+                PerformingMissionId = performingMission.PerformingMissionId,
+                MissionName = performingMission.Mission.MissionName,
+                AgentName = performingMission.Agent.LastName + " " + performingMission.Agent.FirstName,
+                ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100)
+            };
+        }
+
         [Route("[controller]/id")]
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
             var performingMission = _performingMissionRepository.Get(id);
-            return new JsonResult(performingMission);
+            return new JsonResult(PerformingMissionToSend(performingMission));
         }
 
         [HttpGet]
         public JsonResult GetAll()
         {
-            var performingMissions = _performingMissionRepository.GetAll();
+            var performingMissions = _performingMissionRepository.GetAll().Select(mission=>PerformingMissionToSend(mission));
             return new JsonResult(performingMissions);
         }
 

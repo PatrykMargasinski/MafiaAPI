@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MafiaAPI.Repositories
 {
@@ -17,12 +18,17 @@ namespace MafiaAPI.Repositories
         }
         public PerformingMission Get(int id)
         {
-            return _context.PerformingMissions.FirstOrDefault(PerformingMission => PerformingMission.PerformingMissionId == id);
+            return _context.PerformingMissions
+                .Include(p=>p.Mission)
+                .Include(p => p.Agent)
+                .FirstOrDefault(PerformingMission => PerformingMission.PerformingMissionId == id);
         }
 
-        public IEnumerable<PerformingMission> GetAll()
+        public IQueryable<PerformingMission> GetAll()
         {
-            return _context.PerformingMissions;
+            return _context.PerformingMissions
+                .Include(p => p.Mission)
+                .Include(p => p.Agent);
         }
 
         public void Post(PerformingMission mission)

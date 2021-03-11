@@ -8,7 +8,7 @@ namespace MafiaAPI.Repositories
 {
     public interface IPerformingMissionRepository
     {
-        public IEnumerable<PerformingMission> GetAll();
+        public IQueryable<PerformingMission> GetAll();
         public PerformingMission Get(int id);
         public void Post(PerformingMission agent);
         public void Update(PerformingMission newMission);

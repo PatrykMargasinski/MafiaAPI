@@ -35,6 +35,7 @@ namespace MafiaAPI.Repositories
         {
             if(mission!=null)
             {
+                mission.CompletionTime = DateTime.Now.AddDays(1);
                 _context.PerformingMissions.Add(mission);
                 _context.SaveChanges();
             }

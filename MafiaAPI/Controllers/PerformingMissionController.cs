@@ -46,6 +46,13 @@ namespace MafiaAPI.Controllers
             return new JsonResult(performingMissions);
         }
 
+        [HttpPost]
+        public JsonResult PerformMission(PerformingMission performingMission)
+        {
+            _performingMissionRepository.Post(performingMission);
+            return new JsonResult("Added successfully");
+        }
+
         [HttpPut]
         public JsonResult Update(PerformingMission performingMission)
         {

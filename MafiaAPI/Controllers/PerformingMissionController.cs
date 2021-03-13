@@ -27,7 +27,8 @@ namespace MafiaAPI.Controllers
                 PerformingMissionId = performingMission.PerformingMissionId,
                 MissionName = performingMission.Mission.MissionName,
                 AgentName = performingMission.Agent.LastName + " " + performingMission.Agent.FirstName,
-                ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100)
+                ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100),
+                CompletionTime = performingMission.CompletionTime
             };
         }
 

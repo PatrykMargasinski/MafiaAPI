@@ -48,7 +48,8 @@ namespace MafiaAPI
             services.AddTransient<IAgentRepository, AgentRepository>()
                 .AddTransient<IMissionRepository, MissionRepository>()
                 .AddTransient<IBossRepository, BossRepository>()
-                .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>();
+                .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
+                .AddTransient<IMessageRepository, MessageRepository>();
 
             services.AddControllers();
         }

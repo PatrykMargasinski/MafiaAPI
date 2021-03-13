@@ -10,6 +10,7 @@ namespace MafiaAPI.Models
         public Boss()
         {
             Agents = new HashSet<Agent>();
+            Messages = new HashSet<Message>();
         }
 
         public int BossId { get; set; }
@@ -19,5 +20,6 @@ namespace MafiaAPI.Models
         public DateTime? LastSeen { get; set; }
 
         public virtual ICollection<Agent> Agents { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

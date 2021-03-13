@@ -10,7 +10,6 @@ namespace MafiaAPI.Models
     {
         public MafiaDBContext()
         {
-
         }
 
         public MafiaDBContext(DbContextOptions<MafiaDBContext> options)
@@ -22,6 +21,7 @@ namespace MafiaAPI.Models
         public virtual DbSet<Boss> Bosses { get; set; }
         public virtual DbSet<FirstName> FirstNames { get; set; }
         public virtual DbSet<LastName> LastNames { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Mission> Missions { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }
 
@@ -32,7 +32,6 @@ namespace MafiaAPI.Models
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=.;Database=MafiaDB;Trusted_Connection=True;");
             }
-            //optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -94,6 +93,21 @@ namespace MafiaAPI.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("LastName");
+            });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.ToTable("Message");
+
+                entity.Property(e => e.Content)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .HasColumnName("Content");
+
+                entity.HasOne(d => d.Boss)
+                    .WithMany(p => p.Messages)
+                    .HasForeignKey(d => d.BossId)
+                    .HasConstraintName("FK__Messages__BossId__5FB337D6");
             });
 
             modelBuilder.Entity<Mission>(entity =>

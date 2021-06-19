@@ -1,5 +1,6 @@
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MafiaAPI
@@ -29,9 +32,9 @@ namespace MafiaAPI
         public void ConfigureServices(IServiceCollection services)
         {
             //Enable CORS
-            services.AddCors(c=>
+            services.AddCors(c =>
                 {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
                 });
 
             //JSON Initializer
@@ -42,14 +45,40 @@ namespace MafiaAPI
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver =
                 new DefaultContractResolver());
 
+            //Connection String
             services.AddDbContext<MafiaDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MafiaAppCon")));
 
+            //Dependency injections
             services.AddTransient<IAgentRepository, AgentRepository>()
                 .AddTransient<IMissionRepository, MissionRepository>()
                 .AddTransient<IBossRepository, BossRepository>()
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>();
+
+
+            //Security
+            services
+                .AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidIssuer = "http://localhost:53191",
+                        ValidAudience = "http://localhost:53191",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JavorNajlepszyJest"))
+                    };
+                });
+            
 
             services.AddControllers();
         }
@@ -65,6 +94,7 @@ namespace MafiaAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

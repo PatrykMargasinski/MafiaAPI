@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -23,6 +24,7 @@ namespace MafiaAPI.Controllers
 
         [Route("[controller]/id")]
         [HttpGet("{id}")]
+        [Authorize]
         public JsonResult Get(int id)
         {
             var agent = _agentRepository.Get(id);

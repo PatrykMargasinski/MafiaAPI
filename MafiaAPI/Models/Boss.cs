@@ -19,6 +19,7 @@ namespace MafiaAPI.Models
         public int Money { get; set; }
         public DateTime? LastSeen { get; set; }
 
+        public virtual Player Player { get; set; }
         public virtual ICollection<Agent> Agents { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
     }

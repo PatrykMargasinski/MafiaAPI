@@ -24,6 +24,7 @@ namespace MafiaAPI.Models
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Mission> Missions { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -100,14 +101,13 @@ namespace MafiaAPI.Models
                 entity.ToTable("Message");
 
                 entity.Property(e => e.Content)
-                    .HasMaxLength(2000)
-                    .IsUnicode(false)
-                    .HasColumnName("Content");
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Boss)
                     .WithMany(p => p.Messages)
                     .HasForeignKey(d => d.BossId)
-                    .HasConstraintName("FK__Messages__BossId__5FB337D6");
+                    .HasConstraintName("FK__Message__BossId__66603565");
             });
 
             modelBuilder.Entity<Mission>(entity =>
@@ -134,6 +134,28 @@ namespace MafiaAPI.Models
                     .WithMany(p => p.PerformingMissions)
                     .HasForeignKey(d => d.MissionId)
                     .HasConstraintName("FK__Performin__Missi__5070F446");
+            });
+
+            modelBuilder.Entity<Player>(entity =>
+            {
+                entity.ToTable("Player");
+
+                entity.HasIndex(e => e.BossId, "UQ__Player__07C93FB72CC07189")
+                    .IsUnique();
+
+                entity.Property(e => e.Nick)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Boss)
+                    .WithOne(p => p.Player)
+                    .HasForeignKey<Player>(d => d.BossId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Player__BossId__1DB06A4F");
             });
 
             OnModelCreatingPartial(modelBuilder);

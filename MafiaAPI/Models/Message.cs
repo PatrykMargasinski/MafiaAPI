@@ -10,6 +10,7 @@ namespace MafiaAPI.Models
         public int MessageId { get; set; }
         public int? BossId { get; set; }
         public string Content { get; set; }
+
         public virtual Boss Boss { get; set; }
     }
 }

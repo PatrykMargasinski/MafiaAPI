@@ -29,12 +29,40 @@ namespace MafiaAPI.Repositories
             }
         }
 
-        public Boss Get()
+        public Boss GetById(int id)
         {
-            var boss = _context.Bosses.First();
+            var boss = _context.Bosses.Where(x=>x.BossId==id).FirstOrDefault();
             boss.LastSeen = DateTime.Now;
             _context.SaveChanges();
-            return _context.Bosses.First();
+            return boss;
+        }
+
+        public void Post(Boss boss)
+        {
+            if (boss != null)
+            {
+                _context.Bosses.Add(boss);
+                _context.SaveChanges();
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var deletingBoss = _context.Bosses.FirstOrDefault(boss => boss.BossId == id);
+            _context.Remove(deletingBoss);
+            _context.SaveChanges();
+        }
+
+        public Boss GetByFirstAndLastname(string firstname, string lastname)
+        {
+            var boss = _context.Bosses.FirstOrDefault(boss => boss.FirstName==firstname && boss.LastName==lastname);
+            return boss;
+        }
+
+        public bool IsBossWithThatLastName(string lastname)
+        {
+            var bossExist = _context.Bosses.Any(x=>x.LastName==lastname);
+            return bossExist;
         }
     }
 }

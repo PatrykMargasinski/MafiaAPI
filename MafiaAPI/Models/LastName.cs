@@ -7,6 +7,6 @@ namespace MafiaAPI.Models
 {
     public partial class LastName
     {
-        public string LastName1 { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using MafiaAPI.SomeMethods;
+using MafiaAPI.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -29,9 +31,11 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] LoginModel user)
         {
-            if (user == null)
+            var validator = new LoginModelValidator();
+            var errors = validator.Validate(user);
+            if(errors.Length>0)
             {
-                return BadRequest("Invalid client request");
+                return BadRequest(string.Join('\n',errors));
             }
 
             Player player = _playerRepository.GetByNick(user.Nick);
@@ -56,7 +60,13 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] RegisterModel user)
         {
-            if(_bossRepository.IsBossWithThatLastName(user.BossLastName) == true)
+            var validator = new RegisterModelValidator();
+            var errors = validator.Validate(user);
+            if (errors.Length > 0)
+            {
+                return BadRequest(string.Join('\n', errors));
+            }
+            if (_bossRepository.IsBossWithThatLastName(user.BossLastName) == true)
             {
                 return BadRequest("There is a boss with a such last name");
             }
@@ -68,8 +78,8 @@ namespace MafiaAPI.Controllers
 
             Boss boss = new Boss()
             {
-                FirstName = user.BossFirstName,
-                LastName = user.BossLastName,
+                FirstName = Methods.UppercaseFirst(user.BossFirstName),
+                LastName = Methods.UppercaseFirst(user.BossLastName),
                 Money = 5000
             };
             _bossRepository.Post(boss);
@@ -87,8 +97,8 @@ namespace MafiaAPI.Controllers
             {
                 var newAgent = new Agent()
                 {
-                    FirstName = agentName,
-                    LastName = user.BossLastName,
+                    FirstName = Methods.UppercaseFirst(agentName),
+                    LastName = Methods.UppercaseFirst(user.BossLastName),
                     Strength = random.Next(2, 5),
                     Income = random.Next(2, 5)*10,
                     BossId=boss.BossId

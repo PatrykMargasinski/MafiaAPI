@@ -54,7 +54,8 @@ namespace MafiaAPI
                 .AddTransient<IMissionRepository, MissionRepository>()
                 .AddTransient<IBossRepository, BossRepository>()
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
-                .AddTransient<IMessageRepository, MessageRepository>();
+                .AddTransient<IMessageRepository, MessageRepository>()
+                .AddTransient<IPlayerRepository, PlayerRepository>();
 
 
             //Security

@@ -21,11 +21,19 @@ namespace MafiaAPI.Controllers
             _bossRepository = bossRepository;
         }
 
-        [HttpGet]
-        public JsonResult Get()
+        [Route("[controller]/id")]
+        [HttpGet("{id}")]
+        public JsonResult GetById(int id)
         {
-            var boss = _bossRepository.Get();
+            var boss = _bossRepository.GetById(id);
             return new JsonResult(boss);
+        }
+
+        [HttpPost]
+        public JsonResult Post(Boss boss)
+        {
+            _bossRepository.Post(boss);
+            return new JsonResult("Added successfully");
         }
 
         [HttpPut]
@@ -33,6 +41,13 @@ namespace MafiaAPI.Controllers
         {
             _bossRepository.Update(boss);
             return new JsonResult("Updated successfully");
+        }
+
+        [HttpDelete]
+        public JsonResult Delete(int id)
+        {
+            _bossRepository.Delete(id);
+            return new JsonResult("Deleted successfully");
         }
 
     }

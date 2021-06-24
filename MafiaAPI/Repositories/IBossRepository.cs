@@ -8,7 +8,11 @@ namespace MafiaAPI.Repositories
 {
     public interface IBossRepository
     {
-        public Boss Get();
+        public void Post(Boss boss);
+        public Boss GetById(int id);
+        public Boss GetByFirstAndLastname(string firstname, string lastname);
         public void Update(Boss newBoss);
+        public void Delete(int id);
+        public bool IsBossWithThatLastName(string lastname);
     }
 }

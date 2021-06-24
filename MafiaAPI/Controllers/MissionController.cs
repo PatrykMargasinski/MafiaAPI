@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -30,6 +31,7 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public JsonResult GetAll()
         {
             var missions = _missionRepository.GetAll();
@@ -48,6 +50,13 @@ namespace MafiaAPI.Controllers
         public JsonResult Update(Mission mission)
         {
             _missionRepository.Update(mission);
+            return new JsonResult("Updated successfully");
+        }
+
+        [HttpPost]
+        public JsonResult Create(Mission mission)
+        {
+            _missionRepository.Post(mission);
             return new JsonResult("Updated successfully");
         }
 

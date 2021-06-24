@@ -24,7 +24,6 @@ namespace MafiaAPI.Controllers
 
         [Route("[controller]/id")]
         [HttpGet("{id}")]
-        [Authorize]
         public JsonResult Get(int id)
         {
             var agent = _agentRepository.Get(id);

@@ -54,8 +54,18 @@ namespace MafiaAPI.Controllers
 
         [Route("/register")]
         [HttpPost]
-        public JsonResult Register([FromBody] RegisterModel user)
+        public IActionResult Register([FromBody] RegisterModel user)
         {
+            if(_bossRepository.IsBossWithThatLastName(user.BossLastName) == true)
+            {
+                return BadRequest("There is a boss with a such last name");
+            }
+
+            if (_playerRepository.IsPlayerWithThatNick(user.Nick) == true)
+            {
+                return BadRequest("There is a player with a such nick");
+            }
+
             Boss boss = new Boss()
             {
                 FirstName = user.BossFirstName,
@@ -80,13 +90,13 @@ namespace MafiaAPI.Controllers
                     FirstName = agentName,
                     LastName = user.BossLastName,
                     Strength = random.Next(2, 5),
-                    Income = random.Next(2,5)*10,
+                    Income = random.Next(2, 5)*10,
                     BossId=boss.BossId
                 };
                 _agentRepository.Post(newAgent);
             }
 
-            return new JsonResult($"New player created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
+            return Ok($"New player created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
         }
     }
 }

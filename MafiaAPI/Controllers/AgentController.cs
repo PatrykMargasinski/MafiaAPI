@@ -22,6 +22,14 @@ namespace MafiaAPI.Controllers
             _agentRepository = agentRepository;
         }
 
+        [Route("/GetAvailableAgents/{bossId}")]
+        [HttpGet("{bossId}")]
+        public JsonResult GetAvailableAgents(int bossId)
+        {
+            var agents = _agentRepository.GetAvailableAgents(bossId);
+            return new JsonResult(agents);
+        }
+
         [Route("[controller]/id")]
         [HttpGet("{id}")]
         public JsonResult Get(int id)
@@ -34,14 +42,6 @@ namespace MafiaAPI.Controllers
         public JsonResult GetAll()
         {
             var agents = _agentRepository.GetAll();
-            return new JsonResult(agents);
-        }
-        
-        [Route("/GetAvailableAgents")]
-        [HttpGet]
-        public JsonResult GetAvailableAgents()
-        {
-            var agents = _agentRepository.GetAvailableAgents();
             return new JsonResult(agents);
         }
 

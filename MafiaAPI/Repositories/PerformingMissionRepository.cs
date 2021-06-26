@@ -19,7 +19,7 @@ namespace MafiaAPI.Repositories
         public PerformingMission Get(int id)
         {
             return _context.PerformingMissions
-                .Include(p=>p.Mission)
+                .Include(p=> p.Mission)
                 .Include(p => p.Agent)
                 .FirstOrDefault(PerformingMission => PerformingMission.PerformingMissionId == id);
         }

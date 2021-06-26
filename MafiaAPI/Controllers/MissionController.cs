@@ -31,7 +31,6 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public JsonResult GetAll()
         {
             var missions = _missionRepository.GetAll();

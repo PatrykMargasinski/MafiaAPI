@@ -42,6 +42,9 @@ namespace MafiaAPI.Controllers
         public JsonResult GetAll()
         {
             var agents = _agentRepository.GetAll();
+            var temp = agents
+                .Where(x => x.PerformingMissions.Any())
+                .Select(x => new { x.FirstName, x.LastName });
             return new JsonResult(agents);
         }
 

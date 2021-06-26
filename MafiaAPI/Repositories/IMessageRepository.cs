@@ -9,8 +9,11 @@ namespace MafiaAPI.Repositories
 
     public interface IMessageRepository
     {
-        public IQueryable<Message> GetAllMessagesTo(int bossId);
+        public IEnumerable<Message> GetAllMessageTo(int bossId);
+        public IEnumerable<Message> GetAllMessageFrom(int bossId);
+        public Message Get(int id);
         public void Post(Message message);
-        public void Delete(int messageId);
+        public void Update(Message newMessage);
+        public void Delete(int id);
     }
 }

@@ -10,7 +10,8 @@ namespace MafiaAPI.Models
         public Boss()
         {
             Agents = new HashSet<Agent>();
-            Messages = new HashSet<Message>();
+            MessageFromBosses = new HashSet<Message>();
+            MessageToBosses = new HashSet<Message>();
         }
 
         public int BossId { get; set; }
@@ -21,6 +22,7 @@ namespace MafiaAPI.Models
 
         public virtual Player Player { get; set; }
         public virtual ICollection<Agent> Agents { get; set; }
-        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Message> MessageFromBosses { get; set; }
+        public virtual ICollection<Message> MessageToBosses { get; set; }
     }
 }

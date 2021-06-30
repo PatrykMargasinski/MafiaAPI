@@ -15,6 +15,7 @@ namespace MafiaAPI.Models
         public int AgentId { get; set; }
         public int? BossId { get; set; }
         public string LastName { get; set; }
+        public string xD {get; set;}
         public string FirstName { get; set; }
         public int? Strength { get; set; }
         public int? Income { get; set; }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Models
 {
-    public class RegisterModel
+    public class RegisterDTO
     {
         public string Nick { get; set; }
         public string Password { get; set; }

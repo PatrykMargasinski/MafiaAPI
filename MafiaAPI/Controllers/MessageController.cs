@@ -15,8 +15,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class MessageController : Controller
     {
-        private readonly IMessageRepository _messageRepository;
-        public MessageController(IMessageRepository messageRepository)
+        private readonly MessageRepository _messageRepository;
+        public MessageController(MessageRepository messageRepository)
         {
             _messageRepository = messageRepository;
         }
@@ -32,7 +32,7 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public JsonResult CreateMessage(Message message)
         {
-            _messageRepository.Post(message);
+            _messageRepository.create(message);
             return new JsonResult("Added successfully");
         }
 
@@ -40,7 +40,7 @@ namespace MafiaAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {
-            _messageRepository.Delete(id);
+            _messageRepository.deleteById(id);
             return new JsonResult("Deleted successfully");
         }
     }

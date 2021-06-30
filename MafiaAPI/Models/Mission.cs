@@ -5,14 +5,13 @@ using System.Collections.Generic;
 
 namespace MafiaAPI.Models
 {
-    public partial class Mission
+    public partial class Mission : Model
     {
         public Mission()
         {
             PerformingMissions = new HashSet<PerformingMission>();
         }
 
-        public int MissionId { get; set; }
         public string MissionName { get; set; }
         public int? DifficultyLevel { get; set; }
         public int? Loot { get; set; }

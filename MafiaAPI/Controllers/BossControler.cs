@@ -15,8 +15,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class BossController : Controller
     {
-        private readonly IBossRepository _bossRepository;
-        public BossController(IBossRepository bossRepository)
+        private readonly BossRepository _bossRepository;
+        public BossController(BossRepository bossRepository)
         {
             _bossRepository = bossRepository;
         }
@@ -25,28 +25,28 @@ namespace MafiaAPI.Controllers
         [HttpGet("{id}")]
         public JsonResult GetById(int id)
         {
-            var boss = _bossRepository.GetById(id);
+            var boss = _bossRepository.getById(id);
             return new JsonResult(boss);
         }
 
         [HttpPost]
         public JsonResult Post(Boss boss)
         {
-            _bossRepository.Post(boss);
+            _bossRepository.create(boss);
             return new JsonResult("Added successfully");
         }
 
         [HttpPut]
         public JsonResult Update(Boss boss)
         {
-            _bossRepository.Update(boss);
+            _bossRepository.update(boss);
             return new JsonResult("Updated successfully");
         }
 
         [HttpDelete]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(long id)
         {
-            _bossRepository.Delete(id);
+            _bossRepository.deleteById(id);
             return new JsonResult("Deleted successfully");
         }
 

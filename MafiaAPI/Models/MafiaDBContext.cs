@@ -19,8 +19,6 @@ namespace MafiaAPI.Models
 
         public virtual DbSet<Agent> Agents { get; set; }
         public virtual DbSet<Boss> Bosses { get; set; }
-        public virtual DbSet<FirstName> FirstNames { get; set; }
-        public virtual DbSet<LastName> LastNames { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Mission> Missions { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }
@@ -76,23 +74,6 @@ namespace MafiaAPI.Models
                 entity.Property(e => e.LastSeen).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<FirstName>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<LastName>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-            });
 
             modelBuilder.Entity<Message>(entity =>
             {

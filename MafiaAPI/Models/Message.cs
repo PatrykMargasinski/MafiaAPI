@@ -5,10 +5,9 @@ using System.Collections.Generic;
 
 namespace MafiaAPI.Models
 {
-    public partial class Message
+    public partial class Message : Model
     {
-        public int MessageId { get; set; }
-        public int? BossId { get; set; }
+        public long? BossId { get; set; }
         public string Content { get; set; }
 
         public virtual Boss Boss { get; set; }

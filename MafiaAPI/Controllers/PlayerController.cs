@@ -18,8 +18,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class PlayerController : Controller
     {
-        private readonly IPlayerRepository _playerRepository;
-        public PlayerController(IPlayerRepository playerRepository)
+        private readonly PlayerRepository _playerRepository;
+        public PlayerController(PlayerRepository playerRepository)
         {
             _playerRepository = playerRepository;
         }
@@ -27,30 +27,30 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public JsonResult Post(Player player)
         {
-            _playerRepository.Post(player);
+            _playerRepository.create(player);
             return new JsonResult("Added succesfully");
         }
 
         [Route("[controller]/id")]
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public JsonResult Get(long id)
         {
-            var player = _playerRepository.Get(id);
+            var player = _playerRepository.getById(id);
             return new JsonResult(player);
         }
 
         [HttpPut]
         public JsonResult Update(Player player)
         {
-            _playerRepository.Update(player);
+            _playerRepository.update(player);
             return new JsonResult("Updated successfully");
         }
 
         [Route("[controller]/id")]
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(long id)
         {
-            _playerRepository.Delete(id);
+            _playerRepository.deleteById(id);
             return new JsonResult("Deleted successfully");
         }
     }

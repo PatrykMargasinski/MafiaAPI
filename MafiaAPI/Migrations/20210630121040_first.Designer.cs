@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MafiaAPI.Migrations
 {
     [DbContext(typeof(MafiaDBContext))]
-    [Migration("20210629155922_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210630121040_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,13 +24,13 @@ namespace MafiaAPI.Migrations
 
             modelBuilder.Entity("MafiaAPI.Models.Agent", b =>
                 {
-                    b.Property<int>("AgentId")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BossId")
-                        .HasColumnType("int");
+                    b.Property<long?>("BossId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -50,7 +50,7 @@ namespace MafiaAPI.Migrations
                     b.Property<int?>("Strength")
                         .HasColumnType("int");
 
-                    b.HasKey("AgentId");
+                    b.HasKey("id");
 
                     b.HasIndex("BossId");
 
@@ -59,9 +59,9 @@ namespace MafiaAPI.Migrations
 
             modelBuilder.Entity("MafiaAPI.Models.Boss", b =>
                 {
-                    b.Property<int>("BossId")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
@@ -82,47 +82,27 @@ namespace MafiaAPI.Migrations
                     b.Property<int>("Money")
                         .HasColumnType("int");
 
-                    b.HasKey("BossId");
+                    b.HasKey("id");
 
                     b.ToTable("Boss");
                 });
 
-            modelBuilder.Entity("MafiaAPI.Models.FirstName", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
-
-                    b.ToTable("FirstNames");
-                });
-
-            modelBuilder.Entity("MafiaAPI.Models.LastName", b =>
-                {
-                    b.Property<string>("Name")
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(255)");
-
-                    b.ToTable("LastNames");
-                });
-
             modelBuilder.Entity("MafiaAPI.Models.Message", b =>
                 {
-                    b.Property<int>("MessageId")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BossId")
-                        .HasColumnType("int");
+                    b.Property<long?>("BossId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Content")
                         .HasMaxLength(1000)
                         .IsUnicode(false)
                         .HasColumnType("varchar(1000)");
 
-                    b.HasKey("MessageId");
+                    b.HasKey("id");
 
                     b.HasIndex("BossId");
 
@@ -131,9 +111,9 @@ namespace MafiaAPI.Migrations
 
             modelBuilder.Entity("MafiaAPI.Models.Mission", b =>
                 {
-                    b.Property<int>("MissionId")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("DifficultyLevel")
@@ -147,28 +127,28 @@ namespace MafiaAPI.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.HasKey("MissionId");
+                    b.HasKey("id");
 
                     b.ToTable("Mission");
                 });
 
             modelBuilder.Entity("MafiaAPI.Models.PerformingMission", b =>
                 {
-                    b.Property<int>("PerformingMissionId")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AgentId")
-                        .HasColumnType("int");
+                    b.Property<long?>("AgentId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CompletionTime")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("MissionId")
-                        .HasColumnType("int");
+                    b.Property<long?>("MissionId")
+                        .HasColumnType("bigint");
 
-                    b.HasKey("PerformingMissionId");
+                    b.HasKey("id");
 
                     b.HasIndex("AgentId");
 
@@ -179,13 +159,13 @@ namespace MafiaAPI.Migrations
 
             modelBuilder.Entity("MafiaAPI.Models.Player", b =>
                 {
-                    b.Property<int>("PlayerId")
+                    b.Property<long>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BossId")
-                        .HasColumnType("int");
+                    b.Property<long>("BossId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Nick")
                         .HasMaxLength(50)
@@ -197,7 +177,7 @@ namespace MafiaAPI.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(250)");
 
-                    b.HasKey("PlayerId");
+                    b.HasKey("id");
 
                     b.HasIndex(new[] { "BossId" }, "UQ__Player__07C93FB72CC07189")
                         .IsUnique();

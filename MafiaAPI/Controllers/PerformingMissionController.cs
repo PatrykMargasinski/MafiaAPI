@@ -14,8 +14,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class PerformingMissionController : Controller
     {
-        private readonly IPerformingMissionRepository _performingMissionRepository;
-        public PerformingMissionController(IPerformingMissionRepository performingMissionRepository)
+        private readonly PerformingMissionRepository _performingMissionRepository;
+        public PerformingMissionController(PerformingMissionRepository performingMissionRepository)
         {
             _performingMissionRepository = performingMissionRepository;
         }
@@ -24,7 +24,7 @@ namespace MafiaAPI.Controllers
         {
             return new
             {
-                PerformingMissionId = performingMission.PerformingMissionId,
+                PerformingMissionId = performingMission.id,
                 MissionName = performingMission.Mission.MissionName,
                 AgentName = performingMission.Agent.LastName + " " + performingMission.Agent.FirstName,
                 ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100),
@@ -36,36 +36,36 @@ namespace MafiaAPI.Controllers
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
-            var performingMission = _performingMissionRepository.Get(id);
+            var performingMission = _performingMissionRepository.getById(id);
             return new JsonResult(PerformingMissionToSend(performingMission));
         }
 
         [HttpGet]
         public JsonResult GetAll()
         {
-            var performingMissions = _performingMissionRepository.GetAll().Select(mission=>PerformingMissionToSend(mission));
+            var performingMissions = _performingMissionRepository.getAll().Select(mission=>PerformingMissionToSend(mission));
             return new JsonResult(performingMissions);
         }
 
         [HttpPost]
         public JsonResult PerformMission(PerformingMission performingMission)
         {
-            _performingMissionRepository.Post(performingMission);
+            _performingMissionRepository.create(performingMission);
             return new JsonResult("Added successfully");
         }
 
         [HttpPut]
         public JsonResult Update(PerformingMission performingMission)
         {
-            _performingMissionRepository.Update(performingMission);
+            _performingMissionRepository.update(performingMission);
             return new JsonResult("Updated successfully");
         }
 
         [Route("[controller]/id")]
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(long id)
         {
-            _performingMissionRepository.Delete(id);
+            _performingMissionRepository.deleteById(id);
             return new JsonResult("Deleted successfully");
         }
 

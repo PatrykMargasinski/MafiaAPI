@@ -21,16 +21,33 @@ namespace MafiaAPI.Controllers
             _messageRepository = messageRepository;
         }
 
-        [Route("[controller]/id")]
+        [Route("/messageTo/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetAlLMessagesTo(int id)
+        public JsonResult GetAllMessagesTo(int id)
         {
-            var messages = _messageRepository.GetAllMessagesTo(id);
+            var messages = _messageRepository
+                .GetAllMessageTo(id)
+                .Select(x => new
+                {
+                    x.MessageId,
+                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
+                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
+                    x.Content
+                }
+                );
+            return new JsonResult(messages);
+        }
+
+        [Route("/messageFrom/{id}")]
+        [HttpGet("{id}")]
+        public JsonResult GetAllMessagesFrom(int id)
+        {
+            var messages = _messageRepository.GetAllMessageFrom(id);
             return new JsonResult(messages);
         }
 
         [HttpPost]
-        public JsonResult CreateMessage(Message message)
+        public JsonResult SendMessage(Message message)
         {
             _messageRepository.create(message);
             return new JsonResult("Added successfully");

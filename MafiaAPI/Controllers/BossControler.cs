@@ -21,12 +21,27 @@ namespace MafiaAPI.Controllers
             _bossRepository = bossRepository;
         }
 
-        [Route("[controller]/id")]
+        [Route("/boss/{id:int}")]
         [HttpGet("{id}")]
         public JsonResult GetById(int id)
         {
             var boss = _bossRepository.getById(id);
             return new JsonResult(boss);
+        }
+
+        [Route("/boss/GetNameById/{name}")]
+        [HttpGet("{name}")]
+        public IActionResult GetBossIdByName(string name)
+        {
+            var boss = _bossRepository.GetByName(name);
+            if(boss == null)
+            {
+                return BadRequest("Boss not found");
+            }
+            else
+            {
+                return Ok(boss.BossId);
+            }
         }
 
         [HttpPost]
@@ -49,6 +64,5 @@ namespace MafiaAPI.Controllers
             _bossRepository.deleteById(id);
             return new JsonResult("Deleted successfully");
         }
-
     }
 }

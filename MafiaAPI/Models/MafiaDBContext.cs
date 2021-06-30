@@ -29,7 +29,7 @@ namespace MafiaAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.\\;Database=MafiaDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=MafiaDB;Trusted_Connection=True;");
             }
         }
 
@@ -83,10 +83,15 @@ namespace MafiaAPI.Models
                     .HasMaxLength(1000)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Boss)
-                    .WithMany(p => p.Messages)
-                    .HasForeignKey(d => d.BossId)
-                    .HasConstraintName("FK__Message__BossId__66603565");
+                entity.HasOne(d => d.FromBoss)
+                    .WithMany(p => p.MessageFromBosses)
+                    .HasForeignKey(d => d.FromBossId)
+                    .HasConstraintName("FK__Message__FromBos__2180FB33");
+
+                entity.HasOne(d => d.ToBoss)
+                    .WithMany(p => p.MessageToBosses)
+                    .HasForeignKey(d => d.ToBossId)
+                    .HasConstraintName("FK__Message__ToBossI__208CD6FA");
             });
 
             modelBuilder.Entity<Mission>(entity =>

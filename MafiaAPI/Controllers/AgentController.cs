@@ -41,7 +41,14 @@ namespace MafiaAPI.Controllers
         [HttpGet]
         public JsonResult GetAll()
         {
+<<<<<<< HEAD
             var agents = _agentRepository.getAll();
+=======
+            var agents = _agentRepository.GetAll();
+            var temp = agents
+                .Where(x => x.PerformingMissions.Any())
+                .Select(x => new { x.FirstName, x.LastName });
+>>>>>>> 06069cfbb38b554f986aabdb55117282a8ba84b1
             return new JsonResult(agents);
         }
 

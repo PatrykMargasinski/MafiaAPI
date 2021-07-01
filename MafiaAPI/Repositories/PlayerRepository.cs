@@ -1,4 +1,5 @@
 ﻿using MafiaAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    
+
     public class PlayerRepository : IPlayerRepository
     {
         private readonly MafiaDBContext _context;
@@ -21,6 +22,11 @@ namespace MafiaAPI.Repositories
             return _context.Players.FirstOrDefault(player => player.PlayerId == id);
         }
 
+        public Player GetWithBoss(int id)
+        {
+            return _context.Players.Include(p => p.Boss).FirstOrDefault(player => player.PlayerId == id);
+        }
+
         public Player GetByNick(string nick)
         {
             return _context.Players.FirstOrDefault(player => player.Nick == nick);
@@ -33,7 +39,7 @@ namespace MafiaAPI.Repositories
 
         public void Post(Player player)
         {
-            if(player!=null)
+            if (player != null)
             {
                 _context.Players.Add(player);
                 _context.SaveChanges();
@@ -43,7 +49,7 @@ namespace MafiaAPI.Repositories
         public void Update(Player newPlayer)
         {
             var updatingPlayer = _context.Players.FirstOrDefault(player => player.PlayerId == newPlayer.PlayerId);
-            if (newPlayer!=null && updatingPlayer!=null)
+            if (newPlayer != null && updatingPlayer != null)
             {
                 updatingPlayer.BossId = newPlayer.BossId;
                 updatingPlayer.Boss = newPlayer.Boss;
@@ -62,7 +68,7 @@ namespace MafiaAPI.Repositories
 
         public bool IsPlayerWithThatNick(string nick)
         {
-            var playerExist = _context.Players.Any(x=>x.Nick==nick);
+            var playerExist = _context.Players.Any(x => x.Nick == nick);
             return playerExist;
         }
     }

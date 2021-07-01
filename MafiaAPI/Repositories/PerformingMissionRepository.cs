@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MafiaAPI.Repositories
 {
-    
+
     public class PerformingMissionRepository : IPerformingMissionRepository
     {
         private readonly MafiaDBContext _context;
@@ -19,7 +19,7 @@ namespace MafiaAPI.Repositories
         public PerformingMission Get(int id)
         {
             return _context.PerformingMissions
-                .Include(p=>p.Mission)
+                .Include(p => p.Mission)
                 .Include(p => p.Agent)
                 .FirstOrDefault(PerformingMission => PerformingMission.PerformingMissionId == id);
         }
@@ -30,10 +30,20 @@ namespace MafiaAPI.Repositories
                 .Include(p => p.Mission)
                 .Include(p => p.Agent);
         }
+        public IEnumerable<PerformingMission> GetByAgentId(int id)
+        {
+            return _context.PerformingMissions
+                .Where(x => x.AgentId == id);
+        }
+        public IEnumerable<PerformingMission> GetByMissionId(int id)
+        {
+            return _context.PerformingMissions
+                .Where(x => x.MissionId == id);
+        }
 
         public void Post(PerformingMission mission)
         {
-            if(mission!=null)
+            if (mission != null)
             {
                 mission.CompletionTime = DateTime.Now.AddDays(1);
                 _context.PerformingMissions.Add(mission);
@@ -44,9 +54,9 @@ namespace MafiaAPI.Repositories
         public void Update(PerformingMission newPerformingMission)
         {
             var updatingPerformingMission = _context.PerformingMissions.FirstOrDefault(mission => mission.PerformingMissionId == newPerformingMission.PerformingMissionId);
-            if (newPerformingMission!=null && updatingPerformingMission!=null)
+            if (newPerformingMission != null && updatingPerformingMission != null)
             {
-                updatingPerformingMission.MissionId= newPerformingMission.MissionId;
+                updatingPerformingMission.MissionId = newPerformingMission.MissionId;
                 updatingPerformingMission.AgentId = newPerformingMission.AgentId;
                 updatingPerformingMission.CompletionTime = newPerformingMission.CompletionTime;
                 _context.SaveChanges();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    
+
     public class AgentRepository : IAgentRepository
     {
         private readonly MafiaDBContext _context;
@@ -14,6 +14,11 @@ namespace MafiaAPI.Repositories
         public AgentRepository(MafiaDBContext context)
         {
             _context = context;
+        }
+
+        public IEnumerable<Agent> GetBossAgents(int bossId)
+        {
+            return _context.Agents.Where(agent => agent.BossId == bossId);
         }
 
         public IEnumerable<Agent> GetAvailableAgents(int bossId)
@@ -38,7 +43,7 @@ namespace MafiaAPI.Repositories
 
         public void Post(Agent agent)
         {
-            if(agent!=null)
+            if (agent != null)
             {
                 _context.Agents.Add(agent);
                 _context.SaveChanges();
@@ -48,7 +53,7 @@ namespace MafiaAPI.Repositories
         public void Update(Agent newAgent)
         {
             var updatingAgent = _context.Agents.FirstOrDefault(agent => agent.AgentId == newAgent.AgentId);
-            if (newAgent!=null && updatingAgent!=null)
+            if (newAgent != null && updatingAgent != null)
             {
                 updatingAgent.BossId = newAgent.BossId;
                 updatingAgent.Boss = newAgent.Boss;

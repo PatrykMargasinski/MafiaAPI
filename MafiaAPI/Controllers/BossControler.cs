@@ -15,8 +15,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class BossController : Controller
     {
-        private readonly BossRepository _bossRepository;
-        public BossController(BossRepository bossRepository)
+        private readonly IBossRepository _bossRepository;
+        public BossController(IBossRepository bossRepository)
         {
             _bossRepository = bossRepository;
         }

@@ -16,8 +16,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class MissionController : Controller
     {
-        private readonly MissionRepository _missionRepository;
-        public MissionController(MissionRepository missionRepository)
+        private readonly IMissionRepository _missionRepository;
+        public MissionController(IMissionRepository missionRepository)
         {
             _missionRepository = missionRepository;
         }
@@ -36,7 +36,7 @@ namespace MafiaAPI.Controllers
             var missions = _missionRepository.GetAll();
             return new JsonResult(missions);
         }
-        
+
         [Route("/GetAvailableMissions")]
         [HttpGet]
         public JsonResult GetAvailableMissions()

@@ -18,8 +18,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class PlayerController : Controller
     {
-        private readonly PlayerRepository _playerRepository;
-        public PlayerController(PlayerRepository playerRepository)
+        private readonly IPlayerRepository _playerRepository;
+        public PlayerController(IPlayerRepository playerRepository)
         {
             _playerRepository = playerRepository;
         }

@@ -14,8 +14,8 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class PerformingMissionController : Controller
     {
-        private readonly PerformingMissionRepository _performingMissionRepository;
-        public PerformingMissionController(PerformingMissionRepository performingMissionRepository)
+        private readonly IPerformingMissionRepository _performingMissionRepository;
+        public PerformingMissionController(IPerformingMissionRepository performingMissionRepository)
         {
             _performingMissionRepository = performingMissionRepository;
         }
@@ -43,7 +43,7 @@ namespace MafiaAPI.Controllers
         [HttpGet]
         public JsonResult GetAll()
         {
-            var performingMissions = _performingMissionRepository.GetAll().Select(mission=>PerformingMissionToSend(mission));
+            var performingMissions = _performingMissionRepository.GetAll().Select(mission => PerformingMissionToSend(mission));
             return new JsonResult(performingMissions);
         }
 

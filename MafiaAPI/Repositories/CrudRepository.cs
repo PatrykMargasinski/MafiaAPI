@@ -16,27 +16,27 @@ namespace MafiaAPI.Repositories {
             entities = _context.Set<T>(); 
         }
 
-        public  IEnumerable<T> getAll(){
+        public  IEnumerable<T> GetAll(){
             return entities.AsEnumerable();
         }
-        public T getById(long id) {
+        public T GetById(long id) {
             return entities.SingleOrDefault(s => s.id == id); 
         }
-        public void create(T model){
+        public void Create(T model){
             entities.Add(model);
             _context.SaveChanges();
         }
-        public void update(T model){
+        public void Update(T model){
             entities.Update(model);
             _context.SaveChanges();
         }
-        public void delete(T model){
+        public void Delete(T model){
             entities.Remove(model);
             _context.SaveChanges();
         }
 
-        public void deleteById(long id){
-            entities.Remove(getById(id));
+        public void DeleteById(long id){
+            entities.Remove(GetById(id));
             _context.SaveChanges();
         }
     }

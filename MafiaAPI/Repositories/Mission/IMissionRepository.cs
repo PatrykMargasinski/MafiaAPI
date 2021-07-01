@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    public interface IMissionRepository
+    public interface IMissionRepository: ICrudRepository<Mission>
     {
         public IEnumerable<Mission> GetAvailableMissions();
     

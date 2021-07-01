@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    public interface IAgentRepository
+    public interface IAgentRepository: ICrudRepository<Agent>
     {
-        public IEnumerable<Agent> GetAvailableAgents(int bossId);
+        public IEnumerable<Agent> GetAvailableAgents(long bossId);
         public IEnumerable<Agent> GetAgentsForRecruitment();
     }
 }

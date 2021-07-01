@@ -36,28 +36,28 @@ namespace MafiaAPI.Controllers
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
-            var performingMission = _performingMissionRepository.getById(id);
+            var performingMission = _performingMissionRepository.GetById(id);
             return new JsonResult(PerformingMissionToSend(performingMission));
         }
 
         [HttpGet]
         public JsonResult GetAll()
         {
-            var performingMissions = _performingMissionRepository.getAll().Select(mission=>PerformingMissionToSend(mission));
+            var performingMissions = _performingMissionRepository.GetAll().Select(mission=>PerformingMissionToSend(mission));
             return new JsonResult(performingMissions);
         }
 
         [HttpPost]
         public JsonResult PerformMission(PerformingMission performingMission)
         {
-            _performingMissionRepository.create(performingMission);
+            _performingMissionRepository.Create(performingMission);
             return new JsonResult("Added successfully");
         }
 
         [HttpPut]
         public JsonResult Update(PerformingMission performingMission)
         {
-            _performingMissionRepository.update(performingMission);
+            _performingMissionRepository.Update(performingMission);
             return new JsonResult("Updated successfully");
         }
 
@@ -65,7 +65,7 @@ namespace MafiaAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {
-            _performingMissionRepository.deleteById(id);
+            _performingMissionRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
         }
 

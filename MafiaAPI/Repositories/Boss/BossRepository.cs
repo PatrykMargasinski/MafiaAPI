@@ -17,6 +17,11 @@ namespace MafiaAPI.Repositories
             var boss = _context.Bosses.FirstOrDefault(boss => boss.FirstName==firstname && boss.LastName==lastname);
             return boss;
         }
+        public Boss GetByName(string name)
+        {
+            var boss = _context.Bosses.FirstOrDefault(boss => boss.FirstName==name);
+            return boss;
+        }
 
         public bool IsBossWithThatLastName(string lastname)
         {

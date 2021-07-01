@@ -12,7 +12,11 @@ namespace MafiaAPI.Repositories
         
         public MessageRepository(MafiaDBContext context): base(context){}
 
-        public IQueryable<Message> GetAllMessagesTo(int bossId)
+        public IQueryable<Message> GetAllMessagesTo(long bossId)
+        {
+            return _context.Messages.Where(mes => mes.BossId == bossId);
+        }
+        public IQueryable<Message> GetAllMessagesFrom(long bossId)
         {
             return _context.Messages.Where(mes => mes.BossId == bossId);
         }

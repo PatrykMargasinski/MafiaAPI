@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    public interface IPlayerRepository
+    public interface IPlayerRepository: ICrudRepository<Player> 
     {
         public Player GetByNick(string nick);
         public bool IsPlayerWithThatNick(string nick);

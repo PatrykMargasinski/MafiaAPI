@@ -7,22 +7,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MafiaAPI.Repositories
 {
-    
+
     public class PerformingMissionRepository : CrudRepository<PerformingMission>, IPerformingMissionRepository
     {
-    
 
-        public PerformingMissionRepository(MafiaDBContext context): base(context){}
-        
-        public PerformingMission getById(long id)
+
+        public PerformingMissionRepository(MafiaDBContext context) : base(context) { }
+
+        public new PerformingMission GetById(long id)
         {
             return _context.PerformingMissions
-                .Include(p=>p.Mission)
+                .Include(p => p.Mission)
                 .Include(p => p.Agent)
                 .FirstOrDefault(PerformingMission => PerformingMission.id == id);
         }
 
-        public IQueryable<PerformingMission> getAll()
+        public new IQueryable<PerformingMission> GetAll()
         {
             return _context.PerformingMissions
                 .Include(p => p.Mission)

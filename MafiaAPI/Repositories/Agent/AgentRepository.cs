@@ -12,7 +12,7 @@ namespace MafiaAPI.Repositories
 
         public AgentRepository(MafiaDBContext context): base(context){}
 
-        public IEnumerable<Agent> GetAvailableAgents(int bossId){
+        public IEnumerable<Agent> GetAvailableAgents(long bossId){
             return _context.Agents.Where(agent => agent.PerformingMissions.Count == 0 && agent.BossId == bossId);
         }
 

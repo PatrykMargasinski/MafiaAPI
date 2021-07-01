@@ -17,16 +17,16 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class AuthController : Controller
     {
-        private readonly PlayerRepository _playerRepository;
-        private readonly BossRepository _bossRepository;
-        private readonly AgentRepository _agentRepository;
+        private readonly IPlayerRepository _playerRepository;
+        private readonly IBossRepository _bossRepository;
+        private readonly IAgentRepository _agentRepository;
         public AuthController(IBossRepository bossRepository,
                               IPlayerRepository playerRepository,
                               IAgentRepository agentRepository)
         {
-            _playerRepository =(PlayerRepository) playerRepository;
-            _bossRepository = (BossRepository) bossRepository;
-            _agentRepository = (AgentRepository) agentRepository;
+            _playerRepository = playerRepository;
+            _bossRepository = bossRepository;
+            _agentRepository = agentRepository;
         }
 
         [Route("/login")]
@@ -84,14 +84,14 @@ namespace MafiaAPI.Controllers
                 LastName = Utils.UppercaseFirst(user.BossLastName),
                 Money = 5000
             };
-            _bossRepository.update(boss);
+            _bossRepository.Update(boss);
             Player player = new Player()
             {
                 Nick = user.Nick,
                 Password = user.Password,
             };
             player.BossId = boss.id;
-            _playerRepository.create(player);
+            _playerRepository.Create(player);
 
             Random random = new Random();
 
@@ -105,10 +105,10 @@ namespace MafiaAPI.Controllers
                     Income = random.Next(2, 5)*10,
                     BossId=boss.id
                 };
-                _agentRepository.create(newAgent);
+                _agentRepository.Create(newAgent);
             }
 
-            return Ok($"New player created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
+            return Ok($"New player Created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
         }
     }
 }

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    public interface IPerformingMissionRepository{}
+    public interface IPerformingMissionRepository: ICrudRepository<PerformingMission>{}
 }

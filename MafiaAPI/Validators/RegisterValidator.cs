@@ -11,7 +11,7 @@ namespace MafiaAPI.Validators
     {
         public string[] Validate(RegisterDTO model)
         {
-            if(model==null)
+            if (model == null)
             {
                 return new string[] { "There is no data" };
             }
@@ -22,12 +22,12 @@ namespace MafiaAPI.Validators
             if (!Utils.IsAlphabets(model.BossFirstName)) errors.Add("Boss first name should include only alphabets");
             if (model.BossLastName == "") errors.Add("Boss last name is empty");
             if (!Utils.IsAlphabets(model.BossLastName)) errors.Add("Boss last name should include only alphabets");
-            if (model.AgentNames.Length!=3) errors.Add("Wrong number of agent first names");
-            for (int i=0; i<model.AgentNames.Length; i++)
+            if (model.AgentNames.Length != 3) errors.Add("Wrong number of agent first names");
+            for (int i = 0; i < model.AgentNames.Length; i++)
             {
-                if (model.AgentNames[i] == "") 
+                if (model.AgentNames[i] == "")
                     errors.Add($"Agent{i}'s first name is empty");
-                if (!Utils.IsAlphabets(model.AgentNames[i])) 
+                if (!Utils.IsAlphabets(model.AgentNames[i]))
                     errors.Add($"Agent{i}'s first name should include only alphabets");
             }
             return errors.ToArray();

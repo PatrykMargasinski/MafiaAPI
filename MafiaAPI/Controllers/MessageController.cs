@@ -15,18 +15,18 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class MessageController : Controller
     {
-        private readonly MessageRepository _messageRepository;
-        public MessageController(MessageRepository messageRepository)
+        private readonly IMessageRepository _messageRepository;
+        public MessageController(IMessageRepository messageRepository)
         {
             _messageRepository = messageRepository;
         }
 
         [Route("/messageTo/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetAllMessagesTo(int id)
+        public JsonResult GetAllMessagesTo(long id)
         {
             var messages = _messageRepository
-                .GetAllMessageTo(id)
+                .GetAllMessagesTo(id)
                 .Select(x => new
                 {
                     x.MessageId,
@@ -40,16 +40,16 @@ namespace MafiaAPI.Controllers
 
         [Route("/messageFrom/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetAllMessagesFrom(int id)
+        public JsonResult GetAllMessagesFrom(long id)
         {
-            var messages = _messageRepository.GetAllMessageFrom(id);
+            var messages = _messageRepository.GetAllMessagesFrom(id);
             return new JsonResult(messages);
         }
 
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
-            _messageRepository.create(message);
+            _messageRepository.Create(message);
             return new JsonResult("Added successfully");
         }
 
@@ -57,7 +57,7 @@ namespace MafiaAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {
-            _messageRepository.deleteById(id);
+            _messageRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
         }
     }

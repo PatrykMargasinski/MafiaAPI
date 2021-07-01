@@ -32,7 +32,7 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public JsonResult Post(Boss boss)
         {
-            _bossRepository.Post(boss);
+            _bossRepository.Create(boss);
             return new JsonResult("Added successfully");
         }
 
@@ -44,9 +44,9 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpDelete]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(long id)
         {
-            _bossRepository.Delete(id);
+            _bossRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
         }
 

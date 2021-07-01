@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MafiaAPI.SomeMethods
+namespace MafiaAPI.Util
 {
-    public static class Methods
+    public static class Utils
     {
         public static bool IsAlphabets(string inputString)
         {

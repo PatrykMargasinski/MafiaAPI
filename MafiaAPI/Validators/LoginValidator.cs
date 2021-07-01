@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Validators
 {
-    public class LoginModelValidator
+    public class LoginValidator
     {
-        public string[] Validate(LoginModel model)
+        public string[] Validate(LoginDto model)
         {
             if (model == null)
             {

@@ -27,15 +27,15 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public JsonResult Post(Player player)
         {
-            _playerRepository.Post(player);
+            _playerRepository.Create(player);
             return new JsonResult("Added succesfully");
         }
 
         [Route("[controller]/id")]
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public JsonResult Get(long id)
         {
-            var player = _playerRepository.Get(id);
+            var player = _playerRepository.GetById(id);
             return new JsonResult(player);
         }
 
@@ -48,9 +48,9 @@ namespace MafiaAPI.Controllers
 
         [Route("[controller]/id")]
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(long id)
         {
-            _playerRepository.Delete(id);
+            _playerRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
         }
     }

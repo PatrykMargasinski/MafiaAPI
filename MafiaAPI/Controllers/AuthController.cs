@@ -1,6 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
-using MafiaAPI.SomeMethods;
+using MafiaAPI.Util;
 using MafiaAPI.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +20,9 @@ namespace MafiaAPI.Controllers
         private readonly IPlayerRepository _playerRepository;
         private readonly IBossRepository _bossRepository;
         private readonly IAgentRepository _agentRepository;
-        public AuthController(IBossRepository bossRepository, IPlayerRepository playerRepository, IAgentRepository agentRepository)
+        public AuthController(IBossRepository bossRepository,
+                              IPlayerRepository playerRepository,
+                              IAgentRepository agentRepository)
         {
             _playerRepository = playerRepository;
             _bossRepository = bossRepository;
@@ -29,9 +31,9 @@ namespace MafiaAPI.Controllers
 
         [Route("/login")]
         [HttpPost]
-        public IActionResult Login([FromBody] LoginModel user)
+        public IActionResult Login([FromBody] LoginDto user)
         {
-            var validator = new LoginModelValidator();
+            var validator = new LoginValidator();
             var errors = validator.Validate(user);
             if(errors.Length>0)
             {
@@ -58,9 +60,9 @@ namespace MafiaAPI.Controllers
 
         [Route("/register")]
         [HttpPost]
-        public IActionResult Register([FromBody] RegisterModel user)
+        public IActionResult Register([FromBody] RegisterDTO user)
         {
-            var validator = new RegisterModelValidator();
+            var validator = new RegisterValidator();
             var errors = validator.Validate(user);
             if (errors.Length > 0)
             {
@@ -78,18 +80,18 @@ namespace MafiaAPI.Controllers
 
             Boss boss = new Boss()
             {
-                FirstName = Methods.UppercaseFirst(user.BossFirstName),
-                LastName = Methods.UppercaseFirst(user.BossLastName),
+                FirstName = Utils.UppercaseFirst(user.BossFirstName),
+                LastName = Utils.UppercaseFirst(user.BossLastName),
                 Money = 5000
             };
-            _bossRepository.Post(boss);
+            _bossRepository.Update(boss);
             Player player = new Player()
             {
                 Nick = user.Nick,
                 Password = user.Password,
             };
-            player.BossId = boss.BossId;
-            _playerRepository.Post(player);
+            player.BossId = boss.id;
+            _playerRepository.Create(player);
 
             Random random = new Random();
 
@@ -97,16 +99,16 @@ namespace MafiaAPI.Controllers
             {
                 var newAgent = new Agent()
                 {
-                    FirstName = Methods.UppercaseFirst(agentName),
-                    LastName = Methods.UppercaseFirst(user.BossLastName),
+                    FirstName = Utils.UppercaseFirst(agentName),
+                    LastName = Utils.UppercaseFirst(user.BossLastName),
                     Strength = random.Next(2, 5),
                     Income = random.Next(2, 5)*10,
-                    BossId=boss.BossId
+                    BossId=boss.id
                 };
-                _agentRepository.Post(newAgent);
+                _agentRepository.Create(newAgent);
             }
 
-            return Ok($"New player created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
+            return Ok($"New player Created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
         }
     }
 }

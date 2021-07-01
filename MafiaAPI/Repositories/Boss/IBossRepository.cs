@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    public interface IBossRepository
+    public interface IBossRepository: ICrudRepository<Boss>
     {
-        public void Post(Boss boss);
-        public Boss GetById(int id);
         public Boss GetByFirstAndLastname(string firstname, string lastname);
-        public void Update(Boss newBoss);
-        public void Delete(int id);
+        public Boss GetByName(string name);
         public bool IsBossWithThatLastName(string lastname);
     }
 }

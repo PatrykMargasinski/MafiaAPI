@@ -21,18 +21,35 @@ namespace MafiaAPI.Controllers
             _messageRepository = messageRepository;
         }
 
-        [Route("[controller]/id")]
+        [Route("/messageTo/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetAlLMessagesTo(int id)
+        public JsonResult GetAllMessagesTo(long id)
         {
-            var messages = _messageRepository.GetAllMessagesTo(id);
+            var messages = _messageRepository
+                .GetAllMessagesTo(id)
+                .Select(x => new
+                {
+                    x.MessageId,
+                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
+                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
+                    x.Content
+                }
+                );
+            return new JsonResult(messages);
+        }
+
+        [Route("/messageFrom/{id}")]
+        [HttpGet("{id}")]
+        public JsonResult GetAllMessagesFrom(long id)
+        {
+            var messages = _messageRepository.GetAllMessagesFrom(id);
             return new JsonResult(messages);
         }
 
         [HttpPost]
-        public JsonResult CreateMessage(Message message)
+        public JsonResult SendMessage(Message message)
         {
-            _messageRepository.Post(message);
+            _messageRepository.Create(message);
             return new JsonResult("Added successfully");
         }
 
@@ -40,7 +57,7 @@ namespace MafiaAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {
-            _messageRepository.Delete(id);
+            _messageRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
         }
     }

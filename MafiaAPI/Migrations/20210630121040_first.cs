@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MafiaAPI.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace MafiaAPI.Migrations
                 name: "Boss",
                 columns: table => new
                 {
-                    BossId = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LastName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
@@ -20,34 +20,14 @@ namespace MafiaAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Boss", x => x.BossId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FirstNames",
-                columns: table => new
-                {
-                    Name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
-                },
-                constraints: table =>
-                {
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LastNames",
-                columns: table => new
-                {
-                    Name = table.Column<string>(type: "varchar(255)", unicode: false, maxLength: 255, nullable: true)
-                },
-                constraints: table =>
-                {
+                    table.PrimaryKey("PK_Boss", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Mission",
                 columns: table => new
                 {
-                    MissionId = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MissionName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     DifficultyLevel = table.Column<int>(type: "int", nullable: true),
@@ -55,16 +35,16 @@ namespace MafiaAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Mission", x => x.MissionId);
+                    table.PrimaryKey("PK_Mission", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Agent",
                 columns: table => new
                 {
-                    AgentId = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BossId = table.Column<int>(type: "int", nullable: true),
+                    BossId = table.Column<long>(type: "bigint", nullable: true),
                     LastName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     Strength = table.Column<int>(type: "int", nullable: true),
@@ -72,12 +52,12 @@ namespace MafiaAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Agent", x => x.AgentId);
+                    table.PrimaryKey("PK_Agent", x => x.id);
                     table.ForeignKey(
                         name: "FK__Agent__BossId__4BAC3F29",
                         column: x => x.BossId,
                         principalTable: "Boss",
-                        principalColumn: "BossId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -85,19 +65,19 @@ namespace MafiaAPI.Migrations
                 name: "Message",
                 columns: table => new
                 {
-                    MessageId = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BossId = table.Column<int>(type: "int", nullable: true),
+                    BossId = table.Column<long>(type: "bigint", nullable: true),
                     Content = table.Column<string>(type: "varchar(1000)", unicode: false, maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Message", x => x.MessageId);
+                    table.PrimaryKey("PK_Message", x => x.id);
                     table.ForeignKey(
                         name: "FK__Message__BossId__66603565",
                         column: x => x.BossId,
                         principalTable: "Boss",
-                        principalColumn: "BossId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -105,20 +85,20 @@ namespace MafiaAPI.Migrations
                 name: "Player",
                 columns: table => new
                 {
-                    PlayerId = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nick = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
                     Password = table.Column<string>(type: "varchar(250)", unicode: false, maxLength: 250, nullable: true),
-                    BossId = table.Column<int>(type: "int", nullable: false)
+                    BossId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Player", x => x.PlayerId);
+                    table.PrimaryKey("PK_Player", x => x.id);
                     table.ForeignKey(
                         name: "FK__Player__BossId__1DB06A4F",
                         column: x => x.BossId,
                         principalTable: "Boss",
-                        principalColumn: "BossId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -126,26 +106,26 @@ namespace MafiaAPI.Migrations
                 name: "PerformingMission",
                 columns: table => new
                 {
-                    PerformingMissionId = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MissionId = table.Column<int>(type: "int", nullable: true),
-                    AgentId = table.Column<int>(type: "int", nullable: true),
+                    MissionId = table.Column<long>(type: "bigint", nullable: true),
+                    AgentId = table.Column<long>(type: "bigint", nullable: true),
                     CompletionTime = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PerformingMission", x => x.PerformingMissionId);
+                    table.PrimaryKey("PK_PerformingMission", x => x.id);
                     table.ForeignKey(
                         name: "FK__Performin__Agent__5165187F",
                         column: x => x.AgentId,
                         principalTable: "Agent",
-                        principalColumn: "AgentId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK__Performin__Missi__5070F446",
                         column: x => x.MissionId,
                         principalTable: "Mission",
-                        principalColumn: "MissionId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -178,12 +158,6 @@ namespace MafiaAPI.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "FirstNames");
-
-            migrationBuilder.DropTable(
-                name: "LastNames");
-
             migrationBuilder.DropTable(
                 name: "Message");
 

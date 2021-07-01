@@ -10,6 +10,7 @@ namespace MafiaAPI.Repositories
     {
         public Player Get(int id);
         public Player GetByNick(string nick);
+        public Player GetWithBoss(int id);
         public IEnumerable<Player> GetAll();
         public void Post(Player player);
         public void Update(Player newPlayer);

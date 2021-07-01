@@ -31,6 +31,17 @@ namespace MafiaAPI.Repositories
                 .Include(p => p.Agent);
         }
 
+        public IEnumerable<PerformingMission> GetByAgentId(int id)
+        {
+            return _context.PerformingMissions
+                .Where(x => x.AgentId == id);
+        }
+        public IEnumerable<PerformingMission> GetByMissionId(int id)
+        {
+            return _context.PerformingMissions
+                .Where(x => x.MissionId == id);
+        }
+
         public void Post(PerformingMission mission)
         {
             if(mission!=null)

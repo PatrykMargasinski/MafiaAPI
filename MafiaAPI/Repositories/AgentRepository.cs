@@ -21,6 +21,11 @@ namespace MafiaAPI.Repositories
             return _context.Agents.Where(agent => agent.PerformingMissions.Count == 0 && agent.BossId == bossId);
         }
 
+        public IEnumerable<Agent> GetBossAgents(int bossId)
+        {
+            return _context.Agents.Where(agent => agent.BossId == bossId);
+        }
+
         public IEnumerable<Agent> GetAgentsForRecruitment()
         {
             return _context.Agents.Where(agent => agent.BossId == null);

@@ -5,15 +5,14 @@ using System.Collections.Generic;
 
 namespace MafiaAPI.Models
 {
-    public partial class Agent
+    public partial class Agent : Model
     {
         public Agent()
         {
             PerformingMissions = new HashSet<PerformingMission>();
         }
 
-        public int AgentId { get; set; }
-        public int? BossId { get; set; }
+        public long? BossId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public int? Strength { get; set; }

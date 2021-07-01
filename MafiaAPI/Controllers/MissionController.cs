@@ -24,9 +24,9 @@ namespace MafiaAPI.Controllers
 
         [Route("[controller]/id")]
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
+        public JsonResult Get(long id)
         {
-            var mission = _missionRepository.Get(id);
+            var mission = _missionRepository.GetById(id);
             return new JsonResult(mission);
         }
 
@@ -36,7 +36,7 @@ namespace MafiaAPI.Controllers
             var missions = _missionRepository.GetAll();
             return new JsonResult(missions);
         }
-        
+
         [Route("/GetAvailableMissions")]
         [HttpGet]
         public JsonResult GetAvailableMissions()
@@ -55,15 +55,15 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public JsonResult Create(Mission mission)
         {
-            _missionRepository.Post(mission);
+            _missionRepository.Create(mission);
             return new JsonResult("Updated successfully");
         }
 
         [Route("[controller]/id")]
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(long id)
         {
-            _missionRepository.Delete(id);
+            _missionRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
         }
     }

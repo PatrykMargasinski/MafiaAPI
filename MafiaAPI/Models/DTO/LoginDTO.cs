@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MafiaAPI.Models
 {
-    public partial class Player : Model
+    public class LoginDto
     {
         public string Nick { get; set; }
         public string Password { get; set; }
-        public long BossId { get; set; }
-
-        public virtual Boss Boss { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MafiaAPI.Models
 {
-    public partial class Boss
+    public partial class Boss : Model
     {
         public Boss()
         {
@@ -14,7 +14,6 @@ namespace MafiaAPI.Models
             MessageToBosses = new HashSet<Message>();
         }
 
-        public int BossId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public int Money { get; set; }

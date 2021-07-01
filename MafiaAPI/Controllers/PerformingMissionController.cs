@@ -24,7 +24,7 @@ namespace MafiaAPI.Controllers
         {
             return new
             {
-                PerformingMissionId = performingMission.PerformingMissionId,
+                PerformingMissionId = performingMission.id,
                 MissionName = performingMission.Mission.MissionName,
                 AgentName = performingMission.Agent.LastName + " " + performingMission.Agent.FirstName,
                 ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100),
@@ -36,21 +36,21 @@ namespace MafiaAPI.Controllers
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
-            var performingMission = _performingMissionRepository.Get(id);
+            var performingMission = _performingMissionRepository.GetById(id);
             return new JsonResult(PerformingMissionToSend(performingMission));
         }
 
         [HttpGet]
         public JsonResult GetAll()
         {
-            var performingMissions = _performingMissionRepository.GetAll().Select(mission=>PerformingMissionToSend(mission));
+            var performingMissions = _performingMissionRepository.GetAll().Select(mission => PerformingMissionToSend(mission));
             return new JsonResult(performingMissions);
         }
 
         [HttpPost]
         public JsonResult PerformMission(PerformingMission performingMission)
         {
-            _performingMissionRepository.Post(performingMission);
+            _performingMissionRepository.Create(performingMission);
             return new JsonResult("Added successfully");
         }
 
@@ -63,9 +63,9 @@ namespace MafiaAPI.Controllers
 
         [Route("[controller]/id")]
         [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        public JsonResult Delete(long id)
         {
-            _performingMissionRepository.Delete(id);
+            _performingMissionRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
         }
 

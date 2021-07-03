@@ -9,6 +9,7 @@ namespace MafiaAPI.Repositories
     public interface IPlayerRepository: ICrudRepository<Player> 
     {
         public Player GetByNick(string nick);
+        public Player GetWithBoss(int id);
         public bool IsPlayerWithThatNick(string nick);
     }
 }

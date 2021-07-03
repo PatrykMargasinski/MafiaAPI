@@ -9,6 +9,7 @@ namespace MafiaAPI.Database
 {
     public partial class MafiaDBContext : DbContext
     {
+        public MafiaDBContext() { }
 
         public MafiaDBContext(DbContextOptions<MafiaDBContext> options)
             : base(options)

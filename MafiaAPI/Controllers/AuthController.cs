@@ -20,13 +20,17 @@ namespace MafiaAPI.Controllers
         private readonly IPlayerRepository _playerRepository;
         private readonly IBossRepository _bossRepository;
         private readonly IAgentRepository _agentRepository;
+
+        private readonly IPerformingMissionRepository _performingMissionRepository;
         public AuthController(IBossRepository bossRepository,
                               IPlayerRepository playerRepository,
-                              IAgentRepository agentRepository)
+                              IAgentRepository agentRepository,
+                              IPerformingMissionRepository performingMissionRepository)
         {
             _playerRepository = playerRepository;
             _bossRepository = bossRepository;
             _agentRepository = agentRepository;
+            _performingMissionRepository = performingMissionRepository;
         }
 
         [Route("/login")]
@@ -35,9 +39,9 @@ namespace MafiaAPI.Controllers
         {
             var validator = new LoginValidator();
             var errors = validator.Validate(user);
-            if(errors.Length>0)
+            if (errors.Length > 0)
             {
-                return BadRequest(string.Join('\n',errors));
+                return BadRequest(string.Join('\n', errors));
             }
 
             Player player = _playerRepository.GetByNick(user.Nick);
@@ -95,7 +99,7 @@ namespace MafiaAPI.Controllers
 
             Random random = new Random();
 
-            foreach(var agentName in user.AgentNames)
+            foreach (var agentName in user.AgentNames)
             {
                 var newAgent = new Agent()
                 {
@@ -107,8 +111,34 @@ namespace MafiaAPI.Controllers
                 };
                 _agentRepository.Create(newAgent);
             }
+            return Ok();
 
-            return Ok($"New player Created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
+
+        [Route("/deleteAccount/{playerId:int}")]
+        [HttpDelete]
+        public IActionResult DeleteAccount(int playerId)
+        {
+            Player deletingPlayer = _playerRepository.GetWithBoss(playerId);
+            if (deletingPlayer == null)
+                return BadRequest("There is no player with such id");
+            Boss boss = deletingPlayer.Boss;
+            var agents = _agentRepository.GetBossAgents(boss.BossId).ToArray();
+            foreach (var agent in agents)
+            {
+                var performingMissionIds = _performingMissionRepository.GetByAgentId(agent.AgentId).Select(x => x.PerformingMissionId).ToArray();
+                foreach (var id in performingMissionIds)
+                {
+                    _performingMissionRepository.Delete(id);
+                }
+            }
+            foreach (var id in agents.Select(x => x.AgentId))
+            {
+                _agentRepository.Delete(id);
+            }
+            _playerRepository.Delete(playerId);
+            _bossRepository.Delete(boss.BossId);
+            return Ok();
         }
+
     }
 }

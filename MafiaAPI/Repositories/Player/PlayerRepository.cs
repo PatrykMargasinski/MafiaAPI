@@ -1,6 +1,7 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Database;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace MafiaAPI.Repositories
 {
@@ -13,6 +14,11 @@ namespace MafiaAPI.Repositories
         public Player GetByNick(string nick)
         {
             return _context.Players.FirstOrDefault(player => player.Nick == nick);
+        }
+
+        public Player GetWithBoss(int id)
+        {
+            return _context.Players.Include(x=>x.Boss).FirstOrDefault(player => player.Id == id);
         }
 
         public bool IsPlayerWithThatNick(string nick)

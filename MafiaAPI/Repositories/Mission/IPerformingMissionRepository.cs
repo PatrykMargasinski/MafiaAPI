@@ -6,5 +6,9 @@ using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {
-    public interface IPerformingMissionRepository: ICrudRepository<PerformingMission>{}
+    public interface IPerformingMissionRepository: ICrudRepository<PerformingMission>
+    {
+        public IEnumerable<PerformingMission> GetByAgentId(long id);
+        public IQueryable<PerformingMission> GetAllWithMissionAndAgent();
+    }
 }

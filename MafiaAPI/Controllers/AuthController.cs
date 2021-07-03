@@ -106,12 +106,13 @@ namespace MafiaAPI.Controllers
                     FirstName = Utils.UppercaseFirst(agentName),
                     LastName = Utils.UppercaseFirst(user.BossLastName),
                     Strength = random.Next(2, 5),
-                    Income = random.Next(2, 5)*10,
-                    BossId=boss.Id
+                    Income = random.Next(2, 5) * 10,
+                    BossId = boss.Id
                 };
                 _agentRepository.Create(newAgent);
             }
             return Ok();
+        }
 
 
         [Route("/deleteAccount/{playerId:int}")]
@@ -122,23 +123,22 @@ namespace MafiaAPI.Controllers
             if (deletingPlayer == null)
                 return BadRequest("There is no player with such id");
             Boss boss = deletingPlayer.Boss;
-            var agents = _agentRepository.GetBossAgents(boss.BossId).ToArray();
+            var agents = _agentRepository.GetBossAgents(boss.Id).ToArray();
             foreach (var agent in agents)
             {
-                var performingMissionIds = _performingMissionRepository.GetByAgentId(agent.AgentId).Select(x => x.PerformingMissionId).ToArray();
+                var performingMissionIds = _performingMissionRepository.GetByAgentId(agent.Id).Select(x => x.Id).ToArray();
                 foreach (var id in performingMissionIds)
                 {
-                    _performingMissionRepository.Delete(id);
+                    _performingMissionRepository.DeleteById(id);
                 }
             }
-            foreach (var id in agents.Select(x => x.AgentId))
+            foreach (var id in agents.Select(x => x.Id))
             {
-                _agentRepository.Delete(id);
+                _agentRepository.DeleteById(id);
             }
-            _playerRepository.Delete(playerId);
-            _bossRepository.Delete(boss.BossId);
+            _playerRepository.DeleteById(playerId);
+            _bossRepository.DeleteById(boss.Id);
             return Ok();
         }
-
     }
 }

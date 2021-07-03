@@ -38,7 +38,7 @@ namespace MafiaAPI.Controllers
         [HttpGet]
         public JsonResult GetAll()
         {
-            var performingMissions = _performingMissionRepository.GetAll().Select(mission => PerformingMissionToSend(mission));
+            var performingMissions = _performingMissionRepository.GetAllWithMissionAndAgent().Select(mission => PerformingMissionToSend(mission));
             return new JsonResult(performingMissions);
         }
 

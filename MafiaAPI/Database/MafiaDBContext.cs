@@ -18,6 +18,12 @@ namespace MafiaAPI.Database
 
         public virtual DbSet<Agent> Agents { get; set; }
         public virtual DbSet<Boss> Bosses { get; set; }
+
+        internal object Include(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Mission> Missions { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }

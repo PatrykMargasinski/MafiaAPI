@@ -7,8 +7,6 @@ namespace MafiaAPI.Models
 {
     public partial class Message : Model
     {
-        public long BossId { get; set; }
-        public long MessageId { get; set; }
         public long? ToBossId { get; set; }
         public long? FromBossId { get; set; }
         public string Content { get; set; }

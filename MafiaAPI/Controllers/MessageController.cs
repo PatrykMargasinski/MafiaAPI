@@ -29,7 +29,7 @@ namespace MafiaAPI.Controllers
                 .GetAllMessagesTo(id)
                 .Select(x => new
                 {
-                    x.MessageId,
+                    x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
                     x.Content

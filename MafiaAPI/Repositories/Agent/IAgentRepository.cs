@@ -10,5 +10,6 @@ namespace MafiaAPI.Repositories
     {
         public IEnumerable<Agent> GetAvailableAgents(long bossId);
         public IEnumerable<Agent> GetAgentsForRecruitment();
+        public IEnumerable<Agent> GetBossAgents(long id);
     }
 }

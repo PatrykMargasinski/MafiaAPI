@@ -67,8 +67,6 @@ namespace MafiaAPI.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BossId = table.Column<long>(type: "bigint", nullable: false),
-                    MessageId = table.Column<long>(type: "bigint", nullable: false),
                     ToBossId = table.Column<long>(type: "bigint", nullable: true),
                     FromBossId = table.Column<long>(type: "bigint", nullable: true),
                     Content = table.Column<string>(type: "varchar(1000)", unicode: false, maxLength: 1000, nullable: true)

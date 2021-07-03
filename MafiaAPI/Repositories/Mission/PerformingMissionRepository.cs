@@ -2,6 +2,7 @@
 using MafiaAPI.Database;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace MafiaAPI.Repositories
 {
@@ -20,11 +21,16 @@ namespace MafiaAPI.Repositories
                 .FirstOrDefault(PerformingMission => PerformingMission.Id == id);
         }
 
-        public new IQueryable<PerformingMission> GetAll()
+        public new IQueryable<PerformingMission> GetAllWithMissionAndAgent()
         {
             return _context.PerformingMissions
                 .Include(p => p.Mission)
                 .Include(p => p.Agent);
+        }
+
+        public IEnumerable<PerformingMission> GetByAgentId(long id)
+        {
+            return _context.PerformingMissions.Where(x => x.Id == id);
         }
     }
 }

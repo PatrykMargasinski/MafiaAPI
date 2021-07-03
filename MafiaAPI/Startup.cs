@@ -68,8 +68,8 @@ namespace MafiaAPI
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
 
-                        ValidIssuer = "http://localhost:5000",
-                        ValidAudience = "http://localhost:5000",
+                        ValidIssuer = "http://localhost:53191",
+                        ValidAudience = "http://localhost:53191",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JavorNajlepszyJest"))
                     };
                 });

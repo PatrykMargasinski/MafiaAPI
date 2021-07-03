@@ -1,8 +1,7 @@
 ﻿using MafiaAPI.Models;
-using System;
+using MafiaAPI.Database;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Repositories
 {

@@ -1,16 +1,14 @@
 ﻿using MafiaAPI.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using MafiaAPI.Database;
 
 namespace MafiaAPI.Repositories
 {
-    
+
     public class MessageRepository : CrudRepository<Message>, IMessageRepository
     {
-        
-        public MessageRepository(MafiaDBContext context): base(context){}
+
+        public MessageRepository(MafiaDBContext context) : base(context) { }
 
         public IQueryable<Message> GetAllMessagesTo(long bossId)
         {

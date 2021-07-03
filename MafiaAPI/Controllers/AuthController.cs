@@ -20,14 +20,12 @@ namespace MafiaAPI.Controllers
         private readonly IPlayerRepository _playerRepository;
         private readonly IBossRepository _bossRepository;
         private readonly IAgentRepository _agentRepository;
-<<<<<<< HEAD
+
+        private readonly IPerformingMissionRepository _performingMissionRepository;
         public AuthController(IBossRepository bossRepository,
                               IPlayerRepository playerRepository,
-                              IAgentRepository agentRepository)
-=======
-        private readonly IPerformingMissionRepository _performingMissionRepository;
-        public AuthController(IBossRepository bossRepository, IPlayerRepository playerRepository, IAgentRepository agentRepository, IPerformingMissionRepository performingMissionRepository)
->>>>>>> main
+                              IAgentRepository agentRepository,
+                              IPerformingMissionRepository performingMissionRepository)
         {
             _playerRepository = playerRepository;
             _bossRepository = bossRepository;
@@ -96,7 +94,7 @@ namespace MafiaAPI.Controllers
                 Nick = user.Nick,
                 Password = user.Password,
             };
-            player.BossId = boss.id;
+            player.BossId = boss.Id;
             _playerRepository.Create(player);
 
             Random random = new Random();
@@ -108,23 +106,13 @@ namespace MafiaAPI.Controllers
                     FirstName = Utils.UppercaseFirst(agentName),
                     LastName = Utils.UppercaseFirst(user.BossLastName),
                     Strength = random.Next(2, 5),
-<<<<<<< HEAD
                     Income = random.Next(2, 5)*10,
-                    BossId=boss.id
-=======
-                    Income = random.Next(2, 5) * 10,
-                    BossId = boss.BossId
->>>>>>> main
+                    BossId=boss.Id
                 };
                 _agentRepository.Create(newAgent);
             }
-
-<<<<<<< HEAD
-            return Ok($"New player Created\n{player.Nick}, your journey begin. You get 3 agents and 5000$ for the start.");
-=======
             return Ok();
->>>>>>> main
-        }
+
 
         [Route("/deleteAccount/{playerId:int}")]
         [HttpDelete]

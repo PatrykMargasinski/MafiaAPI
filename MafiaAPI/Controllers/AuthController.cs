@@ -90,7 +90,7 @@ namespace MafiaAPI.Controllers
                 Nick = user.Nick,
                 Password = user.Password,
             };
-            player.BossId = boss.id;
+            player.BossId = boss.Id;
             _playerRepository.Create(player);
 
             Random random = new Random();
@@ -103,7 +103,7 @@ namespace MafiaAPI.Controllers
                     LastName = Utils.UppercaseFirst(user.BossLastName),
                     Strength = random.Next(2, 5),
                     Income = random.Next(2, 5)*10,
-                    BossId=boss.id
+                    BossId=boss.Id
                 };
                 _agentRepository.Create(newAgent);
             }

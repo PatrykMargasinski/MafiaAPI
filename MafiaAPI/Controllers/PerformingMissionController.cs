@@ -1,12 +1,7 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Controllers
 {
@@ -24,8 +19,8 @@ namespace MafiaAPI.Controllers
         {
             return new
             {
-                PerformingMissionId = performingMission.id,
-                MissionName = performingMission.Mission.MissionName,
+                PerformingMissionId = performingMission.Id,
+                MissionName = performingMission.Mission.Name,
                 AgentName = performingMission.Agent.LastName + " " + performingMission.Agent.FirstName,
                 ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100),
                 CompletionTime = performingMission.CompletionTime

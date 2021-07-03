@@ -1,7 +1,12 @@
-namespace MafiaAPI.Models{
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public abstract class Model { 
-    public long id { get; set; }
-}
-
+namespace MafiaAPI.Models
+{
+    public abstract class Model
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
+    }
 }

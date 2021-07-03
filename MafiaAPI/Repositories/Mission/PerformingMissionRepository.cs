@@ -1,8 +1,6 @@
 ﻿using MafiaAPI.Models;
-using System;
-using System.Collections.Generic;
+using MafiaAPI.Database;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace MafiaAPI.Repositories
@@ -19,7 +17,7 @@ namespace MafiaAPI.Repositories
             return _context.PerformingMissions
                 .Include(p => p.Mission)
                 .Include(p => p.Agent)
-                .FirstOrDefault(PerformingMission => PerformingMission.id == id);
+                .FirstOrDefault(PerformingMission => PerformingMission.Id == id);
         }
 
         public new IQueryable<PerformingMission> GetAll()

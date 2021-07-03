@@ -11,11 +11,9 @@ namespace MafiaAPI.Models
         {
             PerformingMissions = new HashSet<PerformingMission>();
         }
-
-        public string MissionName { get; set; }
+        public string Name { get; set; }
         public int? DifficultyLevel { get; set; }
         public int? Loot { get; set; }
-
         public virtual ICollection<PerformingMission> PerformingMissions { get; set; }
     }
 }

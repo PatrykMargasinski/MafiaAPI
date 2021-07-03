@@ -10,7 +10,6 @@ namespace MafiaAPI.Models
         public string Nick { get; set; }
         public string Password { get; set; }
         public long BossId { get; set; }
-
         public virtual Boss Boss { get; set; }
     }
 }

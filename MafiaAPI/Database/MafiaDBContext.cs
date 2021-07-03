@@ -1,16 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-
+using MafiaAPI.Models;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.AspNetCore.Authentication;
 #nullable disable
 
-namespace MafiaAPI.Models
+namespace MafiaAPI.Database
 {
     public partial class MafiaDBContext : DbContext
     {
-        public MafiaDBContext()
-        {
-        }
 
         public MafiaDBContext(DbContextOptions<MafiaDBContext> options)
             : base(options)
@@ -98,7 +96,7 @@ namespace MafiaAPI.Models
             {
                 entity.ToTable("Mission");
 
-                entity.Property(e => e.MissionName)
+                entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -142,7 +140,9 @@ namespace MafiaAPI.Models
                     .HasConstraintName("FK__Player__BossId__1DB06A4F");
             });
 
+            modelBuilder.Seed();
             OnModelCreatingPartial(modelBuilder);
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

@@ -1,14 +1,16 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using MafiaAPI.Models;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 #nullable disable
 
 namespace MafiaAPI.Database
 {
     public partial class MafiaDBContext : DbContext
     {
+
+        public static readonly ILoggerFactory MyLoggerFactory
+    = LoggerFactory.Create(builder => { builder.AddConsole(); }); 
         public MafiaDBContext() { }
 
         public MafiaDBContext(DbContextOptions<MafiaDBContext> options)
@@ -33,8 +35,10 @@ namespace MafiaAPI.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=MafiaDB;Trusted_Connection=True;");
+                optionsBuilder
+                    .UseLoggerFactory(MyLoggerFactory)
+                    .EnableSensitiveDataLogging()
+                    .UseSqlServer(Environment.GetEnvironmentVariable("MafiaAppCon"));
             }
         }
 

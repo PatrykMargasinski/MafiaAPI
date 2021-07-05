@@ -2,6 +2,7 @@
 using MafiaAPI.Database;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace MafiaAPI.Repositories
 {
@@ -13,7 +14,9 @@ namespace MafiaAPI.Repositories
 
         public IEnumerable<Mission> GetAvailableMissions()
         {
-            return _context.Missions.Where(mission => mission.PerformingMissions.Count == 0);
+            return _context.Missions
+                .Include(x=>x.PerformingMissions)
+                .Where(mission => !mission.PerformingMissions.Any());
         }
 
     }

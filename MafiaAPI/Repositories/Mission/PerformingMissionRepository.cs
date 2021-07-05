@@ -21,11 +21,18 @@ namespace MafiaAPI.Repositories
                 .FirstOrDefault(PerformingMission => PerformingMission.Id == id);
         }
 
-        public new IQueryable<PerformingMission> GetAllWithMissionAndAgent()
+        public IQueryable<PerformingMission> GetAllWithMissionAndAgent()
         {
             return _context.PerformingMissions
                 .Include(p => p.Mission)
                 .Include(p => p.Agent);
+        }
+        public IQueryable<PerformingMission> GetAllWithMissionAndAgentByBossId(long bossId)
+        {
+            return _context.PerformingMissions
+                .Include(p => p.Mission)
+                .Include(p => p.Agent)
+                .Where(x => x.Agent.BossId == bossId);
         }
 
         public IEnumerable<PerformingMission> GetByAgentId(long id)

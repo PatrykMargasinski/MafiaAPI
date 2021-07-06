@@ -1,5 +1,7 @@
 using MafiaAPI.Database;
 using MafiaAPI.Repositories;
+using MafiaAPI.Services.Authorization;
+using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,7 +51,9 @@ namespace MafiaAPI
                 .AddTransient<IBossRepository, BossRepository>()
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>()
-                .AddTransient<IPlayerRepository, PlayerRepository>();
+                .AddTransient<IPlayerRepository, PlayerRepository>()
+                .AddTransient<IAuthService, AuthService>()
+                .AddTransient<IMessageService, MessageService>();
 
 
             //Security

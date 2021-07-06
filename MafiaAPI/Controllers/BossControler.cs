@@ -21,12 +21,23 @@ namespace MafiaAPI.Controllers
             _bossRepository = bossRepository;
         }
 
-        [Route("[controller]/id")]
-        [HttpGet("{id}")]
+        [Route("/boss/{id:long}")]
+        [HttpGet("{id:long}")]
         public JsonResult GetById(int id)
         {
             var boss = _bossRepository.GetById(id);
             return new JsonResult(boss);
+        }
+
+        
+        [Route("/boss/idByName/{name}")]
+        [HttpGet("{name}")]
+        public IActionResult GetIdByFullname(string name)
+        {
+            var boss = _bossRepository.GetByFullname(name);
+            if (boss == null)
+                return BadRequest("No data");
+            return new JsonResult(boss.Id);
         }
 
         [HttpPost]

@@ -10,5 +10,6 @@ namespace MafiaAPI.Repositories
     {
         public IEnumerable<PerformingMission> GetByAgentId(long id);
         public IQueryable<PerformingMission> GetAllWithMissionAndAgent();
+        public IQueryable<PerformingMission> GetAllWithMissionAndAgentByBossId(long bossId);
     }
 }

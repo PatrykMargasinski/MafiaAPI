@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -16,6 +17,7 @@ namespace MafiaAPI.Controllers
     public class MessageController : Controller
     {
         private readonly IMessageRepository _messageRepository;
+
         public MessageController(IMessageRepository messageRepository)
         {
             _messageRepository = messageRepository;

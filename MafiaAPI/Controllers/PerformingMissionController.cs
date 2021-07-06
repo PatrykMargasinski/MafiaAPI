@@ -20,7 +20,7 @@ namespace MafiaAPI.Controllers
             return new
             {
                 PerformingMissionId = performingMission.Id,
-                MissionName = performingMission.Mission.Name,
+                Name = performingMission.Mission.Name,
                 AgentName = performingMission.Agent.LastName + " " + performingMission.Agent.FirstName,
                 ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100),
                 CompletionTime = performingMission.CompletionTime
@@ -38,7 +38,17 @@ namespace MafiaAPI.Controllers
         [HttpGet]
         public JsonResult GetAll()
         {
-            var performingMissions = _performingMissionRepository.GetAllWithMissionAndAgent().Select(mission => PerformingMissionToSend(mission));
+            var performingMissions = _performingMissionRepository.GetAllWithMissionAndAgent()
+                .Select(mission => PerformingMissionToSend(mission));
+            return new JsonResult(performingMissions);
+        }
+
+        [Route("/performingmission/byBossId/{bossId:long}")]
+        [HttpGet("{bossId}")]
+        public JsonResult GetAllByBossId(int bossId)
+        {
+            var performingMissions = _performingMissionRepository.GetAllWithMissionAndAgentByBossId(bossId)
+                .Select(mission => PerformingMissionToSend(mission));
             return new JsonResult(performingMissions);
         }
 

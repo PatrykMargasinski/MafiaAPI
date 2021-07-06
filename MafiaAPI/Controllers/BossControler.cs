@@ -29,6 +29,15 @@ namespace MafiaAPI.Controllers
             return new JsonResult(boss);
         }
 
+        
+        [Route("/boss/idByName/{name}")]
+        [HttpGet("{name}")]
+        public JsonResult GetIdByFullname(string name)
+        {
+            var boss = _bossRepository.GetByFullname(name);
+            return new JsonResult(boss.Id);
+        }
+
         [HttpPost]
         public JsonResult Post(Boss boss)
         {

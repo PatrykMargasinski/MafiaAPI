@@ -9,7 +9,7 @@ namespace MafiaAPI.Repositories
 
     public interface IMessageRepository : ICrudRepository<Message>
     {
-        public IQueryable<Message> GetAllMessagesTo(long bossId);
-        public IQueryable<Message> GetAllMessagesFrom(long bossId);
+        public IList<Message> GetAllMessagesTo(long bossId);
+        public IList<Message> GetAllMessagesFrom(long bossId);
     }
 }

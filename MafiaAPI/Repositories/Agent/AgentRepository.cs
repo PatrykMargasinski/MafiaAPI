@@ -13,17 +13,23 @@ namespace MafiaAPI.Repositories
 
         public AgentRepository(MafiaDBContext context): base(context){}
 
-        public IEnumerable<Agent> GetAvailableAgents(long bossId){
-            return _context.Agents.Where(agent => !agent.PerformingMissions.Any() && agent.BossId == bossId);
+        public IList<Agent> GetAvailableAgents(long bossId){
+            return _context.Agents
+                .Where(agent => !agent.PerformingMissions.Any() && agent.BossId == bossId)
+                .ToList();
         }
 
-        public IEnumerable<Agent> GetAgentsForRecruitment(){
-            return _context.Agents.Where(agent => agent.BossId == null);
+        public IList<Agent> GetAgentsForRecruitment(){
+            return _context.Agents
+                .Where(agent => agent.BossId == null)
+                .ToList();
         }
 
-        public IEnumerable<Agent> GetBossAgents(long id)
+        public IList<Agent> GetBossAgents(long id)
         {
-            return _context.Agents.Where(agent => agent.BossId == id);
+            return _context.Agents
+                .Where(agent => agent.BossId == id)
+                .ToList();
         }
     }
 }

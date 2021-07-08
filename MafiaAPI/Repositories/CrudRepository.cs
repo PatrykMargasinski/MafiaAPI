@@ -16,9 +16,9 @@ namespace MafiaAPI.Repositories
             entities = _context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public IList<T> GetAll()
         {
-            return entities.AsEnumerable();
+            return entities.ToList();
         }
         public T GetById(long id)
         {

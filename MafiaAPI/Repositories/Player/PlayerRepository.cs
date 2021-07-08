@@ -16,7 +16,7 @@ namespace MafiaAPI.Repositories
             return _context.Players.FirstOrDefault(player => player.Nick == nick);
         }
 
-        public Player GetWithBoss(int id)
+        public Player GetWithBoss(long id)
         {
             return _context.Players.Include(x=>x.Boss).FirstOrDefault(player => player.Id == id);
         }

@@ -11,7 +11,7 @@ using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using MafiaAPI.Util;
 
-namespace MafiaAPI.Services.Authorization
+namespace MafiaAPI.Services
 {
 
     public class AuthService : IAuthService

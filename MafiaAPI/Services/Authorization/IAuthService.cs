@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MafiaAPI.Services.Authorization
+namespace MafiaAPI.Services
 {
     public interface IAuthService
     {

@@ -1,6 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
-using MafiaAPI.Services.Authorization;
+using MafiaAPI.Services;
 using MafiaAPI.Util;
 using MafiaAPI.Validators;
 using Microsoft.AspNetCore.Mvc;

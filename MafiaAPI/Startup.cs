@@ -1,6 +1,6 @@
 using MafiaAPI.Database;
 using MafiaAPI.Repositories;
-using MafiaAPI.Services.Authorization;
+using MafiaAPI.Services;
 using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

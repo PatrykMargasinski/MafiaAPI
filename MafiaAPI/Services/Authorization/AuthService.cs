@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using MafiaAPI.Util;
+using System.Security.Cryptography;
 
 namespace MafiaAPI.Services
 {
@@ -20,18 +21,21 @@ namespace MafiaAPI.Services
         private readonly IBossRepository _bossRepository;
         private readonly IAgentRepository _agentRepository;
         private readonly IPerformingMissionRepository _performingMissionRepository;
+        private readonly ISecurityService _securityService;
 
         public AuthService(
             IPlayerRepository playerRepository, 
             IBossRepository bossRepository, 
             IAgentRepository agentRepository, 
-            IPerformingMissionRepository performingMissionRepository
+            IPerformingMissionRepository performingMissionRepository,
+            ISecurityService securityService
             )
         {
             _playerRepository = playerRepository;
             _bossRepository = bossRepository;
             _agentRepository = agentRepository;
             _performingMissionRepository = performingMissionRepository;
+            _securityService = securityService;
         }
 
         public string[] LoginValidation(LoginDto user)
@@ -44,20 +48,15 @@ namespace MafiaAPI.Services
             }
 
             Player player = _playerRepository.GetByNick(user.Nick);
-            if (player == null || player.Password != user.Password)
+            if (player == null)
             {
-                return new string[] { "Wrong nick or password" };
+                return new string[] { "There is no player with such nick" };
             }
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JavorJestNajepszy"));
-            var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
-            var tokenOptions = new JwtSecurityToken(
-                issuer: "http://localhost:53191",
-                audience: "http://localhost:53191",
-                expires: DateTime.Now.AddMinutes(5),
-                signingCredentials: signingCredentials
-                );
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            if(VerifyPassword(player, user.Password) == false)
+            {
+                return new string[] { "Wrong password" };
+            }
             return errors;
         }
 
@@ -109,7 +108,7 @@ namespace MafiaAPI.Services
             Player player = new Player()
             {
                 Nick = user.Nick,
-                Password = user.Password,
+                Password = _securityService.Hash(user.Password),
             };
             player.BossId = boss.Id;
             _playerRepository.Create(player);
@@ -152,6 +151,21 @@ namespace MafiaAPI.Services
             _playerRepository.DeleteById(playerId);
             _bossRepository.DeleteById(boss.Id);
             return Array.Empty<string>();
+        }
+
+
+        public bool VerifyPassword(Player player, string pass)
+        {
+            string savedPasswordHash = player.Password;
+            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            var pbkdf2 = new Rfc2898DeriveBytes(pass, salt, 100000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i])
+                    return false;
+            return true;
         }
     }
 }

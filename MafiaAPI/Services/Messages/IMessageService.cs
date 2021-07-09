@@ -10,5 +10,8 @@ namespace MafiaAPI.Services.Messages
     {
         public void SendMessage(Message message);
         public void SendMessage(string fromBossName, string toBossName, string content);
+        public IEnumerable<object> GetAllMessagesTo(long id);
+        public IList<Message> GetAllMessagesFrom(long id);
+        public void DeleteMessage(int id);
     }
 }

@@ -53,7 +53,8 @@ namespace MafiaAPI
                 .AddTransient<IMessageRepository, MessageRepository>()
                 .AddTransient<IPlayerRepository, PlayerRepository>()
                 .AddTransient<IAuthService, AuthService>()
-                .AddTransient<IMessageService, MessageService>();
+                .AddTransient<IMessageService, MessageService>()
+                .AddTransient<ISecurityService, SecurityService>();
 
 
             //Security

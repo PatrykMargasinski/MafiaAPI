@@ -16,27 +16,18 @@ namespace MafiaAPI.Controllers
     [ApiController]
     public class MessageController : Controller
     {
-        private readonly IMessageRepository _messageRepository;
+        private readonly IMessageService _messageService;
 
-        public MessageController(IMessageRepository messageRepository)
+        public MessageController(IMessageService messageService)
         {
-            _messageRepository = messageRepository;
+            _messageService = messageService;
         }
 
         [Route("/messageTo/{id}")]
         [HttpGet("{id}")]
         public JsonResult GetAllMessagesTo(long id)
         {
-            var messages = _messageRepository
-                .GetAllMessagesTo(id)
-                .Select(x => new
-                {
-                    x.Id,
-                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
-                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    x.Content
-                }
-                );
+            var messages = _messageService.GetAllMessagesTo(id);
             return new JsonResult(messages);
         }
 
@@ -44,14 +35,14 @@ namespace MafiaAPI.Controllers
         [HttpGet("{id}")]
         public JsonResult GetAllMessagesFrom(long id)
         {
-            var messages = _messageRepository.GetAllMessagesFrom(id);
+            var messages = _messageService.GetAllMessagesFrom(id);
             return new JsonResult(messages);
         }
 
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
-            _messageRepository.Create(message);
+            _messageService.SendMessage(message);
             return new JsonResult("Added successfully");
         }
 
@@ -59,7 +50,7 @@ namespace MafiaAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {
-            _messageRepository.DeleteById(id);
+            _messageService.DeleteMessage(id);
             return new JsonResult("Deleted successfully");
         }
     }

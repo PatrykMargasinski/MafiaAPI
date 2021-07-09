@@ -36,7 +36,7 @@ namespace MafiaAPI.Services.Messages
             _messageRepository.Create(message);
         }
 
-        public IEnumerable<object> GetAllMessagesTo(long id)
+        public IList<object> GetAllMessagesTo(long id)
         {
             var messages = _messageRepository
                 .GetAllMessagesTo(id)
@@ -47,7 +47,7 @@ namespace MafiaAPI.Services.Messages
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
                     Content = _securityService.Decrypt(x.Content)
                 }
-                );
+                ).ToList<object>();
             return messages;
         }
 

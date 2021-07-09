@@ -8,8 +8,8 @@ namespace MafiaAPI.Repositories
 {
     public interface IAgentRepository: ICrudRepository<Agent>
     {
-        public IEnumerable<Agent> GetAvailableAgents(long bossId);
-        public IEnumerable<Agent> GetAgentsForRecruitment();
-        public IEnumerable<Agent> GetBossAgents(long id);
+        public IList<Agent> GetAvailableAgents(long bossId);
+        public IList<Agent> GetAgentsForRecruitment();
+        public IList<Agent> GetBossAgents(long id);
     }
 }

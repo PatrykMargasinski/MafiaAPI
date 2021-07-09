@@ -8,8 +8,8 @@ namespace MafiaAPI.Repositories
 {
     public interface IPerformingMissionRepository: ICrudRepository<PerformingMission>
     {
-        public IEnumerable<PerformingMission> GetByAgentId(long id);
-        public IQueryable<PerformingMission> GetAllWithMissionAndAgent();
-        public IQueryable<PerformingMission> GetAllWithMissionAndAgentByBossId(long bossId);
+        public IList<PerformingMission> GetByAgentId(long id);
+        public IList<PerformingMission> GetAllWithMissionAndAgent();
+        public IList<PerformingMission> GetAllWithMissionAndAgentByBossId(long bossId);
     }
 }

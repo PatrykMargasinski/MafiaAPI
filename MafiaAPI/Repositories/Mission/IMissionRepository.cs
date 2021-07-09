@@ -8,7 +8,7 @@ namespace MafiaAPI.Repositories
 {
     public interface IMissionRepository: ICrudRepository<Mission>
     {
-        public IEnumerable<Mission> GetAvailableMissions();
+        public IList<Mission> GetAvailableMissions();
     
     }
 }

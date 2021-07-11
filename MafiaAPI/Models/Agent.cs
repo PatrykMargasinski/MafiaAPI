@@ -20,5 +20,9 @@ namespace MafiaAPI.Models
 
         public virtual Boss Boss { get; set; }
         public virtual ICollection<PerformingMission> PerformingMissions { get; set; }
+
+        public bool HasBoss() { return BossId.HasValue; }
+
+        public String getName() { return this.FirstName + " " + this.LastName; }
     }
 }

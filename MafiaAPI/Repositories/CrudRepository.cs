@@ -29,6 +29,11 @@ namespace MafiaAPI.Repositories
             entities.Add(model);
             _context.SaveChanges();
         }
+        public long CreateGetId(T model)
+        {
+            Create(model);
+            return model.Id;
+        }
         public void Update(T model)
         {
             entities.Update(model);

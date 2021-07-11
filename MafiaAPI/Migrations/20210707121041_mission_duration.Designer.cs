@@ -4,14 +4,16 @@ using MafiaAPI.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MafiaAPI.Migrations
 {
     [DbContext(typeof(MafiaDBContext))]
-    partial class MafiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210707121041_mission_duration")]
+    partial class mission_duration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +138,7 @@ namespace MafiaAPI.Migrations
                             Id = 1L,
                             FirstName = "Rico",
                             LastName = "Patricio",
-                            LastSeen = new DateTime(2021, 7, 8, 10, 23, 8, 608, DateTimeKind.Local).AddTicks(6910),
+                            LastSeen = new DateTime(2021, 7, 7, 14, 10, 40, 695, DateTimeKind.Local).AddTicks(3694),
                             Money = 5000
                         },
                         new
@@ -144,7 +146,7 @@ namespace MafiaAPI.Migrations
                             Id = 2L,
                             FirstName = "Margherita",
                             LastName = "Rodrigo",
-                            LastSeen = new DateTime(2021, 7, 8, 10, 23, 8, 612, DateTimeKind.Local).AddTicks(4623),
+                            LastSeen = new DateTime(2021, 7, 7, 14, 10, 40, 699, DateTimeKind.Local).AddTicks(1451),
                             Money = 5000
                         });
                 });
@@ -289,14 +291,14 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             AgentId = 1L,
-                            CompletionTime = new DateTime(2021, 7, 8, 10, 23, 8, 616, DateTimeKind.Local).AddTicks(9676),
+                            CompletionTime = new DateTime(2021, 7, 7, 14, 10, 40, 703, DateTimeKind.Local).AddTicks(9875),
                             MissionId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             AgentId = 3L,
-                            CompletionTime = new DateTime(2021, 7, 8, 10, 23, 8, 617, DateTimeKind.Local).AddTicks(271),
+                            CompletionTime = new DateTime(2021, 7, 7, 14, 10, 40, 704, DateTimeKind.Local).AddTicks(559),
                             MissionId = 2L
                         });
                 });

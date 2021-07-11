@@ -5,13 +5,14 @@ namespace MafiaAPI.Repositories {
 
     public interface ICrudRepository<T> where T: Model{
     
-        public IEnumerable<T> GetAll();
-        public T GetById(long id);
-        public void Create(T model);
-        public void Update(T model);
-        public void Delete(T model);
+        IEnumerable<T> GetAll();
+        T GetById(long id);
+        void Create(T model);
+        long CreateGetId(T model);
+        void Update(T model);
+        void Delete(T model);
 
-        public void DeleteById(long id);
+        void DeleteById(long id);
     }
 
 }

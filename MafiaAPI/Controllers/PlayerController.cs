@@ -31,7 +31,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Added succesfully");
         }
 
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpGet("{id}")]
         public JsonResult Get(long id)
         {
@@ -46,7 +46,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {

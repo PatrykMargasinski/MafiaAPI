@@ -37,7 +37,7 @@ namespace MafiaAPI.Repositories
 
         public IEnumerable<PerformingMission> GetByAgentId(long id)
         {
-            return _context.PerformingMissions.Where(x => x.Id == id);
+            return _context.PerformingMissions.Where(x => x.AgentId == id);
         }
     }
 }

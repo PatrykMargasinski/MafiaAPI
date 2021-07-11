@@ -49,13 +49,13 @@ namespace MafiaAPI.Database
         private static IList<Mission> prepareMissions()
         {
             return new List<Mission> {
-                new Mission{Id=1, Name="Bank robbery", DifficultyLevel=7, Loot=5000},
-                new Mission{Id=2, Name="Senator assassination", DifficultyLevel=9, Loot=10000},
-                new Mission{Id=3, Name="Party", DifficultyLevel=2, Loot=100},
-                new Mission{Id=4, Name="Buy a coffee", DifficultyLevel=1, Loot=10},
-                new Mission{Id=5, Name="Money laundering", DifficultyLevel=5, Loot=1000},
-                new Mission{Id=6, Name="Car theft", DifficultyLevel=6, Loot=2000},
-                new Mission{Id=7, Name="Arms trade", DifficultyLevel=8, Loot=4000}
+                new Mission{Id=1, Name="Bank robbery", DifficultyLevel=7, Loot=5000, Duration=30},
+                new Mission{Id=2, Name="Senator assassination", DifficultyLevel=9, Loot=10000, Duration=60},
+                new Mission{Id=3, Name="Party", DifficultyLevel=2, Loot=100, Duration=10},
+                new Mission{Id=4, Name="Buy a coffee", DifficultyLevel=1, Loot=10, Duration=5},
+                new Mission{Id=5, Name="Money laundering", DifficultyLevel=5, Loot=1000, Duration=55},
+                new Mission{Id=6, Name="Car theft", DifficultyLevel=6, Loot=2000, Duration=3600},
+                new Mission{Id=7, Name="Arms trade", DifficultyLevel=8, Loot=4000, Duration=15}
             };
         }
 

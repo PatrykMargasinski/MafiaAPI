@@ -1,5 +1,8 @@
 using MafiaAPI.Database;
+using MafiaAPI.Jobs;
+using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using MafiaAPI.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,8 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using Quartz;
 using System.Text;
 
 namespace MafiaAPI
@@ -50,6 +55,10 @@ namespace MafiaAPI
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>()
                 .AddTransient<IPlayerRepository, PlayerRepository>();
+            //Services
+            services.AddTransient<IMissionService, MissionService>()
+                .AddTransient<IPerformingMissionService, PerformingMissionService>()
+                .AddTransient<IAgentService, AgentService>();
 
 
             //Security
@@ -74,6 +83,16 @@ namespace MafiaAPI
                     };
                 });
 
+            services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
+
+            services.AddQuartz(q =>
+            {
+                q.UseMicrosoftDependencyInjectionJobFactory();
+            });
+            services.AddQuartzServer(options =>
+            {
+                options.WaitForJobsToComplete = true;
+            });
 
             services.AddControllers();
         }
@@ -96,6 +115,7 @@ namespace MafiaAPI
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

@@ -1,13 +1,7 @@
-﻿using MafiaAPI.Models;
+﻿using System;
+using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Controllers
 {
@@ -21,19 +15,19 @@ namespace MafiaAPI.Controllers
             _bossRepository = bossRepository;
         }
 
-        [Route("/boss/{id:long}")]
-        [HttpGet("{id:long}")]
+        [Route("{id}")]
+        [HttpGet]
         public JsonResult GetById(int id)
         {
             var boss = _bossRepository.GetById(id);
             return new JsonResult(boss);
         }
 
-        
-        [Route("/boss/idByName/{name}")]
-        [HttpGet("{name}")]
-        public IActionResult GetIdByFullname(string name)
+        [Route("{name}/id")]
+        [HttpGet]
+        public JsonResult GetIdByFullname(string name)
         {
+            Console.WriteLine(name + " HELLO!");
             var boss = _bossRepository.GetByFullname(name);
             if (boss == null)
                 return BadRequest("No data");

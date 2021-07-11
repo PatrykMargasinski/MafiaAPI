@@ -1,14 +1,8 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
-using Microsoft.AspNetCore.Authorization;
+using MafiaAPI.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+using MafiaAPI.Models.Requests;
 
 namespace MafiaAPI.Controllers
 {
@@ -17,32 +11,40 @@ namespace MafiaAPI.Controllers
     public class MissionController : Controller
     {
         private readonly IMissionRepository _missionRepository;
-        public MissionController(IMissionRepository missionRepository)
+        private readonly IMissionService _missionService;
+        private readonly IPerformingMissionService _pmService;
+        private readonly IAgentService _agentService;
+
+        public MissionController(
+            IMissionRepository missionRepository,
+            IMissionService missionService,
+            IPerformingMissionService pmService,
+            IAgentService agentService)
         {
             _missionRepository = missionRepository;
+            _missionService = missionService;
+            _pmService = pmService;
+            _agentService = agentService;
         }
 
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpGet("{id}")]
         public JsonResult Get(long id)
         {
-            var mission = _missionRepository.GetById(id);
-            return new JsonResult(mission);
+            return new JsonResult(_missionRepository.GetById(id));
         }
 
         [HttpGet]
         public JsonResult GetAll()
         {
-            var missions = _missionRepository.GetAll();
-            return new JsonResult(missions);
+            return new JsonResult(_missionRepository.GetAll());
         }
 
-        [Route("/GetAvailableMissions")]
+        [Route("GetAvailableMissions")]
         [HttpGet]
         public JsonResult GetAvailableMissions()
         {
-            var missions = _missionRepository.GetAvailableMissions();
-            return new JsonResult(missions);
+            return new JsonResult(_missionRepository.GetAvailableMissions());
         }
 
         [HttpPut]
@@ -59,12 +61,21 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {
             _missionRepository.DeleteById(id);
             return new JsonResult("Deleted successfully");
+        }
+
+        [Route("start")]
+        [HttpPost]
+        public IActionResult startMission([FromBody] MissionStartRequest missionStart)
+        {
+            long agentId = missionStart.AgentId;
+            long missionId = missionStart.MissionId;
+            return _missionService.DoMission(agentId, missionId);
         }
     }
 }

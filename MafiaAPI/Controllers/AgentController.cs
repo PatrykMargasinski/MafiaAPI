@@ -22,7 +22,7 @@ namespace MafiaAPI.Controllers
             _agentRepository = agentRepository;
         }
 
-        [Route("/GetAvailableAgents/{bossId}")]
+        [Route("GetAvailableAgents/{bossId}")]
         [HttpGet("{bossId}")]
         public JsonResult GetAvailableAgents(int bossId)
         {
@@ -30,7 +30,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult(agents);
         }
 
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
@@ -48,7 +48,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult(agents);
         }
 
-        [Route("/GetAgentsForRecruitment")]
+        [Route("GetAgentsForRecruitment")]
         [HttpGet]
         public JsonResult GetAgentsForRecruitment()
         {
@@ -70,7 +70,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {

@@ -1,6 +1,9 @@
 ﻿using MafiaAPI.Models;
+using MafiaAPI.Models.DTO;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.JsonPatch.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace MafiaAPI.Controllers
@@ -15,41 +18,22 @@ namespace MafiaAPI.Controllers
             _performingMissionRepository = performingMissionRepository;
         }
 
-        public static object PerformingMissionToSend(PerformingMission performingMission)
-        {
-            return new
-            {
-                PerformingMissionId = performingMission.Id,
-                Name = performingMission.Mission.Name,
-                AgentName = performingMission.Agent.LastName + " " + performingMission.Agent.FirstName,
-                ChanceOfSuccess = (int)((11f - performingMission.Mission.DifficultyLevel + performingMission.Agent.Strength + 1f) / 22f * 100),
-                CompletionTime = performingMission.CompletionTime
-            };
-        }
-
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
             var performingMission = _performingMissionRepository.GetById(id);
-            return new JsonResult(PerformingMissionToSend(performingMission));
+            return new JsonResult(new PerformingMissionDTO(performingMission));
         }
 
         [HttpGet]
-        public JsonResult GetAll()
+        public JsonResult GetAll(long? bossId)
         {
-            var performingMissions = _performingMissionRepository.GetAllWithMissionAndAgent()
-                .Select(mission => PerformingMissionToSend(mission));
-            return new JsonResult(performingMissions);
-        }
-
-        [Route("/performingmission/byBossId/{bossId:long}")]
-        [HttpGet("{bossId}")]
-        public JsonResult GetAllByBossId(int bossId)
-        {
-            var performingMissions = _performingMissionRepository.GetAllWithMissionAndAgentByBossId(bossId)
-                .Select(mission => PerformingMissionToSend(mission));
-            return new JsonResult(performingMissions);
+            if (bossId.HasValue)
+            {
+                return GetAllByBossId(bossId.Value);
+            }
+            return GetAllInProgress();
         }
 
         [HttpPost]
@@ -66,7 +50,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("[controller]/id")]
+        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {
@@ -74,5 +58,20 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Deleted successfully");
         }
 
+        private JsonResult GetAllInProgress()
+        {
+            return new JsonResult(
+                _performingMissionRepository.GetAllWithMissionAndAgent()
+                .Select(mission => new PerformingMissionDTO(mission))
+            );
+        }
+
+        private JsonResult GetAllByBossId(long bossId)
+        {
+            return new JsonResult(
+                    _performingMissionRepository
+                    .GetAllWithMissionAndAgentByBossId(bossId)
+                    .Select(mission => new PerformingMissionDTO(mission)));
+        }
     }
 }

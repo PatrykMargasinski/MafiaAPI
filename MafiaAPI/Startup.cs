@@ -3,6 +3,7 @@ using MafiaAPI.Jobs;
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using MafiaAPI.Service;
+using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,17 +49,20 @@ namespace MafiaAPI
             services.AddDbContext<MafiaDBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MafiaAppCon")));
 
-            //Dependency injections
+            //Repositories
             services.AddTransient<IAgentRepository, AgentRepository>()
                 .AddTransient<IMissionRepository, MissionRepository>()
                 .AddTransient<IBossRepository, BossRepository>()
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>()
                 .AddTransient<IPlayerRepository, PlayerRepository>();
+          
             //Services
             services.AddTransient<IMissionService, MissionService>()
                 .AddTransient<IPerformingMissionService, PerformingMissionService>()
                 .AddTransient<IAgentService, AgentService>();
+                .AddTransient<IAuthService, AuthService>()
+                .AddTransient<IMessageService, MessageService>();
 
 
             //Security

@@ -17,6 +17,7 @@ namespace MafiaAPI.Repositories
         }
         public Boss GetByFullname(string name)
         {
+            name = name.Trim();
             var boss = _context.Bosses.FirstOrDefault(boss => boss.FirstName + boss.LastName == name || boss.LastName + boss.FirstName == name);
             return boss;
         }

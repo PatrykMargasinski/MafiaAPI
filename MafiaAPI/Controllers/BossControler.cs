@@ -29,6 +29,8 @@ namespace MafiaAPI.Controllers
         {
             Console.WriteLine(name + " HELLO!");
             var boss = _bossRepository.GetByFullname(name);
+            if (boss == null)
+                return BadRequest("No data");
             return new JsonResult(boss.Id);
         }
 

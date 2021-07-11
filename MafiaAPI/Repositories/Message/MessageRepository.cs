@@ -1,6 +1,7 @@
 ﻿using MafiaAPI.Models;
 using System.Linq;
 using MafiaAPI.Database;
+using System.Collections.Generic;
 
 namespace MafiaAPI.Repositories
 {
@@ -10,13 +11,17 @@ namespace MafiaAPI.Repositories
 
         public MessageRepository(MafiaDBContext context) : base(context) { }
 
-        public IQueryable<Message> GetAllMessagesTo(long bossId)
+        public IList<Message> GetAllMessagesTo(long bossId)
         {
-            return _context.Messages.Where(mes => mes.ToBossId == bossId);
+            return _context.Messages
+                .Where(mes => mes.ToBossId == bossId)
+                .ToList();
         }
-        public IQueryable<Message> GetAllMessagesFrom(long bossId)
+        public IList<Message> GetAllMessagesFrom(long bossId)
         {
-            return _context.Messages.Where(mes => mes.FromBossId == bossId);
+            return _context.Messages
+                .Where(mes => mes.FromBossId == bossId)
+                .ToList();
         }
     }
 }

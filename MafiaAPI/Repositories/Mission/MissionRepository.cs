@@ -12,11 +12,12 @@ namespace MafiaAPI.Repositories
 
         public MissionRepository(MafiaDBContext context): base(context){}
 
-        public IEnumerable<Mission> GetAvailableMissions()
+        public IList<Mission> GetAvailableMissions()
         {
             return _context.Missions
                 .Include(x=>x.PerformingMissions)
-                .Where(mission => !mission.PerformingMissions.Any());
+                .Where(mission => !mission.PerformingMissions.Any())
+                .ToList();
         }
 
     }

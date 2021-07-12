@@ -136,7 +136,7 @@ namespace MafiaAPI.Migrations
                             Id = 1L,
                             FirstName = "Rico",
                             LastName = "Patricio",
-                            LastSeen = new DateTime(2021, 7, 8, 10, 23, 8, 608, DateTimeKind.Local).AddTicks(6910),
+                            LastSeen = new DateTime(2021, 7, 12, 17, 32, 30, 950, DateTimeKind.Local).AddTicks(7202),
                             Money = 5000
                         },
                         new
@@ -144,7 +144,7 @@ namespace MafiaAPI.Migrations
                             Id = 2L,
                             FirstName = "Margherita",
                             LastName = "Rodrigo",
-                            LastSeen = new DateTime(2021, 7, 8, 10, 23, 8, 612, DateTimeKind.Local).AddTicks(4623),
+                            LastSeen = new DateTime(2021, 7, 12, 17, 32, 30, 954, DateTimeKind.Local).AddTicks(3150),
                             Money = 5000
                         });
                 });
@@ -289,14 +289,14 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             AgentId = 1L,
-                            CompletionTime = new DateTime(2021, 7, 8, 10, 23, 8, 616, DateTimeKind.Local).AddTicks(9676),
+                            CompletionTime = new DateTime(2021, 7, 12, 17, 32, 30, 959, DateTimeKind.Local).AddTicks(1174),
                             MissionId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             AgentId = 3L,
-                            CompletionTime = new DateTime(2021, 7, 8, 10, 23, 8, 617, DateTimeKind.Local).AddTicks(271),
+                            CompletionTime = new DateTime(2021, 7, 12, 17, 32, 30, 959, DateTimeKind.Local).AddTicks(1928),
                             MissionId = 2L
                         });
                 });

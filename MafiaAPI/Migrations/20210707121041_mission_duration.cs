@@ -7,13 +7,7 @@ namespace MafiaAPI.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "BossId",
-                table: "Message");
 
-            migrationBuilder.DropColumn(
-                name: "MessageId",
-                table: "Message");
 
             migrationBuilder.AddColumn<double>(
                 name: "Duration",

@@ -25,7 +25,7 @@ namespace MafiaAPI.Controllers
 
         [Route("{name}/id")]
         [HttpGet]
-        public JsonResult GetIdByFullname(string name)
+        public IActionResult GetIdByFullname(string name)
         {
             Console.WriteLine(name + " HELLO!");
             var boss = _bossRepository.GetByFullname(name);

@@ -3,6 +3,7 @@ using MafiaAPI.Jobs;
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using MafiaAPI.Service;
+using MafiaAPI.Services;
 using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -60,7 +61,7 @@ namespace MafiaAPI
             //Services
             services.AddTransient<IMissionService, MissionService>()
                 .AddTransient<IPerformingMissionService, PerformingMissionService>()
-                .AddTransient<IAgentService, AgentService>();
+                .AddTransient<IAgentService, AgentService>()
                 .AddTransient<IAuthService, AuthService>()
                 .AddTransient<IMessageService, MessageService>();
 

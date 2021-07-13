@@ -29,17 +29,12 @@ namespace MafiaAPI.Controllers
         {
             _playerRepository.Create(player);
             return new JsonResult("Added succesfully");
-        }
-
-        [Route("id")]
-        [HttpGet("{id}")]
-        public JsonResult Get(long id)
-        {
+    
             var player = _playerRepository.GetById(id);
             return new JsonResult(player);
         }
 
-        [HttpPut]
+        [HttpP
         public JsonResult Update(Player player)
         {
             _playerRepository.Update(player);

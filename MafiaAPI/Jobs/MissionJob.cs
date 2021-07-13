@@ -28,7 +28,7 @@ public class MissionJob : IJob
         JobKey key = context.JobDetail.Key;
 
 		JobDataMap dataMap = context.JobDetail.JobDataMap;
-		long pmId = Int32.Parse(dataMap.GetString("pmId"));
+		long pmId = Int64.Parse(dataMap.GetString("pmId"));
 		_missionService.EndMission(pmId);
 	}
 

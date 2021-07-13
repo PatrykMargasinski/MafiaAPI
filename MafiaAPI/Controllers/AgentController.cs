@@ -1,14 +1,8 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Controllers
 {
@@ -21,16 +15,22 @@ namespace MafiaAPI.Controllers
         {
             _agentRepository = agentRepository;
         }
-
-        [Route("GetAvailableAgents/{bossId}")]
-        [HttpGet("{bossId}")]
+        
+        /// <summary>
+        /// Get available agents for boss who are not on mission
+        /// </summary>
+        /// <param name="bossId"></param>   
+        [HttpGet("available/{bossId}")]
         public JsonResult GetAvailableAgents(int bossId)
         {
             var agents = _agentRepository.GetAvailableAgents(bossId);
             return new JsonResult(agents);
         }
 
-        [Route("id")]
+        /// <summary>
+        /// Get agent by id
+        /// </summary>
+        /// <param name="id"></param>   
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
@@ -38,6 +38,10 @@ namespace MafiaAPI.Controllers
             return new JsonResult(agent);
         }
 
+
+        /// <summary>
+        /// Get all agents
+        /// </summary> 
         [HttpGet]
         public JsonResult GetAll()
         {
@@ -48,14 +52,20 @@ namespace MafiaAPI.Controllers
             return new JsonResult(agents);
         }
 
-        [Route("GetAgentsForRecruitment")]
-        [HttpGet]
+        /// <summary>
+        /// Get agents who dont have boss
+        /// </summary>  
+        [HttpGet("getAgentsForRecruitment")]
         public JsonResult GetAgentsForRecruitment()
         {
             var agents = _agentRepository.GetAgentsForRecruitment();
             return new JsonResult(agents);
         }
 
+
+        /// <summary>
+        /// Create new agent
+        /// </summary>  
         [HttpPost]
         public JsonResult AddAgent(Agent agent)
         {
@@ -63,6 +73,9 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Added successfully");
         }
 
+        /// <summary>
+        /// Update agent
+        /// </summary> 
         [HttpPut]
         public JsonResult Update(Agent agent)
         {
@@ -70,7 +83,10 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("id")]
+        /// <summary>
+        /// Delete agent
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {

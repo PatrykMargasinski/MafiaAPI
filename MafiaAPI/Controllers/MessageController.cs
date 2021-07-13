@@ -23,8 +23,12 @@ namespace MafiaAPI.Controllers
             _messageRepository = messageRepository;
         }
 
-        [Route("/messageTo/{id}")]
-        [HttpGet("{id}")]
+
+        /// <summary>
+        /// Get all message to player with specified id
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpGet("messageTo/{id}")]
         public JsonResult GetAllMessagesTo(long id)
         {
             var messages = _messageRepository
@@ -40,14 +44,21 @@ namespace MafiaAPI.Controllers
             return new JsonResult(messages);
         }
 
-        [Route("/messageFrom/{id}")]
-        [HttpGet("{id}")]
+        /// <summary>
+        /// Get all message sent by player with specific id
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpGet("messageFrom/{id}")]
         public JsonResult GetAllMessagesFrom(long id)
         {
             var messages = _messageRepository.GetAllMessagesFrom(id);
             return new JsonResult(messages);
         }
 
+        /// <summary>
+        /// Send message to boss
+        /// </summary>
+        /// <param name="message"></param>
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
@@ -55,7 +66,10 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Added successfully");
         }
 
-        [Route("[controller]/id")]
+        /// <summary>
+        /// Delete message by id
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {

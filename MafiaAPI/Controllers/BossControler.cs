@@ -15,16 +15,14 @@ namespace MafiaAPI.Controllers
             _bossRepository = bossRepository;
         }
 
-        [Route("{id}")]
-        [HttpGet]
+        [HttpGet("{id}")]
         public JsonResult GetById(int id)
         {
             var boss = _bossRepository.GetById(id);
             return new JsonResult(boss);
         }
 
-        [Route("{name}/id")]
-        [HttpGet]
+        [HttpGet("{name}/id")]
         public IActionResult GetIdByFullname(string name)
         {
             Console.WriteLine(name + " HELLO!");

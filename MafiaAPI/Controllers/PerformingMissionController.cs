@@ -3,6 +3,7 @@ using MafiaAPI.Models.DTO;
 using MafiaAPI.Repositories;
 using Microsoft.AspNetCore.JsonPatch.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 
@@ -18,7 +19,10 @@ namespace MafiaAPI.Controllers
             _performingMissionRepository = performingMissionRepository;
         }
 
-        [Route("id")]
+        /// <summary>
+        /// Get all missions in progress started by boss with specified id
+        /// </summary>
+        /// <param name="id"></param>
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
@@ -50,7 +54,6 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {

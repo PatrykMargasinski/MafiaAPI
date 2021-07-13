@@ -8,7 +8,6 @@ namespace MafiaAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 
-
             migrationBuilder.AddColumn<double>(
                 name: "Duration",
                 table: "Mission",

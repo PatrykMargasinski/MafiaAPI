@@ -63,6 +63,7 @@ namespace MafiaAPI
                 .AddTransient<IPerformingMissionService, PerformingMissionService>()
                 .AddTransient<IAgentService, AgentService>()
                 .AddTransient<IAuthService, AuthService>()
+                .AddTransient<ISecurityService, SecurityService>()
                 .AddTransient<IMessageService, MessageService>();
 
 

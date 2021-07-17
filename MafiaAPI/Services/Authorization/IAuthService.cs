@@ -13,5 +13,6 @@ namespace MafiaAPI.Services
         public string[] RegisterValidation(RegisterDTO user);
         public void CreateUser(RegisterDTO user);
         public string[] DeleteAccount(long playerId);
+        public bool VerifyPassword(Player player, string pass);
     }
 }

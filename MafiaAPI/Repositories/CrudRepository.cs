@@ -50,5 +50,10 @@ namespace MafiaAPI.Repositories
             entities.Remove(GetById(id));
             _context.SaveChanges();
         }
+
+        public long GetCount()
+        {
+            return entities.LongCount();
+        }
     }
 }

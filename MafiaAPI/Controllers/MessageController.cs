@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using MafiaAPI.Services;
 using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -17,10 +18,12 @@ namespace MafiaAPI.Controllers
     public class MessageController : Controller
     {
         private readonly IMessageRepository _messageRepository;
+        private readonly ISecurityService _securityService;
 
-        public MessageController(IMessageRepository messageRepository)
+        public MessageController(IMessageRepository messageRepository, ISecurityService securityService)
         {
             _messageRepository = messageRepository;
+            _securityService = securityService;
         }
 
         [Route("/messageTo/{id}")]
@@ -34,7 +37,7 @@ namespace MafiaAPI.Controllers
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    x.Content
+                    Content = _securityService.Decrypt(x.Content)
                 }
                 );
             return new JsonResult(messages);
@@ -44,13 +47,23 @@ namespace MafiaAPI.Controllers
         [HttpGet("{id}")]
         public JsonResult GetAllMessagesFrom(long id)
         {
-            var messages = _messageRepository.GetAllMessagesFrom(id);
+            var messages = _messageRepository
+                .GetAllMessagesFrom(id)
+                .Select(x => new
+                {
+                    x.Id,
+                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
+                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
+                    Content = _securityService.Decrypt(x.Content)
+                }
+                );
             return new JsonResult(messages);
         }
 
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
+            message.Content = _securityService.Encrypt(message.Content);
             _messageRepository.Create(message);
             return new JsonResult("Added successfully");
         }

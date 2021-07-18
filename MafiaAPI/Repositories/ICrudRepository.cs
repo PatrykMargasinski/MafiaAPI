@@ -13,6 +13,7 @@ namespace MafiaAPI.Repositories {
         public void Update(T model);
         public void Delete(T model);
         public void DeleteById(long id);
+        public void DeleteByIds(long[] ids);
 
     }
 

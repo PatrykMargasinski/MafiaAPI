@@ -123,6 +123,8 @@ namespace MafiaAPI.Services
                     FirstName = Utils.UppercaseFirst(agentName),
                     LastName = Utils.UppercaseFirst(user.BossLastName),
                     Strength = random.Next(2, 5),
+                    Intelligence = random.Next(2, 5),
+                    Dexterity = random.Next(2, 5),
                     Income = random.Next(2, 5) * 10,
                     BossId = boss.Id
                 };

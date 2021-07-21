@@ -21,6 +21,7 @@ namespace MafiaAPI.Repositories
                 .OrderByDescending(x=>x.ReceiveDate)
                 .ToList();
         }
+
         public IList<Message> GetAllMessagesFrom(long bossId)
         {
             return _context.Messages
@@ -30,21 +31,25 @@ namespace MafiaAPI.Repositories
                 .OrderByDescending(x => x.ReceiveDate)
                 .ToList();
         }
-        public IList<Message> GetAllMessagesToRange(long bossId, int fromRange, int toRange, string bossNameFilter)
+
+        public IList<Message> GetAllMessagesToRange(long bossId, int fromRange, int toRange, string bossNameFilter, bool onlyUnseen)
         {
             return _context.Messages
                 .Include(x => x.ToBoss)
                 .Include(x => x.FromBoss)
                 .Where(mes => 
                 mes.ToBossId == bossId && (
-                (mes.FromBoss.FirstName + mes.FromBoss.LastName).ToLower().Contains(bossNameFilter.Trim().ToLower()) ||
-                (mes.FromBoss.LastName + mes.FromBoss.FirstName).ToLower().Contains(bossNameFilter.Trim().ToLower())
-                ))
+                    (mes.FromBoss.FirstName + mes.FromBoss.LastName).ToLower().Contains(bossNameFilter.Trim().ToLower()) ||
+                    (mes.FromBoss.LastName + mes.FromBoss.FirstName).ToLower().Contains(bossNameFilter.Trim().ToLower())
+                ) &&
+                    !mes.Seen || !onlyUnseen //get only unseen messages if "onlyUnseen" is true
+                )
                 .OrderByDescending(x => x.ReceiveDate)
                 .Skip(fromRange)
                 .Take(toRange - fromRange)
                 .ToList();
         }
+
         public IList<Message> GetAllMessagesFromRange(long bossId, int fromRange, int toRange)
         {
             return _context.Messages
@@ -53,7 +58,7 @@ namespace MafiaAPI.Repositories
                 .Where(mes => mes.FromBossId == bossId)
                 .OrderByDescending(x => x.ReceiveDate)
                 .Skip(fromRange)
-                .Take(toRange-fromRange)
+                .Take(toRange - fromRange)
                 .ToList();
         }
 
@@ -62,6 +67,14 @@ namespace MafiaAPI.Repositories
             return _context.Messages
                 .Where(x => x.ToBossId == bossId)
                 .Count();
+        }
+
+        public string GetMessageContent(long messageId)
+        {
+            return _context.Messages
+                .Where(x => x.Id == messageId)
+                .FirstOrDefault()
+                .Content;
         }
     }
 }

@@ -37,8 +37,9 @@ namespace MafiaAPI.Controllers
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Content = _securityService.Decrypt(x.Content),
-                    ReceiveDate = x.ReceiveDate
+                    Subject = _securityService.Decrypt(x.Subject),
+                    ReceiveDate = x.ReceiveDate,
+                    Seen = x.Seen
                 }
                 );
             return new JsonResult(messages);
@@ -46,21 +47,22 @@ namespace MafiaAPI.Controllers
 
         [Route("/messageToRange/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetAllMessagesToRange(long id, int? fromRange, int? toRange, string bossNameFilter)
+        public JsonResult GetAllMessagesToRange(long id, int? fromRange, int? toRange, string bossNameFilter, bool onlyUnseen)
         {
             if(!fromRange.HasValue && !toRange.HasValue)
             {
                 fromRange = 0; toRange = 5;
             }
             var messages = _messageRepository
-                .GetAllMessagesToRange(id, fromRange.Value, toRange.Value, bossNameFilter ?? "")
+                .GetAllMessagesToRange(id, fromRange.Value, toRange.Value, bossNameFilter ?? "", onlyUnseen)
                 .Select(x => new
                 {
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Content = _securityService.Decrypt(x.Content),
-                    ReceiveDate = x.ReceiveDate
+                    Subject = _securityService.Decrypt(x.Subject),
+                    ReceiveDate = x.ReceiveDate,
+                    Seen=x.Seen
                 }
                 );
             return new JsonResult(messages);
@@ -85,8 +87,9 @@ namespace MafiaAPI.Controllers
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Content = _securityService.Decrypt(x.Content),
-                    ReceiveDate = x.ReceiveDate
+                    Subject = _securityService.Decrypt(x.Subject),
+                    ReceiveDate = x.ReceiveDate,
+                    Seen = x.Seen
                 }
                 );
             return new JsonResult(messages);
@@ -98,7 +101,7 @@ namespace MafiaAPI.Controllers
         {
             if (!fromRange.HasValue && !toRange.HasValue)
             {
-                fromRange = 0; toRange = 10;
+                fromRange = 0; toRange = 5;
             }
             var messages = _messageRepository
                 .GetAllMessagesFromRange(id, fromRange.Value, toRange.Value)
@@ -107,8 +110,9 @@ namespace MafiaAPI.Controllers
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Content = _securityService.Decrypt(x.Content),
-                    ReceiveDate = x.ReceiveDate
+                    Subject = _securityService.Decrypt(x.Subject),
+                    ReceiveDate = x.ReceiveDate,
+                    Seen = x.Seen
                 }
                 );
             return new JsonResult(messages);
@@ -117,10 +121,23 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
+            message.Subject = _securityService.Encrypt(message.Subject);
             message.Content = _securityService.Encrypt(message.Content);
             message.ReceiveDate = DateTime.Now;
             _messageRepository.Create(message);
             return new JsonResult("Added successfully");
+        }
+
+        [Route("/messageContent/{id}")]
+        [HttpGet("{id}")]
+        public JsonResult GetMessageContent(int id)
+        {
+            var message = _messageRepository.GetById(id);
+            message.Seen = true;
+            _messageRepository.Update(message);
+            var content= _securityService.Decrypt(message.Subject)+"\n\n"+
+                _securityService.Decrypt(message.Content);
+            return new JsonResult(content);
         }
 
         [Route("[controller]/id")]

@@ -28,33 +28,14 @@ namespace MafiaAPI.Controllers
 
         [Route("/messageTo/{id}")]
         [HttpGet("{id}")]
-        public JsonResult GetAllMessagesTo(long id)
-        {
-            var messages = _messageRepository
-                .GetAllMessagesTo(id)
-                .Select(x => new
-                {
-                    x.Id,
-                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
-                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Subject = _securityService.Decrypt(x.Subject),
-                    ReceiveDate = x.ReceiveDate,
-                    Seen = x.Seen
-                }
-                );
-            return new JsonResult(messages);
-        }
-
-        [Route("/messageToRange/{id}")]
-        [HttpGet("{id}")]
-        public JsonResult GetAllMessagesToRange(long id, int? fromRange, int? toRange, string bossNameFilter, bool onlyUnseen)
+        public JsonResult GetAllMessagesTo(long id, int? fromRange, int? toRange, string bossNameFilter, bool? onlyUnseen)
         {
             if(!fromRange.HasValue && !toRange.HasValue)
             {
                 fromRange = 0; toRange = 5;
             }
             var messages = _messageRepository
-                .GetAllMessagesToRange(id, fromRange.Value, toRange.Value, bossNameFilter ?? "", onlyUnseen)
+                .GetAllMessagesToRange(id, fromRange.Value, toRange.Value, bossNameFilter ?? "", onlyUnseen ?? false)
                 .Select(x => new
                 {
                     x.Id,
@@ -82,29 +63,6 @@ namespace MafiaAPI.Controllers
         {
             var messages = _messageRepository
                 .GetAllMessagesFrom(id)
-                .Select(x => new
-                {
-                    x.Id,
-                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
-                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Subject = _securityService.Decrypt(x.Subject),
-                    ReceiveDate = x.ReceiveDate,
-                    Seen = x.Seen
-                }
-                );
-            return new JsonResult(messages);
-        }
-
-        [Route("/messageFromRange/{id}")]
-        [HttpGet("{id}")]
-        public JsonResult GetAllMessagesFromRange(long id, int? fromRange, int? toRange)
-        {
-            if (!fromRange.HasValue && !toRange.HasValue)
-            {
-                fromRange = 0; toRange = 5;
-            }
-            var messages = _messageRepository
-                .GetAllMessagesFromRange(id, fromRange.Value, toRange.Value)
                 .Select(x => new
                 {
                     x.Id,

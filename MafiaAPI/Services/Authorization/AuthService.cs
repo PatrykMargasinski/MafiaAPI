@@ -27,12 +27,10 @@ namespace MafiaAPI.Services
         private readonly ISecurityService _securityService;
 
         public AuthService(
-            IPlayerRepository playerRepository,
-            IBossRepository bossRepository,
-            IAgentRepository agentRepository,
-            IPerformingMissionRepository performingMissionRepository,
-            ISecurityService securityService,
-            IConfiguration config
+            IPlayerRepository playerRepository, 
+            IBossRepository bossRepository, 
+            IAgentRepository agentRepository, 
+            IPerformingMissionRepository performingMissionRepository
             )
         {
             _playerRepository = playerRepository;

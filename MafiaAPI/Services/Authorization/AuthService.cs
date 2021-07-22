@@ -30,7 +30,9 @@ namespace MafiaAPI.Services
             IPlayerRepository playerRepository, 
             IBossRepository bossRepository, 
             IAgentRepository agentRepository, 
-            IPerformingMissionRepository performingMissionRepository
+            IPerformingMissionRepository performingMissionRepository,
+            ISecurityService securityService,
+            IConfiguration config
             )
         {
             _playerRepository = playerRepository;

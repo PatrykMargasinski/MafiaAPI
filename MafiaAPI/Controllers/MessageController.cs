@@ -26,54 +26,34 @@ namespace MafiaAPI.Controllers
             _securityService = securityService;
         }
 
-        [Route("/messageTo/{id}")]
-        [HttpGet("{id}")]
-        public JsonResult GetAllMessagesTo(long id, int? fromRange, int? toRange, string bossNameFilter, bool? onlyUnseen)
+        [HttpGet("to")]
+        public JsonResult GetAllMessagesTo(long bossId, int? fromRange, int? toRange, string bossNameFilter = "", bool onlyUnseen = false)
         {
-            if(!fromRange.HasValue && !toRange.HasValue)
+            if (!fromRange.HasValue || !toRange.HasValue)
             {
                 fromRange = 0; toRange = 5;
             }
+
             var messages = _messageRepository
-                .GetAllMessagesToRange(id, fromRange.Value, toRange.Value, bossNameFilter ?? "", onlyUnseen ?? false)
+                .GetAllMessagesTo(bossId, fromRange.Value, toRange.Value, bossNameFilter, onlyUnseen)
                 .Select(x => new
                 {
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
                     Subject = _securityService.Decrypt(x.Subject),
-                    ReceiveDate = x.ReceiveDate,
-                    Seen=x.Seen
-                }
-                );
-            return new JsonResult(messages);
-        }
-
-        [Route("/messageCount/{bossId}")]
-        [HttpGet("{bossId}")]
-        public JsonResult GetCount(long bossId)
-        {
-            var messageCount = _messageRepository.GetMessageToCount(bossId);
-            return new JsonResult(messageCount);
-        }
-
-        [Route("/messageFrom/{id}")]
-        [HttpGet("{id}")]
-        public JsonResult GetAllMessagesFrom(long id)
-        {
-            var messages = _messageRepository
-                .GetAllMessagesFrom(id)
-                .Select(x => new
-                {
-                    x.Id,
-                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
-                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Subject = _securityService.Decrypt(x.Subject),
-                    ReceiveDate = x.ReceiveDate,
+                    ReceivedDate = x.ReceivedDate,
                     Seen = x.Seen
                 }
                 );
             return new JsonResult(messages);
+        }
+
+        [HttpGet("count")]
+        public JsonResult CountMessagesTo(long bossId)
+        {
+            var messageCount = _messageRepository.CountMessagesTo(bossId);
+            return new JsonResult(messageCount);
         }
 
         [HttpPost]
@@ -81,24 +61,22 @@ namespace MafiaAPI.Controllers
         {
             message.Subject = _securityService.Encrypt(message.Subject);
             message.Content = _securityService.Encrypt(message.Content);
-            message.ReceiveDate = DateTime.Now;
+            message.ReceivedDate = DateTime.Now;
             _messageRepository.Create(message);
             return new JsonResult("Added successfully");
         }
 
-        [Route("/messageContent/{id}")]
-        [HttpGet("{id}")]
+        [HttpGet("content")]
         public JsonResult GetMessageContent(int id)
         {
             var message = _messageRepository.GetById(id);
             message.Seen = true;
             _messageRepository.Update(message);
-            var content= _securityService.Decrypt(message.Subject)+"\n\n"+
+            var content = _securityService.Decrypt(message.Subject) + "\n\n" +
                 _securityService.Decrypt(message.Content);
             return new JsonResult(content);
         }
 
-        [Route("[controller]/id")]
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {

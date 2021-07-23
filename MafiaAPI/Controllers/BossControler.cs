@@ -33,8 +33,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult(boss.Id);
         }
 
-        [Route("/bossSimilarNames")]
-        [HttpGet]
+        [HttpGet("similarNames")]
         public JsonResult GetSimilarNames(string name)
         {
             var similarNames = _bossRepository.GetSimilarNames(name.ToLower().Replace(" ", ""));

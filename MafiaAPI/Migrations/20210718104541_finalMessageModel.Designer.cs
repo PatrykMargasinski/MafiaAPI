@@ -166,7 +166,7 @@ namespace MafiaAPI.Migrations
                     b.Property<long?>("FromBossId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("ReceiveDate")
+                    b.Property<DateTime>("ReceivedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Seen")

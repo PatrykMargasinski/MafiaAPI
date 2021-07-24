@@ -11,5 +11,6 @@ namespace MafiaAPI.Repositories
         public Boss GetByFirstAndLastname(string firstname, string lastname);
         public Boss GetByFullname(string name);
         public bool IsBossWithThatLastName(string lastname);
+        public IList<string> GetSimilarNames(string name);
     }
 }

@@ -26,53 +26,70 @@ namespace MafiaAPI.Controllers
             _securityService = securityService;
         }
 
-        [Route("/messageTo/{id}")]
-        [HttpGet("{id}")]
-        public JsonResult GetAllMessagesTo(long id)
+        [HttpGet("to")]
+        public JsonResult GetAllMessagesTo(long bossId, int? fromRange, int? toRange, string bossNameFilter = "", bool onlyUnseen = false)
         {
+            if (!fromRange.HasValue || !toRange.HasValue)
+            {
+                fromRange = 0; toRange = 5;
+            }
+
             var messages = _messageRepository
-                .GetAllMessagesTo(id)
+                .GetAllMessagesTo(bossId, fromRange.Value, toRange.Value, bossNameFilter, onlyUnseen)
                 .Select(x => new
                 {
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Content = _securityService.Decrypt(x.Content)
+                    Subject = _securityService.Decrypt(x.Subject),
+                    ReceivedDate = x.ReceivedDate,
+                    Seen = x.Seen
                 }
                 );
             return new JsonResult(messages);
         }
 
-        [Route("/messageFrom/{id}")]
-        [HttpGet("{id}")]
-        public JsonResult GetAllMessagesFrom(long id)
+        [HttpGet("count")]
+        public JsonResult CountMessagesTo(long bossId)
         {
-            var messages = _messageRepository
-                .GetAllMessagesFrom(id)
-                .Select(x => new
-                {
-                    x.Id,
-                    FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
-                    ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    Content = _securityService.Decrypt(x.Content)
-                }
-                );
-            return new JsonResult(messages);
+            var messageCount = _messageRepository.CountMessagesTo(bossId);
+            return new JsonResult(messageCount);
         }
 
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
+            message.Subject = _securityService.Encrypt(message.Subject);
             message.Content = _securityService.Encrypt(message.Content);
+            message.ReceivedDate = DateTime.Now;
             _messageRepository.Create(message);
             return new JsonResult("Added successfully");
         }
 
-        [Route("[controller]/id")]
+        [HttpGet("content")]
+        public JsonResult GetMessageContent(int id)
+        {
+            var message = _messageRepository.GetById(id);
+            message.Seen = true;
+            _messageRepository.Update(message);
+            var content = _securityService.Decrypt(message.Subject) + "\n\n" +
+                _securityService.Decrypt(message.Content);
+            return new JsonResult(content);
+        }
+
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {
             _messageRepository.DeleteById(id);
+            return new JsonResult("Deleted successfully");
+        }
+
+        [Route("/messages")]
+        [HttpDelete]
+        public JsonResult DeleteMessages(string stringIds)
+        {
+            long[] ids = stringIds.Split('i').Select(x => long.Parse(x)).ToArray();
+            _messageRepository.DeleteByIds(ids);
             return new JsonResult("Deleted successfully");
         }
     }

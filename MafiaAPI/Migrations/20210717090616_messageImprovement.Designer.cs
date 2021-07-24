@@ -4,14 +4,16 @@ using MafiaAPI.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MafiaAPI.Migrations
 {
     [DbContext(typeof(MafiaDBContext))]
-    partial class MafiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210717090616_messageImprovement")]
+    partial class messageImprovement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +138,7 @@ namespace MafiaAPI.Migrations
                             Id = 1L,
                             FirstName = "Rico",
                             LastName = "Patricio",
-                            LastSeen = new DateTime(2021, 7, 18, 12, 45, 39, 804, DateTimeKind.Local).AddTicks(6131),
+                            LastSeen = new DateTime(2021, 7, 17, 11, 6, 15, 15, DateTimeKind.Local).AddTicks(2007),
                             Money = 5000
                         },
                         new
@@ -144,7 +146,7 @@ namespace MafiaAPI.Migrations
                             Id = 2L,
                             FirstName = "Margherita",
                             LastName = "Rodrigo",
-                            LastSeen = new DateTime(2021, 7, 18, 12, 45, 39, 812, DateTimeKind.Local).AddTicks(4818),
+                            LastSeen = new DateTime(2021, 7, 17, 11, 6, 15, 20, DateTimeKind.Local).AddTicks(8193),
                             Money = 5000
                         });
                 });
@@ -166,12 +168,6 @@ namespace MafiaAPI.Migrations
 
                     b.Property<DateTime>("ReceivedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("Seen")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ToBossId")
                         .HasColumnType("bigint");
@@ -298,14 +294,14 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             AgentId = 1L,
-                            CompletionTime = new DateTime(2021, 7, 18, 12, 45, 39, 823, DateTimeKind.Local).AddTicks(9306),
+                            CompletionTime = new DateTime(2021, 7, 17, 11, 6, 15, 31, DateTimeKind.Local).AddTicks(508),
                             MissionId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             AgentId = 3L,
-                            CompletionTime = new DateTime(2021, 7, 18, 12, 45, 39, 824, DateTimeKind.Local).AddTicks(740),
+                            CompletionTime = new DateTime(2021, 7, 17, 11, 6, 15, 31, DateTimeKind.Local).AddTicks(1809),
                             MissionId = 2L
                         });
                 });

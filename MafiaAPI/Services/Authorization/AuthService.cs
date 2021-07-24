@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using MafiaAPI.Util;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
+using System.Data.SqlClient;
 
 namespace MafiaAPI.Services
 {
@@ -23,12 +24,14 @@ namespace MafiaAPI.Services
         private readonly IAgentRepository _agentRepository;
         private readonly IPerformingMissionRepository _performingMissionRepository;
         private readonly IConfiguration _config;
+        private readonly ISecurityService _securityService;
 
         public AuthService(
-            IPlayerRepository playerRepository,
-            IBossRepository bossRepository,
-            IAgentRepository agentRepository,
+            IPlayerRepository playerRepository, 
+            IBossRepository bossRepository, 
+            IAgentRepository agentRepository, 
             IPerformingMissionRepository performingMissionRepository,
+            ISecurityService securityService,
             IConfiguration config
             )
         {
@@ -36,6 +39,7 @@ namespace MafiaAPI.Services
             _bossRepository = bossRepository;
             _agentRepository = agentRepository;
             _performingMissionRepository = performingMissionRepository;
+            _securityService = securityService;
             _config = config;
         }
 
@@ -43,22 +47,33 @@ namespace MafiaAPI.Services
         {
             var validator = new LoginValidator();
             var errors = validator.Validate(user);
-            if (errors.Length > 0)
+            try
             {
+                if (errors.Length > 0)
+                {
+                    return errors;
+                }
+
+                Player player = _playerRepository.GetByNick(user.Nick);
+                if (player == null)
+                {
+                    return new string[] { "There is no player with such nick" };
+                }
+
+                if (VerifyPassword(player, user.Password) == false)
+                {
+                    return new string[] { "Wrong password" };
+                }
                 return errors;
             }
-
-            Player player = _playerRepository.GetByNick(user.Nick);
-            if (player == null)
+            catch(SqlException)
             {
-                return new string[] { "There is no player with such nick" };
+                return new string[] { "There is a problem with a database" };
             }
-
-            if (VerifyPassword(player, user.Password) == false)
+            catch(Exception ex)
             {
-                return new string[] { "Wrong password" };
+                return new string[] { "Something happened: "+ex.Message };
             }
-            return errors;
         }
 
         public string CreateToken()
@@ -110,7 +125,7 @@ namespace MafiaAPI.Services
             Player player = new Player()
             {
                 Nick = user.Nick,
-                Password = user.Password,
+                Password = _securityService.Hash(user.Password),
             };
             player.BossId = boss.Id;
             _playerRepository.Create(player);

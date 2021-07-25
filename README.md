@@ -20,3 +20,7 @@ CL EF:
     `dotnet ef database update`  
 - drop database:   
     `dotnet ef database drop`
+
+# Swagger
+
+Swagger is a tool to document an API. ASP.NET generate swagger's docs automatically, but for better description it can be done manually. If you want to check how to make endpoint/model documentation by hand, you can check Swashbuckle project. https://github.com/domaindrivendev/Swashbuckle.AspNetCore. You can check API documentation under this link after run .net server: http://localhost:53191/swagger

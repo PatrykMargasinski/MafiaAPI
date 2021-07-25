@@ -28,8 +28,7 @@ namespace MafiaAPI.Controllers
             _authService = authService;
         }
 
-        [Route("/login")]
-        [HttpPost]
+        [HttpPost("/login")]
         public IActionResult Login([FromBody] LoginDto user)
         {
             var errors = _authService.LoginValidation(user);
@@ -43,8 +42,7 @@ namespace MafiaAPI.Controllers
                 });
         }
 
-        [Route("/register")]
-        [HttpPost]
+        [HttpPost("/register")]
         public IActionResult Register([FromBody] RegisterDTO user)
         {
             var errors = _authService.RegisterValidation(user);
@@ -57,8 +55,7 @@ namespace MafiaAPI.Controllers
             }
         }
 
-        [Route("/deleteAccount/{playerId:long}")]
-        [HttpDelete]
+        [HttpDelete("/deleteAccount/{playerId:long}")]
         public IActionResult DeleteAccount(long playerId)
         {
             var errors = _authService.DeleteAccount(playerId);

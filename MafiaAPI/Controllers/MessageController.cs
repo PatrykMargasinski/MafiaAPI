@@ -26,7 +26,11 @@ namespace MafiaAPI.Controllers
             _securityService = securityService;
         }
 
-        [HttpGet("to")]
+        /// <summary>
+        /// Get all message to player with specified id
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpGet("to/{id}")]
         public JsonResult GetAllMessagesTo(long bossId, int? fromRange, int? toRange, string bossNameFilter = "", bool onlyUnseen = false)
         {
             if (!fromRange.HasValue || !toRange.HasValue)
@@ -49,6 +53,10 @@ namespace MafiaAPI.Controllers
             return new JsonResult(messages);
         }
 
+        /// <summary>
+        /// Get number of messages
+        /// </summary>
+        /// <param name="id"></param>
         [HttpGet("count")]
         public JsonResult CountMessagesTo(long bossId)
         {
@@ -56,6 +64,10 @@ namespace MafiaAPI.Controllers
             return new JsonResult(messageCount);
         }
 
+        /// <summary>
+        /// Send message to boss
+        /// </summary>
+        /// <param name="message"></param>
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
@@ -66,7 +78,11 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Added successfully");
         }
 
-        [HttpGet("content")]
+        /// <summary>
+        /// Get message content
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpGet("content/{id}")]
         public JsonResult GetMessageContent(int id)
         {
             var message = _messageRepository.GetById(id);
@@ -77,6 +93,10 @@ namespace MafiaAPI.Controllers
             return new JsonResult(content);
         }
 
+        /// <summary>
+        /// Delete message by id
+        /// </summary>
+        /// <param name="id"></param>
         [HttpDelete("{id}")]
         public JsonResult DeleteMessage(int id)
         {

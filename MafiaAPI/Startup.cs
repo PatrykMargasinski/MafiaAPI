@@ -1,6 +1,4 @@
 using MafiaAPI.Database;
-using MafiaAPI.Jobs;
-using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using MafiaAPI.Service;
 using MafiaAPI.Services;
@@ -12,11 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Quartz;
 using System.Text;
+using System;
 
 namespace MafiaAPI
 {
@@ -57,7 +56,7 @@ namespace MafiaAPI
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>()
                 .AddTransient<IPlayerRepository, PlayerRepository>();
-          
+
             //Services
             services.AddTransient<IMissionService, MissionService>()
                 .AddTransient<IPerformingMissionService, PerformingMissionService>()
@@ -89,6 +88,7 @@ namespace MafiaAPI
                     };
                 });
 
+            //Quartz
             services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
 
             services.AddQuartz(q =>
@@ -100,6 +100,15 @@ namespace MafiaAPI
                 options.WaitForJobsToComplete = true;
             });
 
+            //Swagger
+            services.AddSwaggerGen(c=>{
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Mafia API",
+                    Description = "API for Mafia game webpage",
+                });
+            });
             services.AddControllers();
         }
 
@@ -122,6 +131,14 @@ namespace MafiaAPI
                 endpoints.MapControllers();
             });
 
+            app.UseSwagger(c => {
+                
+            });
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
         }
     }
 }

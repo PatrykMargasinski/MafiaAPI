@@ -4,14 +4,16 @@ using MafiaAPI.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MafiaAPI.Migrations
 {
     [DbContext(typeof(MafiaDBContext))]
-    partial class MafiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210718104541_finalMessageModel")]
+    partial class finalMessageModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace MafiaAPI.Migrations
                     b.Property<long?>("BossId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Dexterity")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -42,16 +41,13 @@ namespace MafiaAPI.Migrations
                     b.Property<int?>("Income")
                         .HasColumnType("int");
 
-                    b.Property<int>("Intelligence")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("Strength")
+                    b.Property<int?>("Strength")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -65,10 +61,8 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             BossId = 1L,
-                            Dexterity = 0,
                             FirstName = "Kujo",
                             Income = 100,
-                            Intelligence = 0,
                             LastName = "Jotaro",
                             Strength = 10
                         },
@@ -76,10 +70,8 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 2L,
                             BossId = 1L,
-                            Dexterity = 0,
                             FirstName = "Mickiewicz",
                             Income = 50,
-                            Intelligence = 0,
                             LastName = "Adam",
                             Strength = 5
                         },
@@ -87,20 +79,16 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 3L,
                             BossId = 2L,
-                            Dexterity = 0,
                             FirstName = "Natsu",
                             Income = 70,
-                            Intelligence = 0,
                             LastName = "Natalia",
                             Strength = 7
                         },
                         new
                         {
                             Id = 4L,
-                            Dexterity = 0,
                             FirstName = "Eleonora",
                             Income = 30,
-                            Intelligence = 0,
                             LastName = "Lora",
                             Strength = 8
                         },
@@ -108,10 +96,8 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 5L,
                             BossId = 1L,
-                            Dexterity = 0,
                             FirstName = "Robert",
                             Income = 200,
-                            Intelligence = 0,
                             LastName = "Makłowicz",
                             Strength = 3
                         });

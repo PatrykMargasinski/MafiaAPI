@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using MafiaAPI.Services;
 using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -17,42 +18,50 @@ namespace MafiaAPI.Controllers
     public class MessageController : Controller
     {
         private readonly IMessageRepository _messageRepository;
+        private readonly ISecurityService _securityService;
 
-        public MessageController(IMessageRepository messageRepository)
+        public MessageController(IMessageRepository messageRepository, ISecurityService securityService)
         {
             _messageRepository = messageRepository;
+            _securityService = securityService;
         }
-
 
         /// <summary>
         /// Get all message to player with specified id
         /// </summary>
         /// <param name="id"></param>
-        [HttpGet("messageTo/{id}")]
-        public JsonResult GetAllMessagesTo(long id)
+        [HttpGet("to/{id}")]
+        public JsonResult GetAllMessagesTo(long bossId, int? fromRange, int? toRange, string bossNameFilter = "", bool onlyUnseen = false)
         {
+            if (!fromRange.HasValue || !toRange.HasValue)
+            {
+                fromRange = 0; toRange = 5;
+            }
+
             var messages = _messageRepository
-                .GetAllMessagesTo(id)
+                .GetAllMessagesTo(bossId, fromRange.Value, toRange.Value, bossNameFilter, onlyUnseen)
                 .Select(x => new
                 {
                     x.Id,
                     FromBoss = x.FromBoss.FirstName + " " + x.FromBoss.LastName,
                     ToBoss = x.ToBoss.FirstName + " " + x.ToBoss.LastName,
-                    x.Content
+                    Subject = _securityService.Decrypt(x.Subject),
+                    ReceivedDate = x.ReceivedDate,
+                    Seen = x.Seen
                 }
                 );
             return new JsonResult(messages);
         }
 
         /// <summary>
-        /// Get all message sent by player with specific id
+        /// Get number of messages
         /// </summary>
         /// <param name="id"></param>
-        [HttpGet("messageFrom/{id}")]
-        public JsonResult GetAllMessagesFrom(long id)
+        [HttpGet("count")]
+        public JsonResult CountMessagesTo(long bossId)
         {
-            var messages = _messageRepository.GetAllMessagesFrom(id);
-            return new JsonResult(messages);
+            var messageCount = _messageRepository.CountMessagesTo(bossId);
+            return new JsonResult(messageCount);
         }
 
         /// <summary>
@@ -62,8 +71,26 @@ namespace MafiaAPI.Controllers
         [HttpPost]
         public JsonResult SendMessage(Message message)
         {
+            message.Subject = _securityService.Encrypt(message.Subject);
+            message.Content = _securityService.Encrypt(message.Content);
+            message.ReceivedDate = DateTime.Now;
             _messageRepository.Create(message);
             return new JsonResult("Added successfully");
+        }
+
+        /// <summary>
+        /// Get message content
+        /// </summary>
+        /// <param name="id"></param>
+        [HttpGet("content/{id}")]
+        public JsonResult GetMessageContent(int id)
+        {
+            var message = _messageRepository.GetById(id);
+            message.Seen = true;
+            _messageRepository.Update(message);
+            var content = _securityService.Decrypt(message.Subject) + "\n\n" +
+                _securityService.Decrypt(message.Content);
+            return new JsonResult(content);
         }
 
         /// <summary>
@@ -74,6 +101,15 @@ namespace MafiaAPI.Controllers
         public JsonResult DeleteMessage(int id)
         {
             _messageRepository.DeleteById(id);
+            return new JsonResult("Deleted successfully");
+        }
+
+        [Route("/messages")]
+        [HttpDelete]
+        public JsonResult DeleteMessages(string stringIds)
+        {
+            long[] ids = stringIds.Split('i').Select(x => long.Parse(x)).ToArray();
+            _messageRepository.DeleteByIds(ids);
             return new JsonResult("Deleted successfully");
         }
     }

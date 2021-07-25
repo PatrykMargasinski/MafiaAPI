@@ -25,11 +25,17 @@ namespace MafiaAPI.Controllers
         [HttpGet("{name}/id")]
         public IActionResult GetIdByFullname(string name)
         {
-            Console.WriteLine(name + " HELLO!");
             var boss = _bossRepository.GetByFullname(name);
             if (boss == null)
-                return BadRequest("No data");
+                return BadRequest("Boss with that name not found");
             return new JsonResult(boss.Id);
+        }
+
+        [HttpGet("similarNames")]
+        public JsonResult GetSimilarNames(string name)
+        {
+            var similarNames = _bossRepository.GetSimilarNames(name.ToLower().Replace(" ", ""));
+            return new JsonResult(similarNames);
         }
 
         [HttpPost]

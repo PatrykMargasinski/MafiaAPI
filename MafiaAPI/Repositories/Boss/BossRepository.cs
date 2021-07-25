@@ -1,6 +1,7 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Database;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace MafiaAPI.Repositories
 {
@@ -17,7 +18,7 @@ namespace MafiaAPI.Repositories
         }
         public Boss GetByFullname(string name)
         {
-            name = name.Trim();
+            name = name.Replace(" ","");
             var boss = _context.Bosses.FirstOrDefault(boss => boss.FirstName + boss.LastName == name || boss.LastName + boss.FirstName == name);
             return boss;
         }
@@ -26,6 +27,18 @@ namespace MafiaAPI.Repositories
         {
             var bossExist = _context.Bosses.Any(x=>x.LastName==lastname);
             return bossExist;
+        }
+
+        public IList<string> GetSimilarNames(string name)
+        {
+            var names = _context.Bosses
+                .Where(x =>
+                (x.LastName.ToLower() + x.FirstName.ToLower()).StartsWith(name)
+                || (x.FirstName.ToLower() + x.LastName.ToLower()).StartsWith(name))
+                .Select(x=>x.FirstName + " " + x.LastName)
+                .Take(5)
+                .ToList();
+            return names;
         }
     }
 }

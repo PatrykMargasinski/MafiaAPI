@@ -15,7 +15,9 @@ namespace MafiaAPI.Models
         public long? BossId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public int? Strength { get; set; }
+        public int Strength { get; set; }
+        public int Dexterity { get; set; }
+        public int Intelligence { get; set; }
         public int? Income { get; set; }
 
         public virtual Boss Boss { get; set; }

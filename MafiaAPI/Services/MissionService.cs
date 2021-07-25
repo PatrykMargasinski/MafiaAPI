@@ -91,7 +91,7 @@ namespace MafiaAPI.Service
         }
         public static double CalculateMissionSuccessRate(Mission mission, Agent agent) =>
              ((11 - mission.DifficultyLevel.GetValueOrDefault(0)) +
-             (agent.Strength.GetValueOrDefault(0)))
-             * 100 / 21;
+             agent.Strength + agent.Intelligence + agent.Dexterity)
+             * 100 / 44;
     }
 }

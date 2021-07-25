@@ -65,10 +65,10 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             BossId = 1L,
-                            Dexterity = 0,
+                            Dexterity = 10,
                             FirstName = "Kujo",
                             Income = 100,
-                            Intelligence = 0,
+                            Intelligence = 10,
                             LastName = "Jotaro",
                             Strength = 10
                         },
@@ -76,10 +76,10 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 2L,
                             BossId = 1L,
-                            Dexterity = 0,
+                            Dexterity = 5,
                             FirstName = "Mickiewicz",
                             Income = 50,
-                            Intelligence = 0,
+                            Intelligence = 5,
                             LastName = "Adam",
                             Strength = 5
                         },
@@ -87,17 +87,17 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 3L,
                             BossId = 2L,
-                            Dexterity = 0,
+                            Dexterity = 4,
                             FirstName = "Natsu",
                             Income = 70,
-                            Intelligence = 0,
+                            Intelligence = 3,
                             LastName = "Natalia",
                             Strength = 7
                         },
                         new
                         {
                             Id = 4L,
-                            Dexterity = 0,
+                            Dexterity = 7,
                             FirstName = "Eleonora",
                             Income = 30,
                             Intelligence = 0,
@@ -108,10 +108,10 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 5L,
                             BossId = 1L,
-                            Dexterity = 0,
+                            Dexterity = 1,
                             FirstName = "Robert",
                             Income = 200,
-                            Intelligence = 0,
+                            Intelligence = 5,
                             LastName = "Makłowicz",
                             Strength = 3
                         });
@@ -152,7 +152,7 @@ namespace MafiaAPI.Migrations
                             Id = 1L,
                             FirstName = "Rico",
                             LastName = "Patricio",
-                            LastSeen = new DateTime(2021, 7, 18, 12, 45, 39, 804, DateTimeKind.Local).AddTicks(6131),
+                            LastSeen = new DateTime(2021, 7, 25, 8, 47, 38, 663, DateTimeKind.Local).AddTicks(7984),
                             Money = 5000
                         },
                         new
@@ -160,7 +160,7 @@ namespace MafiaAPI.Migrations
                             Id = 2L,
                             FirstName = "Margherita",
                             LastName = "Rodrigo",
-                            LastSeen = new DateTime(2021, 7, 18, 12, 45, 39, 812, DateTimeKind.Local).AddTicks(4818),
+                            LastSeen = new DateTime(2021, 7, 25, 8, 47, 38, 667, DateTimeKind.Local).AddTicks(6186),
                             Money = 5000
                         });
                 });
@@ -314,14 +314,14 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             AgentId = 1L,
-                            CompletionTime = new DateTime(2021, 7, 18, 12, 45, 39, 823, DateTimeKind.Local).AddTicks(9306),
+                            CompletionTime = new DateTime(2021, 7, 25, 8, 47, 38, 672, DateTimeKind.Local).AddTicks(7069),
                             MissionId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             AgentId = 3L,
-                            CompletionTime = new DateTime(2021, 7, 18, 12, 45, 39, 824, DateTimeKind.Local).AddTicks(740),
+                            CompletionTime = new DateTime(2021, 7, 25, 8, 47, 38, 672, DateTimeKind.Local).AddTicks(7699),
                             MissionId = 2L
                         });
                 });

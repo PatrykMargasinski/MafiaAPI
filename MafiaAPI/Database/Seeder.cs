@@ -38,11 +38,11 @@ namespace MafiaAPI.Database
         private static IList<Agent> prepareAgents()
         {
             return new List<Agent> {
-                new Agent{Id=1, BossId=1, FirstName="Kujo", LastName="Jotaro", Strength=10, Income=100},
-                new Agent{Id=2, BossId=1, FirstName="Mickiewicz", LastName="Adam", Strength=5, Income=50},
-                new Agent{Id=3, BossId=2, FirstName="Natsu", LastName="Natalia", Strength=7, Income=70},
-                new Agent{Id=4, FirstName="Eleonora", LastName="Lora", Strength=8, Income=30},
-                new Agent{Id=5, BossId=1, FirstName="Robert", LastName="Makłowicz", Strength=3, Income=200},
+                new Agent{Id=1, BossId=1, FirstName="Kujo", LastName="Jotaro", Strength=10, Intelligence=10, Dexterity=10, Income=100},
+                new Agent{Id=2, BossId=1, FirstName="Mickiewicz", LastName="Adam", Strength=5, Intelligence=5, Dexterity=5, Income=50},
+                new Agent{Id=3, BossId=2, FirstName="Natsu", LastName="Natalia", Strength=7, Intelligence=3, Dexterity=4, Income=70},
+                new Agent{Id=4, FirstName="Eleonora", LastName="Lora", Strength=8, Intelligence=0, Dexterity=7, Income=30},
+                new Agent{Id=5, BossId=1, FirstName="Robert", LastName="Makłowicz", Strength=3, Intelligence=5, Dexterity=1, Income=200},
             };
         }
 

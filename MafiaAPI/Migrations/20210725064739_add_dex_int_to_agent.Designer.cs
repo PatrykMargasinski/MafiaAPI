@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MafiaAPI.Migrations
 {
     [DbContext(typeof(MafiaDBContext))]
-    [Migration("20210720112928_add_dex_int_to_agent")]
+    [Migration("20210725064739_add_dex_int_to_agent")]
     partial class add_dex_int_to_agent
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,10 +67,10 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             BossId = 1L,
-                            Dexterity = 0,
+                            Dexterity = 10,
                             FirstName = "Kujo",
                             Income = 100,
-                            Intelligence = 0,
+                            Intelligence = 10,
                             LastName = "Jotaro",
                             Strength = 10
                         },
@@ -78,10 +78,10 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 2L,
                             BossId = 1L,
-                            Dexterity = 0,
+                            Dexterity = 5,
                             FirstName = "Mickiewicz",
                             Income = 50,
-                            Intelligence = 0,
+                            Intelligence = 5,
                             LastName = "Adam",
                             Strength = 5
                         },
@@ -89,17 +89,17 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 3L,
                             BossId = 2L,
-                            Dexterity = 0,
+                            Dexterity = 4,
                             FirstName = "Natsu",
                             Income = 70,
-                            Intelligence = 0,
+                            Intelligence = 3,
                             LastName = "Natalia",
                             Strength = 7
                         },
                         new
                         {
                             Id = 4L,
-                            Dexterity = 0,
+                            Dexterity = 7,
                             FirstName = "Eleonora",
                             Income = 30,
                             Intelligence = 0,
@@ -110,10 +110,10 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 5L,
                             BossId = 1L,
-                            Dexterity = 0,
+                            Dexterity = 1,
                             FirstName = "Robert",
                             Income = 200,
-                            Intelligence = 0,
+                            Intelligence = 5,
                             LastName = "Makłowicz",
                             Strength = 3
                         });
@@ -154,7 +154,7 @@ namespace MafiaAPI.Migrations
                             Id = 1L,
                             FirstName = "Rico",
                             LastName = "Patricio",
-                            LastSeen = new DateTime(2021, 7, 20, 13, 29, 27, 979, DateTimeKind.Local).AddTicks(7612),
+                            LastSeen = new DateTime(2021, 7, 25, 8, 47, 38, 663, DateTimeKind.Local).AddTicks(7984),
                             Money = 5000
                         },
                         new
@@ -162,7 +162,7 @@ namespace MafiaAPI.Migrations
                             Id = 2L,
                             FirstName = "Margherita",
                             LastName = "Rodrigo",
-                            LastSeen = new DateTime(2021, 7, 20, 13, 29, 27, 989, DateTimeKind.Local).AddTicks(1398),
+                            LastSeen = new DateTime(2021, 7, 25, 8, 47, 38, 667, DateTimeKind.Local).AddTicks(6186),
                             Money = 5000
                         });
                 });
@@ -181,6 +181,15 @@ namespace MafiaAPI.Migrations
 
                     b.Property<long?>("FromBossId")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("ReceivedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Seen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("ToBossId")
                         .HasColumnType("bigint");
@@ -307,14 +316,14 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             AgentId = 1L,
-                            CompletionTime = new DateTime(2021, 7, 20, 13, 29, 27, 993, DateTimeKind.Local).AddTicks(8511),
+                            CompletionTime = new DateTime(2021, 7, 25, 8, 47, 38, 672, DateTimeKind.Local).AddTicks(7069),
                             MissionId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             AgentId = 3L,
-                            CompletionTime = new DateTime(2021, 7, 20, 13, 29, 27, 993, DateTimeKind.Local).AddTicks(9128),
+                            CompletionTime = new DateTime(2021, 7, 25, 8, 47, 38, 672, DateTimeKind.Local).AddTicks(7699),
                             MissionId = 2L
                         });
                 });

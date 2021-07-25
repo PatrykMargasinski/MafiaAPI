@@ -32,46 +32,67 @@ namespace MafiaAPI.Migrations
                 defaultValue: 0);
 
             migrationBuilder.UpdateData(
+                table: "Agent",
+                keyColumn: "Id",
+                keyValue: 1L,
+                columns: new[] { "Dexterity", "Intelligence" },
+                values: new object[] { 10, 10 });
+
+            migrationBuilder.UpdateData(
+                table: "Agent",
+                keyColumn: "Id",
+                keyValue: 2L,
+                columns: new[] { "Dexterity", "Intelligence" },
+                values: new object[] { 5, 5 });
+
+            migrationBuilder.UpdateData(
+                table: "Agent",
+                keyColumn: "Id",
+                keyValue: 3L,
+                columns: new[] { "Dexterity", "Intelligence" },
+                values: new object[] { 4, 3 });
+
+            migrationBuilder.UpdateData(
+                table: "Agent",
+                keyColumn: "Id",
+                keyValue: 4L,
+                column: "Dexterity",
+                value: 7);
+
+            migrationBuilder.UpdateData(
+                table: "Agent",
+                keyColumn: "Id",
+                keyValue: 5L,
+                columns: new[] { "Dexterity", "Intelligence" },
+                values: new object[] { 1, 5 });
+
+            migrationBuilder.UpdateData(
                 table: "Boss",
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "LastSeen",
-                value: new DateTime(2021, 7, 20, 13, 29, 27, 979, DateTimeKind.Local).AddTicks(7612));
+                value: new DateTime(2021, 7, 25, 8, 47, 38, 663, DateTimeKind.Local).AddTicks(7984));
 
             migrationBuilder.UpdateData(
                 table: "Boss",
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "LastSeen",
-                value: new DateTime(2021, 7, 20, 13, 29, 27, 989, DateTimeKind.Local).AddTicks(1398));
+                value: new DateTime(2021, 7, 25, 8, 47, 38, 667, DateTimeKind.Local).AddTicks(6186));
 
             migrationBuilder.UpdateData(
                 table: "PerformingMission",
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "CompletionTime",
-                value: new DateTime(2021, 7, 20, 13, 29, 27, 993, DateTimeKind.Local).AddTicks(8511));
+                value: new DateTime(2021, 7, 25, 8, 47, 38, 672, DateTimeKind.Local).AddTicks(7069));
 
             migrationBuilder.UpdateData(
                 table: "PerformingMission",
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "CompletionTime",
-                value: new DateTime(2021, 7, 20, 13, 29, 27, 993, DateTimeKind.Local).AddTicks(9128));
-
-            migrationBuilder.UpdateData(
-                table: "Player",
-                keyColumn: "Id",
-                keyValue: 1L,
-                column: "Password",
-                value: "tlnK6HiwFF4+b4DRVaVdRlIPtzduirsf8W3+nbXlLWlf9c/J");
-
-            migrationBuilder.UpdateData(
-                table: "Player",
-                keyColumn: "Id",
-                keyValue: 2L,
-                column: "Password",
-                value: "d2JZt0Jz9UzgW1l544W2WnOaX14u/pfGUDYTQzv5AEWk3W7D");
+                value: new DateTime(2021, 7, 25, 8, 47, 38, 672, DateTimeKind.Local).AddTicks(7699));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -97,42 +118,28 @@ namespace MafiaAPI.Migrations
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "LastSeen",
-                value: new DateTime(2021, 7, 12, 17, 32, 30, 950, DateTimeKind.Local).AddTicks(7202));
+                value: new DateTime(2021, 7, 18, 12, 45, 39, 804, DateTimeKind.Local).AddTicks(6131));
 
             migrationBuilder.UpdateData(
                 table: "Boss",
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "LastSeen",
-                value: new DateTime(2021, 7, 12, 17, 32, 30, 954, DateTimeKind.Local).AddTicks(3150));
+                value: new DateTime(2021, 7, 18, 12, 45, 39, 812, DateTimeKind.Local).AddTicks(4818));
 
             migrationBuilder.UpdateData(
                 table: "PerformingMission",
                 keyColumn: "Id",
                 keyValue: 1L,
                 column: "CompletionTime",
-                value: new DateTime(2021, 7, 12, 17, 32, 30, 959, DateTimeKind.Local).AddTicks(1174));
+                value: new DateTime(2021, 7, 18, 12, 45, 39, 823, DateTimeKind.Local).AddTicks(9306));
 
             migrationBuilder.UpdateData(
                 table: "PerformingMission",
                 keyColumn: "Id",
                 keyValue: 2L,
                 column: "CompletionTime",
-                value: new DateTime(2021, 7, 12, 17, 32, 30, 959, DateTimeKind.Local).AddTicks(1928));
-
-            migrationBuilder.UpdateData(
-                table: "Player",
-                keyColumn: "Id",
-                keyValue: 1L,
-                column: "Password",
-                value: "a");
-
-            migrationBuilder.UpdateData(
-                table: "Player",
-                keyColumn: "Id",
-                keyValue: 2L,
-                column: "Password",
-                value: "b");
+                value: new DateTime(2021, 7, 18, 12, 45, 39, 824, DateTimeKind.Local).AddTicks(740));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using MafiaAPI.Models;
-using MafiaAPI.Models.DTO;
 using MafiaAPI.Repositories;
 using Microsoft.AspNetCore.JsonPatch.Helpers;
 using Microsoft.AspNetCore.Mvc;

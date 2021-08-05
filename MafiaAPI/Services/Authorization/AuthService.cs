@@ -185,5 +185,31 @@ namespace MafiaAPI.Services
                     return false;
             return true;
         }
+
+        public string[] ChangePassword(ChangePasswordDTO changeModel)
+        {
+            Player player = _playerRepository.GetById(changeModel.PlayerId);
+            if(player==null)
+            {
+                return new string[] { "User not found" };
+            }
+
+            if(VerifyPassword(player,changeModel.OldPassword) == false)
+            {
+                return new string[] { "Invalid old password" };
+            }
+            try
+            {
+                player.Password = _securityService.Hash(changeModel.NewPassword);
+            }
+            catch(Exception)
+            {
+                return new string[] { "Error occurred during hashing operation" };
+            }
+
+            _playerRepository.Update(player);
+
+            return Array.Empty<string>();
+        }
     }
 }

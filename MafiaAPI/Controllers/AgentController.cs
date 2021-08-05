@@ -22,15 +22,27 @@ namespace MafiaAPI.Controllers
             _agentRepository = agentRepository;
         }
 
-        [Route("GetAvailableAgents/{bossId}")]
-        [HttpGet("{bossId}")]
+        [HttpGet("available/{bossId}")]
         public JsonResult GetAvailableAgents(int bossId)
         {
             var agents = _agentRepository.GetAvailableAgents(bossId);
             return new JsonResult(agents);
         }
 
-        [Route("id")]
+        [HttpGet("onMission/{bossId}")]
+        public JsonResult GetAgentsOnMission(int bossId)
+        {
+            var agents = _agentRepository.GetAgentsOnMission(bossId);
+            return new JsonResult(agents);
+        }
+
+        [HttpGet("forSale")]
+        public JsonResult GetAgentsForSale()
+        {
+            var agents = _agentRepository.GetAgentsForSale();
+            return new JsonResult(agents);
+        }
+
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
@@ -48,13 +60,6 @@ namespace MafiaAPI.Controllers
             return new JsonResult(agents);
         }
 
-        [Route("GetAgentsForRecruitment")]
-        [HttpGet]
-        public JsonResult GetAgentsForRecruitment()
-        {
-            var agents = _agentRepository.GetAgentsForRecruitment();
-            return new JsonResult(agents);
-        }
 
         [HttpPost]
         public JsonResult AddAgent(Agent agent)
@@ -70,7 +75,6 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {

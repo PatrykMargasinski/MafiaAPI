@@ -1,7 +1,7 @@
 using System;
 using MafiaAPI.Service;
 
-namespace MafiaAPI.Models.DTO
+namespace MafiaAPI.Models
 {
 
     public class PerformingMissionDTO

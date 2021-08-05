@@ -14,5 +14,6 @@ namespace MafiaAPI.Services
         public void CreateUser(RegisterDTO user);
         public string[] DeleteAccount(long playerId);
         public bool VerifyPassword(Player player, string pass);
+        public string[] ChangePassword(ChangePasswordDTO changeModel);
     }
 }

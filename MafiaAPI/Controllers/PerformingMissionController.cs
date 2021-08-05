@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = "Player")]
     [ApiController]
     public class PerformingMissionController : Controller
     {

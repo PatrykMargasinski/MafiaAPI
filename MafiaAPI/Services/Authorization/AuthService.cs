@@ -13,6 +13,7 @@ using MafiaAPI.Util;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
+using System.Security.Claims;
 
 namespace MafiaAPI.Services
 {
@@ -76,16 +77,23 @@ namespace MafiaAPI.Services
             }
         }
 
-        public string CreateToken()
+        public string CreateToken(string user)
         {
             var key = _config.GetValue<string>("Security:AuthKey");
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user),
+                new Claim(ClaimTypes.Role, "Player")
+            };
+
             var tokenOptions = new JwtSecurityToken(
                 issuer: "http://localhost:53191",
                 audience: "http://localhost:53191",
                 expires: DateTime.Now.AddMinutes(5),
+                claims: claims,
                 signingCredentials: signingCredentials
                 );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);

@@ -37,7 +37,7 @@ namespace MafiaAPI.Controllers
             else
                 return Ok(new 
                 { 
-                    Token = _authService.CreateToken(), 
+                    Token = _authService.CreateToken(user.Nick), 
                     PlayerId = _playerRepository.GetByNick(user.Nick).Id,
                     BossId = _playerRepository.GetByNick(user.Nick).BossId
                 });

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = "Player")]
     [ApiController]
     public class AgentController : Controller
     {

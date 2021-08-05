@@ -2,6 +2,7 @@
 using MafiaAPI.Repositories;
 using MafiaAPI.Services;
 using MafiaAPI.Services.Messages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = "Player")]
     [ApiController]
     public class MessageController : Controller
     {

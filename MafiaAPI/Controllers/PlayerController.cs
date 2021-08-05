@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = "Player")]
     [ApiController]
     public class PlayerController : Controller
     {

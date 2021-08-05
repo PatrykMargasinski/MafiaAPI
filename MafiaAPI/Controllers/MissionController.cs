@@ -3,10 +3,12 @@ using MafiaAPI.Repositories;
 using MafiaAPI.Service;
 using Microsoft.AspNetCore.Mvc;
 using MafiaAPI.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = "Player")]
     [ApiController]
     public class MissionController : Controller
     {

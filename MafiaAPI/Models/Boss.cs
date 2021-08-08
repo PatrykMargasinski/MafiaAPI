@@ -12,6 +12,7 @@ namespace MafiaAPI.Models
             Agents = new HashSet<Agent>();
             MessageFromBosses = new HashSet<Message>();
             MessageToBosses = new HashSet<Message>();
+            ReportToBosses = new HashSet<Report>();
         }
 
         public string LastName { get; set; }
@@ -23,6 +24,7 @@ namespace MafiaAPI.Models
         public virtual ICollection<Agent> Agents { get; set; }
         public virtual ICollection<Message> MessageFromBosses { get; set; }
         public virtual ICollection<Message> MessageToBosses { get; set; }
+        public virtual ICollection<Report> ReportToBosses { get; set; }
 
         public void AddMoney(int money) 
         {

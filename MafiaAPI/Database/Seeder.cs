@@ -16,14 +16,22 @@ namespace MafiaAPI.Database
             modelBuilder.Entity<Agent>().HasData(prepareAgents());
             modelBuilder.Entity<Mission>().HasData(prepareMissions());
             modelBuilder.Entity<PerformingMission>().HasData(preparePerformingMissions());
+            modelBuilder.Entity<Report>().HasData(prepareReports());
         }
 
         private static IList<Boss> prepareBosses()
         {
             return new List<Boss>
             {
-                new Boss {Id=1, FirstName = "Rico", LastName = "Patricio", Money = 5000, LastSeen = DateTime.Now },
-                new Boss {Id=2, FirstName = "Margherita", LastName = "Rodrigo", Money = 5000, LastSeen = DateTime.Now }
+                new Boss {Id=1, FirstName = "Patricio", LastName = "Rico", Money = 5000, LastSeen = DateTime.Now },
+                new Boss {Id=2, FirstName = "Rodrigo", LastName = "Margherita", Money = 5000, LastSeen = DateTime.Now }
+            };
+        }
+
+        private static IList<Report> prepareReports()
+        {
+            return new List<Report>
+            {
             };
         }
 
@@ -38,9 +46,9 @@ namespace MafiaAPI.Database
         private static IList<Agent> prepareAgents()
         {
             return new List<Agent> {
-                new Agent{Id=1, BossId=1, FirstName="Kujo", LastName="Jotaro", Strength=10, Intelligence=10, Dexterity=10, Income=100},
-                new Agent{Id=2, BossId=1, FirstName="Mickiewicz", LastName="Adam", Strength=5, Intelligence=5, Dexterity=5, Income=50},
-                new Agent{Id=3, BossId=2, FirstName="Natsu", LastName="Natalia", Strength=7, Intelligence=3, Dexterity=4, Income=70},
+                new Agent{Id=1, BossId=1, FirstName="Jotaro", LastName="Kujo", Strength=10, Intelligence=10, Dexterity=10, Income=100},
+                new Agent{Id=2, BossId=1, FirstName="Adam", LastName="Mickiewicz", Strength=5, Intelligence=5, Dexterity=5, Income=50},
+                new Agent{Id=3, BossId=2, FirstName="Natalia", LastName="Natsu", Strength=7, Intelligence=3, Dexterity=4, Income=70},
                 new Agent{Id=4, FirstName="Eleonora", LastName="Lora", Strength=8, Intelligence=0, Dexterity=7, Income=30},
                 new Agent{Id=5, BossId=1, FirstName="Robert", LastName="Makłowicz", Strength=3, Intelligence=5, Dexterity=1, Income=200},
             };
@@ -62,8 +70,6 @@ namespace MafiaAPI.Database
         private static IList<PerformingMission> preparePerformingMissions()
         {
             return new List<PerformingMission>{
-                new PerformingMission{Id=1, MissionId=1, AgentId=1, CompletionTime=DateTime.Now},
-                new PerformingMission{Id=2, MissionId=2, AgentId=3, CompletionTime=DateTime.Now},
             };
         }
     }

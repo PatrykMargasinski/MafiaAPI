@@ -19,9 +19,17 @@ namespace MafiaAPI.Repositories
                 .ToList();
         }
 
-        public IList<Agent> GetAgentsForRecruitment(){
+        public IList<Agent> GetAgentsForSale(){
             return _context.Agents
                 .Where(agent => agent.BossId == null)
+                .ToList();
+        }
+
+        public IList<Agent> GetAgentsOnMission(long bossId)
+        {
+            return _context
+                .Agents
+                .Where(agent => _context.PerformingMissions.Any(pm => pm.AgentId == agent.Id) && agent.BossId == bossId)
                 .ToList();
         }
 

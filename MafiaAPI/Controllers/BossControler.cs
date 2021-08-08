@@ -1,11 +1,13 @@
 ﻿using System;
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = "Player")]
     [ApiController]
     public class BossController : Controller
     {

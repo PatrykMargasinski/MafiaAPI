@@ -1,5 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 namespace MafiaAPI.Controllers
 {
     [Route("[controller]")]
+    [Authorize(Roles = "Player")]
     [ApiController]
     public class PlayerController : Controller
     {
@@ -31,7 +33,6 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Added succesfully");
         }
 
-        [Route("id")]
         [HttpGet("{id}")]
         public JsonResult Get(long id)
         {
@@ -46,7 +47,6 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {

@@ -4,14 +4,16 @@ using MafiaAPI.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MafiaAPI.Migrations
 {
     [DbContext(typeof(MafiaDBContext))]
-    partial class MafiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210727182158_firstNameAndLastName")]
+    partial class firstNameAndLastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +32,6 @@ namespace MafiaAPI.Migrations
                     b.Property<long?>("BossId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Dexterity")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -42,16 +41,13 @@ namespace MafiaAPI.Migrations
                     b.Property<int?>("Income")
                         .HasColumnType("int");
 
-                    b.Property<int>("Intelligence")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("Strength")
+                    b.Property<int?>("Strength")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -65,10 +61,8 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             BossId = 1L,
-                            Dexterity = 10,
                             FirstName = "Kujo",
                             Income = 100,
-                            Intelligence = 10,
                             LastName = "Jotaro",
                             Strength = 10
                         },
@@ -76,10 +70,8 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 2L,
                             BossId = 1L,
-                            Dexterity = 5,
                             FirstName = "Mickiewicz",
                             Income = 50,
-                            Intelligence = 5,
                             LastName = "Adam",
                             Strength = 5
                         },
@@ -87,20 +79,16 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 3L,
                             BossId = 2L,
-                            Dexterity = 4,
                             FirstName = "Natsu",
                             Income = 70,
-                            Intelligence = 3,
                             LastName = "Natalia",
                             Strength = 7
                         },
                         new
                         {
                             Id = 4L,
-                            Dexterity = 7,
                             FirstName = "Eleonora",
                             Income = 30,
-                            Intelligence = 0,
                             LastName = "Lora",
                             Strength = 8
                         },
@@ -108,10 +96,8 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 5L,
                             BossId = 1L,
-                            Dexterity = 1,
                             FirstName = "Robert",
                             Income = 200,
-                            Intelligence = 5,
                             LastName = "Makłowicz",
                             Strength = 3
                         });
@@ -152,7 +138,7 @@ namespace MafiaAPI.Migrations
                             Id = 1L,
                             FirstName = "Rico",
                             LastName = "Patricio",
-                            LastSeen = new DateTime(2021, 8, 6, 8, 29, 48, 154, DateTimeKind.Local).AddTicks(9898),
+                            LastSeen = new DateTime(2021, 7, 27, 20, 21, 56, 997, DateTimeKind.Local).AddTicks(556),
                             Money = 5000
                         },
                         new
@@ -160,8 +146,148 @@ namespace MafiaAPI.Migrations
                             Id = 2L,
                             FirstName = "Margherita",
                             LastName = "Rodrigo",
-                            LastSeen = new DateTime(2021, 8, 6, 8, 29, 48, 161, DateTimeKind.Local).AddTicks(4698),
+                            LastSeen = new DateTime(2021, 7, 27, 20, 21, 57, 1, DateTimeKind.Local).AddTicks(8033),
                             Money = 5000
+                        });
+                });
+
+            modelBuilder.Entity("MafiaAPI.Models.FirstName", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FirstName");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Gianna"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Blanka"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "Lucia"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Name = "Romeo"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Name = "Capri"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Name = "Armani"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Name = "Giuseppe"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Name = "Secondo"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Name = "Allegra"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Name = "Brandy"
+                        });
+                });
+
+            modelBuilder.Entity("MafiaAPI.Models.LastName", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LastName");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Name = "Ferrari"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Name = "Colombo"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            Name = "Conti"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            Name = "De Luca"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            Name = "Rizzo"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            Name = "Lombardi"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            Name = "Moretti"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Name = "Greco"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            Name = "Bruno"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            Name = "Marino"
                         });
                 });
 
@@ -314,14 +440,14 @@ namespace MafiaAPI.Migrations
                         {
                             Id = 1L,
                             AgentId = 1L,
-                            CompletionTime = new DateTime(2021, 8, 6, 8, 29, 48, 171, DateTimeKind.Local).AddTicks(2007),
+                            CompletionTime = new DateTime(2021, 7, 27, 20, 21, 57, 7, DateTimeKind.Local).AddTicks(6467),
                             MissionId = 1L
                         },
                         new
                         {
                             Id = 2L,
                             AgentId = 3L,
-                            CompletionTime = new DateTime(2021, 8, 6, 8, 29, 48, 171, DateTimeKind.Local).AddTicks(5088),
+                            CompletionTime = new DateTime(2021, 7, 27, 20, 21, 57, 7, DateTimeKind.Local).AddTicks(7252),
                             MissionId = 2L
                         });
                 });
@@ -367,48 +493,6 @@ namespace MafiaAPI.Migrations
                             BossId = 2L,
                             Nick = "tomek",
                             Password = "d2JZt0Jz9UzgW1l544W2WnOaX14u/pfGUDYTQzv5AEWk3W7D"
-                        });
-                });
-
-            modelBuilder.Entity("MafiaAPI.Models.Report", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(1000)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(1000)");
-
-                    b.Property<DateTime>("ReceivedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Seen")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("ToBossId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ToBossId");
-
-                    b.ToTable("Report");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Content = "TestReport",
-                            ReceivedDate = new DateTime(2021, 8, 6, 8, 29, 48, 172, DateTimeKind.Local).AddTicks(4791),
-                            Seen = false,
-                            Subject = "Test",
-                            ToBossId = 1L
                         });
                 });
 
@@ -467,16 +551,6 @@ namespace MafiaAPI.Migrations
                     b.Navigation("Boss");
                 });
 
-            modelBuilder.Entity("MafiaAPI.Models.Report", b =>
-                {
-                    b.HasOne("MafiaAPI.Models.Boss", "ToBoss")
-                        .WithMany("ReportToBosses")
-                        .HasForeignKey("ToBossId")
-                        .HasConstraintName("FK__Report__ToBossI__208CD6FC");
-
-                    b.Navigation("ToBoss");
-                });
-
             modelBuilder.Entity("MafiaAPI.Models.Agent", b =>
                 {
                     b.Navigation("PerformingMissions");
@@ -491,8 +565,6 @@ namespace MafiaAPI.Migrations
                     b.Navigation("MessageToBosses");
 
                     b.Navigation("Player");
-
-                    b.Navigation("ReportToBosses");
                 });
 
             modelBuilder.Entity("MafiaAPI.Models.Mission", b =>

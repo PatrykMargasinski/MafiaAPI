@@ -27,6 +27,7 @@ namespace MafiaAPI.Database
         }
 
         public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Mission> Missions { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }
         public virtual DbSet<Player> Players { get; set; }
@@ -101,6 +102,21 @@ namespace MafiaAPI.Database
                     .WithMany(p => p.MessageToBosses)
                     .HasForeignKey(d => d.ToBossId)
                     .HasConstraintName("FK__Message__ToBossI__208CD6FA");
+            });
+
+
+            modelBuilder.Entity<Report>(entity =>
+            {
+                entity.ToTable("Report");
+
+                entity.Property(e => e.Content)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ToBoss)
+                    .WithMany(p => p.ReportToBosses)
+                    .HasForeignKey(d => d.ToBossId)
+                    .HasConstraintName("FK__Report__ToBossI__208CD6FC");
             });
 
             modelBuilder.Entity<Mission>(entity =>

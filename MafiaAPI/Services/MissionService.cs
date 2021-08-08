@@ -2,6 +2,7 @@ using System;
 using MafiaAPI.Jobs;
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -15,13 +16,15 @@ namespace MafiaAPI.Service
         private readonly IPerformingMissionService _pmService;
         private readonly IBossRepository _bossRepository;
         private readonly IAgentService _agentService;
+        private readonly IReportService _reportService;
         private readonly ILogger<MissionService> _logger;
         public MissionService(ISchedulerFactory scheduler,
                               IPerformingMissionService pmService,
                               IMissionRepository missionRepository,
                               ILogger<MissionService> logger,
                               IBossRepository bossRepository,
-                              IAgentService agentService)
+                              IAgentService agentService,
+                              IReportService reportService)
         {
             _scheduler = scheduler;
             _pmService = pmService;
@@ -29,6 +32,7 @@ namespace MafiaAPI.Service
             _logger = logger;
             _bossRepository = bossRepository;
             _agentService = agentService;
+            _reportService = reportService;
         }
         public IActionResult DoMission(long agentId, long missionId)
         {
@@ -72,21 +76,22 @@ namespace MafiaAPI.Service
             }
             long bossId = agent.BossId.Value;
             Boss boss = _bossRepository.GetById(bossId);
-            String info = agent.IdToString() + "Agent " + agent.LastName +
-                " has finished mission " + mission.Name;
+            String info = "Agent " + agent.FirstName + " " + agent.LastName +
+                " has finished mission: " + mission.Name;
             if (new Random().NextDouble() < CalculateMissionSuccessRate(mission, agent))
             {
                 boss.AddMoney(mission.Loot.GetValueOrDefault(0));
                 _bossRepository.Update(boss);
-                info += "\n Mission succes! \n";
-                info += boss.IdToString() + boss.LastName +
-                " family has earned " + mission.Loot;
+                info += "\nMission success! \n";
+                info += boss.LastName +
+                " family has earned " + mission.Loot+"$";
             }
             else
             {
                 info += ("\nMission failed.\n");
             }
             _logger.LogInformation(info);
+            _reportService.CreateReport(bossId, "Mission: " + mission.Name, info);
             _pmService.Delete(pm);
         }
         public static double CalculateMissionSuccessRate(Mission mission, Agent agent) =>

@@ -56,15 +56,17 @@ namespace MafiaAPI
                 .AddTransient<IBossRepository, BossRepository>()
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>()
-                .AddTransient<IPlayerRepository, PlayerRepository>();
-          
+                .AddTransient<IPlayerRepository, PlayerRepository>()
+                .AddTransient<IReportRepository, ReportRepository>();
+
             //Services
             services.AddTransient<IMissionService, MissionService>()
                 .AddTransient<IPerformingMissionService, PerformingMissionService>()
                 .AddTransient<IAgentService, AgentService>()
                 .AddTransient<IAuthService, AuthService>()
                 .AddTransient<ISecurityService, SecurityService>()
-                .AddTransient<IMessageService, MessageService>();
+                .AddTransient<IMessageService, MessageService>()
+                .AddTransient<IReportService, ReportService>();
 
 
             //Security
@@ -80,16 +82,13 @@ namespace MafiaAPI
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
 
-                        ValidIssuer = "http://localhost:53191",
-                        ValidAudience = "http://localhost:53191",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JavorNajlepszyJest"))
+                        ValidIssuer = Configuration.GetValue<string>("Security:ValidIssuer"),
+                        ValidAudience = Configuration.GetValue<string>("Security:ValidAudience"),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("Security:AuthKey")))
                     };
                 });
-
-            services.Configure<QuartzOptions>(Configuration.GetSection("Quartz"));
 
             services.AddQuartz(q =>
             {

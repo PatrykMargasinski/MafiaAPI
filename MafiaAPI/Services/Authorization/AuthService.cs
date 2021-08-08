@@ -13,6 +13,7 @@ using MafiaAPI.Util;
 using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
+using System.Security.Claims;
 
 namespace MafiaAPI.Services
 {
@@ -76,16 +77,23 @@ namespace MafiaAPI.Services
             }
         }
 
-        public string CreateToken()
+        public string CreateToken(string user)
         {
             var key = _config.GetValue<string>("Security:AuthKey");
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user),
+                new Claim(ClaimTypes.Role, "Player")
+            };
+
             var tokenOptions = new JwtSecurityToken(
                 issuer: "http://localhost:53191",
                 audience: "http://localhost:53191",
                 expires: DateTime.Now.AddMinutes(5),
+                claims: claims,
                 signingCredentials: signingCredentials
                 );
             var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
@@ -184,6 +192,32 @@ namespace MafiaAPI.Services
                 if (hashBytes[i + 16] != hash[i])
                     return false;
             return true;
+        }
+
+        public string[] ChangePassword(ChangePasswordDTO changeModel)
+        {
+            Player player = _playerRepository.GetById(changeModel.PlayerId);
+            if(player==null)
+            {
+                return new string[] { "User not found" };
+            }
+
+            if(VerifyPassword(player,changeModel.OldPassword) == false)
+            {
+                return new string[] { "Invalid old password" };
+            }
+            try
+            {
+                player.Password = _securityService.Hash(changeModel.NewPassword);
+            }
+            catch(Exception)
+            {
+                return new string[] { "Error occurred during hashing operation" };
+            }
+
+            _playerRepository.Update(player);
+
+            return Array.Empty<string>();
         }
     }
 }

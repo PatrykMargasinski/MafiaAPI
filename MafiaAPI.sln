@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MafiaAPI", "MafiaAPI\MafiaAPI.csproj", "{DF3B22F8-EFD4-4EEA-9FDC-D637754F561D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MafiaTest", "MafiaTest\MafiaTest.csproj", "{03FB9B8B-B364-4500-835E-A5E4AEFD6E81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DF3B22F8-EFD4-4EEA-9FDC-D637754F561D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF3B22F8-EFD4-4EEA-9FDC-D637754F561D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF3B22F8-EFD4-4EEA-9FDC-D637754F561D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03FB9B8B-B364-4500-835E-A5E4AEFD6E81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03FB9B8B-B364-4500-835E-A5E4AEFD6E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03FB9B8B-B364-4500-835E-A5E4AEFD6E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03FB9B8B-B364-4500-835E-A5E4AEFD6E81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

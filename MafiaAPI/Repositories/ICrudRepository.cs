@@ -7,6 +7,7 @@ namespace MafiaAPI.Repositories {
       
         public IList<T> GetAll();
         public T GetById(long id);
+        public T GetRandom();
         //Probably two methods bellow can be rewrite as one method.
         public void Create(T model);
         long CreateGetId(T model);

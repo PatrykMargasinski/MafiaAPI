@@ -17,6 +17,7 @@ namespace MafiaAPI.Database
             modelBuilder.Entity<Mission>().HasData(prepareMissions());
             modelBuilder.Entity<PerformingMission>().HasData(preparePerformingMissions());
             modelBuilder.Entity<Report>().HasData(prepareReports());
+            modelBuilder.Entity<AgentForSale >().HasData(prepareAgentsOnSale());
         }
 
         private static IList<Boss> prepareBosses()
@@ -70,6 +71,14 @@ namespace MafiaAPI.Database
         private static IList<PerformingMission> preparePerformingMissions()
         {
             return new List<PerformingMission>{
+            };
+        }
+
+        private static IList<AgentForSale > prepareAgentsOnSale()
+        {
+            return new List<AgentForSale >
+            {
+                new AgentForSale (){ Id=1, AgentId=4, Price=5000 }
             };
         }
     }

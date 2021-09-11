@@ -19,7 +19,7 @@ namespace MafiaAPI.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public JsonResult GetById(int id)
+        public JsonResult GetById(long id)
         {
             var boss = _bossRepository.GetById(id);
             return new JsonResult(boss);

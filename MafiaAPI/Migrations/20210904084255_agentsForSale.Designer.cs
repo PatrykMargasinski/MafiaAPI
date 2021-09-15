@@ -4,14 +4,16 @@ using MafiaAPI.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MafiaAPI.Migrations
 {
     [DbContext(typeof(MafiaDBContext))]
-    partial class MafiaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210904084255_agentsOnSale")]
+    partial class agentsForSale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,7 +119,7 @@ namespace MafiaAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MafiaAPI.Models.AgentForSale", b =>
+            modelBuilder.Entity("MafiaAPI.Models.AgentForSale ", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,7 +137,7 @@ namespace MafiaAPI.Migrations
                     b.HasIndex("AgentId")
                         .IsUnique();
 
-                    b.ToTable("AgentForSale");
+                    b.ToTable("AgentForSale ");
 
                     b.HasData(
                         new
@@ -168,8 +170,8 @@ namespace MafiaAPI.Migrations
                     b.Property<DateTime?>("LastSeen")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("Money")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Money")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -181,16 +183,16 @@ namespace MafiaAPI.Migrations
                             Id = 1L,
                             FirstName = "Patricio",
                             LastName = "Rico",
-                            LastSeen = new DateTime(2021, 9, 11, 9, 22, 56, 626, DateTimeKind.Local).AddTicks(1023),
-                            Money = 5000L
+                            LastSeen = new DateTime(2021, 9, 4, 10, 42, 53, 910, DateTimeKind.Local).AddTicks(6938),
+                            Money = 5000
                         },
                         new
                         {
                             Id = 2L,
                             FirstName = "Rodrigo",
                             LastName = "Margherita",
-                            LastSeen = new DateTime(2021, 9, 11, 9, 22, 56, 630, DateTimeKind.Local).AddTicks(2878),
-                            Money = 5000L
+                            LastSeen = new DateTime(2021, 9, 4, 10, 42, 53, 917, DateTimeKind.Local).AddTicks(1513),
+                            Money = 5000
                         });
                 });
 
@@ -424,11 +426,11 @@ namespace MafiaAPI.Migrations
                     b.Navigation("Boss");
                 });
 
-            modelBuilder.Entity("MafiaAPI.Models.AgentForSale", b =>
+            modelBuilder.Entity("MafiaAPI.Models.AgentForSale ", b =>
                 {
                     b.HasOne("MafiaAPI.Models.Agent", "Agent")
-                        .WithOne("AgentForSale")
-                        .HasForeignKey("MafiaAPI.Models.AgentForSale", "AgentId")
+                        .WithOne("AgentForSale ")
+                        .HasForeignKey("MafiaAPI.Models.AgentForSale ", "AgentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -492,7 +494,7 @@ namespace MafiaAPI.Migrations
 
             modelBuilder.Entity("MafiaAPI.Models.Agent", b =>
                 {
-                    b.Navigation("AgentForSale");
+                    b.Navigation("AgentForSale ");
 
                     b.Navigation("PerformingMissions");
                 });

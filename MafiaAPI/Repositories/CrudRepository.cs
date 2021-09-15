@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using MafiaAPI.Database;
 using System.Linq;
+using System;
 
 namespace MafiaAPI.Repositories
 {
@@ -24,6 +25,12 @@ namespace MafiaAPI.Repositories
         {
             return entities.SingleOrDefault(s => s.Id == id);
         }
+
+        public T GetRandom()
+        {
+            return entities.OrderBy(r => Guid.NewGuid()).FirstOrDefault();
+        }
+
         public void Create(T model)
         {
             entities.Add(model);

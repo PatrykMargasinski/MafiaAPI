@@ -1,10 +1,12 @@
 using MafiaAPI.Database;
+using MafiaAPI.Factories;
 using MafiaAPI.Jobs;
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using MafiaAPI.Service;
 using MafiaAPI.Services;
 using MafiaAPI.Services.Messages;
+using MafiaAPI.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -57,7 +59,10 @@ namespace MafiaAPI
                 .AddTransient<IPerformingMissionRepository, PerformingMissionRepository>()
                 .AddTransient<IMessageRepository, MessageRepository>()
                 .AddTransient<IPlayerRepository, PlayerRepository>()
-                .AddTransient<IReportRepository, ReportRepository>();
+                .AddTransient<IReportRepository, ReportRepository>()
+                .AddTransient<IAgentForSaleRepository, AgentForSaleRepository>()
+                .AddTransient<IFirstNameRepository, FirstNameRepository>()
+                .AddTransient<ILastNameRepository, LastNameRepository>();
 
             //Services
             services.AddTransient<IMissionService, MissionService>()
@@ -68,6 +73,8 @@ namespace MafiaAPI
                 .AddTransient<IMessageService, MessageService>()
                 .AddTransient<IReportService, ReportService>();
 
+            //Factories
+            services.AddScoped<AgentFactory>();
 
             //Security
             services

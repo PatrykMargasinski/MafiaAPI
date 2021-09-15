@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;
 using System.Data.SqlClient;
 using System.Security.Claims;
+using MafiaAPI.Factories;
 
 namespace MafiaAPI.Services
 {

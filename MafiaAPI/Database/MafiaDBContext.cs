@@ -31,6 +31,7 @@ namespace MafiaAPI.Database
         public virtual DbSet<Mission> Missions { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }
         public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<AgentForSale > AgentsForSale { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -165,6 +166,15 @@ namespace MafiaAPI.Database
                     .HasForeignKey<Player>(d => d.BossId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Player__BossId__1DB06A4F");
+            });
+
+            modelBuilder.Entity<AgentForSale>(entity =>
+            {
+                entity.ToTable("AgentForSale");
+
+                entity.HasOne(d => d.Agent)
+                .WithOne(x => x.AgentForSale )
+                .HasForeignKey<AgentForSale>(x => x.AgentId);
             });
 
             modelBuilder.Seed();

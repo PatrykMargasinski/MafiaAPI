@@ -29,9 +29,10 @@ namespace MafiaAPI.Database
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Mission> Missions { get; set; }
+        public virtual DbSet<MissionType> MissionTypes { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }
         public virtual DbSet<Player> Players { get; set; }
-        public virtual DbSet<AgentForSale > AgentsForSale { get; set; }
+        public virtual DbSet<AgentForSale> AgentsForSale { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -127,6 +128,11 @@ namespace MafiaAPI.Database
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<MissionType>(entity =>
+            {
+                entity.ToTable("MissionType");
             });
 
             modelBuilder.Entity<PerformingMission>(entity =>

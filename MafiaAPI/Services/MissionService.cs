@@ -80,7 +80,7 @@ namespace MafiaAPI.Service
                 " has finished mission: " + mission.Name;
             if (new Random().NextDouble() < CalculateMissionSuccessRate(mission, agent))
             {
-                boss.AddMoney(mission.Loot.GetValueOrDefault(0));
+                boss.AddMoney(mission.Loot);
                 _bossRepository.Update(boss);
                 info += "\nMission success! \n";
                 info += boss.LastName +
@@ -95,7 +95,7 @@ namespace MafiaAPI.Service
             _pmService.Delete(pm);
         }
         public static double CalculateMissionSuccessRate(Mission mission, Agent agent) =>
-             ((11 - mission.DifficultyLevel.GetValueOrDefault(0)) +
+             ((11 - mission.DifficultyLevel) +
              agent.Strength + agent.Intelligence + agent.Dexterity)
              * 100 / 44;
     }

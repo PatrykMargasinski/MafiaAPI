@@ -20,5 +20,12 @@ namespace MafiaAPI.Repositories
                 .ToList();
         }
 
+        public IList<MissionType> GetMissionTypes()
+        {
+            return _context
+                .MissionTypes
+                .ToList();
+        }
+
     }
 }

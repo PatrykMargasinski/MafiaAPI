@@ -1,5 +1,3 @@
-using MafiaAPI.Repositories;
-
 namespace MafiaAPI.Service
 {
     public interface IAgentService
@@ -9,5 +7,5 @@ namespace MafiaAPI.Service
         bool Exist(long agentId);
     }
 
-    
+
 }

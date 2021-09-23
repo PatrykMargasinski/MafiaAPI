@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MafiaAPI.Models
+﻿namespace MafiaAPI.Models
 {
-    public class AgentForSale  : Model
+    public class AgentForSale : Model
     {
         public long AgentId { get; set; }
         public long Price { get; set; }

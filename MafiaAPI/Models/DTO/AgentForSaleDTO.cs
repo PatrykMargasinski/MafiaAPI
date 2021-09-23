@@ -1,6 +1,3 @@
-using System;
-using MafiaAPI.Service;
-
 namespace MafiaAPI.Models
 {
     public class AgentForSaleDTO

@@ -1,20 +1,17 @@
 ﻿using MafiaAPI.Models;
+using MafiaAPI.Repositories;
+using MafiaAPI.Util;
+using MafiaAPI.Validators;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MafiaAPI.Database;
-using MafiaAPI.Repositories;
-using MafiaAPI.Validators;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.IdentityModel.Tokens.Jwt;
-using MafiaAPI.Util;
-using Microsoft.Extensions.Configuration;
-using System.Security.Cryptography;
 using System.Data.SqlClient;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
-using MafiaAPI.Factories;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MafiaAPI.Services
 {
@@ -29,9 +26,9 @@ namespace MafiaAPI.Services
         private readonly ISecurityService _securityService;
 
         public AuthService(
-            IPlayerRepository playerRepository, 
-            IBossRepository bossRepository, 
-            IAgentRepository agentRepository, 
+            IPlayerRepository playerRepository,
+            IBossRepository bossRepository,
+            IAgentRepository agentRepository,
             IPerformingMissionRepository performingMissionRepository,
             ISecurityService securityService,
             IConfiguration config
@@ -68,13 +65,13 @@ namespace MafiaAPI.Services
                 }
                 return errors;
             }
-            catch(SqlException)
+            catch (SqlException)
             {
                 return new string[] { "There is a problem with a database" };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new string[] { "Something happened: "+ex.Message };
+                return new string[] { "Something happened: " + ex.Message };
             }
         }
 
@@ -198,12 +195,12 @@ namespace MafiaAPI.Services
         public string[] ChangePassword(ChangePasswordDTO changeModel)
         {
             Player player = _playerRepository.GetById(changeModel.PlayerId);
-            if(player==null)
+            if (player == null)
             {
                 return new string[] { "User not found" };
             }
 
-            if(VerifyPassword(player,changeModel.OldPassword) == false)
+            if (VerifyPassword(player, changeModel.OldPassword) == false)
             {
                 return new string[] { "Invalid old password" };
             }
@@ -211,7 +208,7 @@ namespace MafiaAPI.Services
             {
                 player.Password = _securityService.Hash(changeModel.NewPassword);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return new string[] { "Error occurred during hashing operation" };
             }

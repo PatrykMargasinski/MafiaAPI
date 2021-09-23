@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using MafiaAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections;
-using MafiaAPI.Repositories;
+using System.Collections.Generic;
 
 namespace MafiaAPI.Database
 {
@@ -17,7 +15,7 @@ namespace MafiaAPI.Database
             modelBuilder.Entity<Mission>().HasData(prepareMissions());
             modelBuilder.Entity<PerformingMission>().HasData(preparePerformingMissions());
             modelBuilder.Entity<Report>().HasData(prepareReports());
-            modelBuilder.Entity<AgentForSale >().HasData(prepareAgentsOnSale());
+            modelBuilder.Entity<AgentForSale>().HasData(prepareAgentsOnSale());
         }
 
         private static IList<Boss> prepareBosses()
@@ -70,13 +68,14 @@ namespace MafiaAPI.Database
 
         private static IList<PerformingMission> preparePerformingMissions()
         {
-            return new List<PerformingMission>{
+            return new List<PerformingMission>
+            {
             };
         }
 
-        private static IList<AgentForSale > prepareAgentsOnSale()
+        private static IList<AgentForSale> prepareAgentsOnSale()
         {
-            return new List<AgentForSale >
+            return new List<AgentForSale>
             {
                 new AgentForSale (){ Id=1, AgentId=4, Price=5000 }
             };

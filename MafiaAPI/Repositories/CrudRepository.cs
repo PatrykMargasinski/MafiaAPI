@@ -1,9 +1,9 @@
-using MafiaAPI.Models;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using MafiaAPI.Database;
-using System.Linq;
+using MafiaAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MafiaAPI.Repositories
 {
@@ -60,7 +60,7 @@ namespace MafiaAPI.Repositories
 
         public void DeleteByIds(long[] ids)
         {
-            entities.RemoveRange(entities.Where(x=>ids.Contains(x.Id)));
+            entities.RemoveRange(entities.Where(x => ids.Contains(x.Id)));
             _context.SaveChanges();
         }
     }

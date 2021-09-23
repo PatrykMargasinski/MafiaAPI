@@ -10,7 +10,8 @@ namespace MafiaAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        public String IdToString() {
+        public String IdToString()
+        {
             return "[id=" + this.Id + "]";
         }
     }

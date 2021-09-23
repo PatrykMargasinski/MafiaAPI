@@ -1,17 +1,15 @@
-﻿using MafiaAPI.Models;
-using System;
+﻿using MafiaAPI.Database;
+using MafiaAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MafiaAPI.Database;
-using Microsoft.EntityFrameworkCore;
 
 namespace MafiaAPI.Repositories
 {
-    
-    public class AgentForSaleRepository : CrudRepository<AgentForSale> ,IAgentForSaleRepository
+
+    public class AgentForSaleRepository : CrudRepository<AgentForSale>, IAgentForSaleRepository
     {
-        public AgentForSaleRepository(MafiaDBContext context): base(context){}
+        public AgentForSaleRepository(MafiaDBContext context) : base(context) { }
         public IList<AgentForSaleDTO> GetAgentsForSale()
         {
             return _context

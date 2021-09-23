@@ -1,5 +1,4 @@
-﻿using System;
-using MafiaAPI.Models;
+﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,16 +16,14 @@ namespace MafiaAPI.Controllers
             _bossRepository = bossRepository;
         }
 
-        [Route("{id}")]
-        [HttpGet]
+        [HttpGet("{id}")]
         public JsonResult GetById(long id)
         {
             var boss = _bossRepository.GetById(id);
             return new JsonResult(boss);
         }
 
-        [Route("{name}/id")]
-        [HttpGet]
+        [HttpGet("{name}/id")]
         public IActionResult GetIdByFullname(string name)
         {
             var boss = _bossRepository.GetByFullname(name);

@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
+using System;
+using System.Collections.Generic;
 
 namespace MafiaAPI.Service
 {
-    public class AgentService: IAgentService
+    public class AgentService : IAgentService
     {
         IAgentRepository _agentRepository;
         IAgentForSaleRepository _agentForSaleRepository;
@@ -30,7 +30,7 @@ namespace MafiaAPI.Service
                 var recruitedAgent = _agentRepository.GetById(agentId);
                 var recrutingBoss = _bossRepository.GetById(bossId);
                 var agentOnSale = _agentForSaleRepository.GetByAgentId(agentId);
-                if (recrutingBoss.Money < agentOnSale.Price) 
+                if (recrutingBoss.Money < agentOnSale.Price)
                     return "You don't have enough money to buy this agent";
                 recrutingBoss.Money -= agentOnSale.Price;
                 recruitedAgent.BossId = recrutingBoss.Id;
@@ -41,7 +41,7 @@ namespace MafiaAPI.Service
             }
             catch (Exception ex)
             {
-                return "Something happened: "+ex.Message;
+                return "Something happened: " + ex.Message;
             }
         }
 

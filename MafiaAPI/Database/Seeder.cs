@@ -59,13 +59,13 @@ namespace MafiaAPI.Database
         private static IList<Mission> prepareMissions()
         {
             return new List<Mission> {
-                new Mission{Id=1, Name="Bank robbery", DifficultyLevel=7, Loot=5000, Duration=30},
-                new Mission{Id=2, Name="Senator assassination", DifficultyLevel=9, Loot=10000, Duration=60},
-                new Mission{Id=3, Name="Party", DifficultyLevel=2, Loot=100, Duration=10},
-                new Mission{Id=4, Name="Buy a coffee", DifficultyLevel=1, Loot=10, Duration=5},
-                new Mission{Id=5, Name="Money laundering", DifficultyLevel=5, Loot=5000, Duration=55},
-                new Mission{Id=6, Name="Car theft", DifficultyLevel=6, Loot=2000, Duration=3600},
-                new Mission{Id=7, Name="Arms trade", DifficultyLevel=8, Loot=7000, Duration=15}
+                new Mission{Id=1, Name="Bank robbery", DifficultyLevel=7, Loot=5000, StrengthPercentage=60, DexterityPercentage=20, IntelligencePercentage=20, Duration=30},
+                new Mission{Id=2, Name="Senator assassination", DifficultyLevel=9, Loot=10000, StrengthPercentage=60,DexterityPercentage=20,IntelligencePercentage=20, Duration=60},
+                new Mission{Id=3, Name="Party", DifficultyLevel=2, StrengthPercentage=80,DexterityPercentage=10,IntelligencePercentage=10, Loot=100, Duration=10},
+                new Mission{Id=4, Name="Buy a coffee", DifficultyLevel=1, Loot=10, StrengthPercentage=0,DexterityPercentage=0,IntelligencePercentage=100, Duration=5},
+                new Mission{Id=5, Name="Money laundering", DifficultyLevel=5, StrengthPercentage=20,DexterityPercentage=20,IntelligencePercentage=60,Loot=5000, Duration=55},
+                new Mission{Id=6, Name="Car theft", DifficultyLevel=6, StrengthPercentage=10,DexterityPercentage=80,IntelligencePercentage=10, Loot=2000, Duration=3600},
+                new Mission{Id=7, Name="Arms trade", DifficultyLevel=8, StrengthPercentage=10,DexterityPercentage=10,IntelligencePercentage=80,Loot=7000, Duration=15}
             };
         }
 

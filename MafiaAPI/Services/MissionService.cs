@@ -98,5 +98,10 @@ namespace MafiaAPI.Service
              ((11 - mission.DifficultyLevel) +
              agent.Strength + agent.Intelligence + agent.Dexterity)
              * 100 / 44;
+
+        public void GenerateMissions()
+        {
+            
+        }
     }
 }

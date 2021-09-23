@@ -8,5 +8,6 @@ namespace MafiaAPI.Service
     {
         public IActionResult DoMission(long agentId, long missionId);
         public void EndMission(long pmId);
+        public void GenerateMissions();
     }
 }

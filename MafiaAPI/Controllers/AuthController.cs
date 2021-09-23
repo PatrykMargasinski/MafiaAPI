@@ -1,16 +1,7 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using MafiaAPI.Services;
-using MafiaAPI.Util;
-using MafiaAPI.Validators;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Controllers
 {
@@ -32,12 +23,12 @@ namespace MafiaAPI.Controllers
         public IActionResult Login([FromBody] LoginDto user)
         {
             var errors = _authService.LoginValidation(user);
-            if(errors.Length>0)
+            if (errors.Length > 0)
                 return BadRequest(string.Join('\n', errors));
             else
-                return Ok(new 
-                { 
-                    Token = _authService.CreateToken(user.Nick), 
+                return Ok(new
+                {
+                    Token = _authService.CreateToken(user.Nick),
                     PlayerId = _playerRepository.GetByNick(user.Nick).Id,
                     BossId = _playerRepository.GetByNick(user.Nick).BossId
                 });
@@ -60,9 +51,9 @@ namespace MafiaAPI.Controllers
         public IActionResult ChangePassword([FromBody] ChangePasswordDTO changeModel)
         {
             var errors = _authService.ChangePassword(changeModel);
-            if(errors.Length>0)
+            if (errors.Length > 0)
             {
-                 return BadRequest(string.Join('\n', errors));
+                return BadRequest(string.Join('\n', errors));
             }
             else
             {

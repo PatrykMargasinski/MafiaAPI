@@ -1,9 +1,6 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Factories
 {

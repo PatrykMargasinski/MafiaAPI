@@ -1,10 +1,6 @@
 ﻿using MafiaAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MafiaAPI.Database;
 using MafiaAPI.Repositories;
+using System;
 
 namespace MafiaAPI.Services.Messages
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
@@ -15,7 +13,7 @@ namespace MafiaAPI.Models
         public string Name { get; set; }
         public int? DifficultyLevel { get; set; }
         public int? Loot { get; set; }
-        
+
         public double Duration { get; set; }
         public virtual ICollection<PerformingMission> PerformingMissions { get; set; }
     }

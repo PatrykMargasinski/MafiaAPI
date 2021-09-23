@@ -1,10 +1,12 @@
 using MafiaAPI.Models;
 using System.Collections.Generic;
 
-namespace MafiaAPI.Repositories {
+namespace MafiaAPI.Repositories
+{
 
-    public interface ICrudRepository<T> where T: Model{
-      
+    public interface ICrudRepository<T> where T : Model
+    {
+
         public IList<T> GetAll();
         public T GetById(long id);
         public T GetRandom();

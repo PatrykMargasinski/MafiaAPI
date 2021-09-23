@@ -1,9 +1,7 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 
 namespace MafiaAPI.Controllers
@@ -19,7 +17,6 @@ namespace MafiaAPI.Controllers
             _performingMissionRepository = performingMissionRepository;
         }
 
-        [Route("id")]
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
@@ -51,7 +48,6 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Updated successfully");
         }
 
-        [Route("id")]
         [HttpDelete("{id}")]
         public JsonResult Delete(long id)
         {

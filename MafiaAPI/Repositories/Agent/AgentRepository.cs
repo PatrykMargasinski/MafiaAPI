@@ -1,25 +1,25 @@
-﻿using MafiaAPI.Models;
-using System;
+﻿using MafiaAPI.Database;
+using MafiaAPI.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MafiaAPI.Database;
 
 namespace MafiaAPI.Repositories
 {
-    
-    public class AgentRepository : CrudRepository<Agent> ,IAgentRepository
+
+    public class AgentRepository : CrudRepository<Agent>, IAgentRepository
     {
 
-        public AgentRepository(MafiaDBContext context): base(context){}
+        public AgentRepository(MafiaDBContext context) : base(context) { }
 
-        public IList<Agent> GetAvailableAgents(long bossId){
+        public IList<Agent> GetAvailableAgents(long bossId)
+        {
             return _context.Agents
                 .Where(agent => !agent.PerformingMissions.Any() && agent.BossId == bossId)
                 .ToList();
         }
 
-        public IList<Agent> GetAgentsForSale(){
+        public IList<Agent> GetAgentsForSale()
+        {
             return _context.Agents
                 .Where(agent => agent.BossId == null)
                 .ToList();

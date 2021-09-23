@@ -1,16 +1,11 @@
 ﻿using MafiaAPI.Models;
 using MafiaAPI.Repositories;
 using MafiaAPI.Services;
-using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Controllers
 {

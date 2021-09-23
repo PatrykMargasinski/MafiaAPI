@@ -1,7 +1,7 @@
-﻿using System;
+﻿using MafiaAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using MafiaAPI.Models;
 using Microsoft.Extensions.Logging;
+using System;
 #nullable disable
 
 namespace MafiaAPI.Database
@@ -10,7 +10,7 @@ namespace MafiaAPI.Database
     {
 
         public static readonly ILoggerFactory MyLoggerFactory
-    = LoggerFactory.Create(builder => { builder.AddConsole(); }); 
+    = LoggerFactory.Create(builder => { builder.AddConsole(); });
         public MafiaDBContext() { }
 
         public MafiaDBContext(DbContextOptions<MafiaDBContext> options)
@@ -31,7 +31,7 @@ namespace MafiaAPI.Database
         public virtual DbSet<Mission> Missions { get; set; }
         public virtual DbSet<PerformingMission> PerformingMissions { get; set; }
         public virtual DbSet<Player> Players { get; set; }
-        public virtual DbSet<AgentForSale > AgentsForSale { get; set; }
+        public virtual DbSet<AgentForSale> AgentsForSale { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -173,7 +173,7 @@ namespace MafiaAPI.Database
                 entity.ToTable("AgentForSale");
 
                 entity.HasOne(d => d.Agent)
-                .WithOne(x => x.AgentForSale )
+                .WithOne(x => x.AgentForSale)
                 .HasForeignKey<AgentForSale>(x => x.AgentId);
             });
 

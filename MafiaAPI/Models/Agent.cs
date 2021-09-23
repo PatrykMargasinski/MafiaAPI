@@ -21,7 +21,7 @@ namespace MafiaAPI.Models
         public int? Income { get; set; }
 
         public virtual Boss Boss { get; set; }
-        public virtual AgentForSale  AgentForSale  { get; set; }
+        public virtual AgentForSale AgentForSale { get; set; }
         public virtual ICollection<PerformingMission> PerformingMissions { get; set; }
 
         public bool HasBoss() { return BossId.HasValue; }

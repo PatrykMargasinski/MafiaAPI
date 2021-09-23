@@ -1,5 +1,5 @@
-using System;
 using MafiaAPI.Service;
+using System;
 
 namespace MafiaAPI.Models
 {

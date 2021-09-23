@@ -3,13 +3,9 @@ using MafiaAPI.Repositories;
 using MafiaAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MafiaAPI.Controllers
 {
@@ -28,7 +24,7 @@ namespace MafiaAPI.Controllers
         }
 
         [HttpGet("to")]
-        public JsonResult GetAllReportsTo(long bossId, int? fromRange, int? toRange,  bool onlyUnseen = false)
+        public JsonResult GetAllReportsTo(long bossId, int? fromRange, int? toRange, bool onlyUnseen = false)
         {
 
             if (!fromRange.HasValue || !toRange.HasValue)
@@ -37,7 +33,7 @@ namespace MafiaAPI.Controllers
             }
 
             var reports = _reportRepository
-                .GetAllReportsTo(bossId, fromRange.Value, toRange.Value,  onlyUnseen)
+                .GetAllReportsTo(bossId, fromRange.Value, toRange.Value, onlyUnseen)
                 .Select(x => new
                 {
                     x.Id,
@@ -85,8 +81,7 @@ namespace MafiaAPI.Controllers
             return new JsonResult("Deleted successfully");
         }
 
-        [Route("/reports")]
-        [HttpDelete]
+        [HttpDelete("reports")]
         public JsonResult DeleteReports(string stringIds)
         {
             long[] ids = stringIds.Split('i').Select(x => long.Parse(x)).ToArray();

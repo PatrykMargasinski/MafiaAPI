@@ -1,4 +1,3 @@
-using System;
 using MafiaAPI.Jobs;
 using MafiaAPI.Models;
 using MafiaAPI.Repositories;
@@ -6,6 +5,7 @@ using MafiaAPI.Services.Messages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Quartz;
+using System;
 
 namespace MafiaAPI.Service
 {
@@ -84,7 +84,7 @@ namespace MafiaAPI.Service
                 _bossRepository.Update(boss);
                 info += "\nMission success! \n";
                 info += boss.LastName +
-                " family has earned " + mission.Loot+"$";
+                " family has earned " + mission.Loot + "$";
             }
             else
             {

@@ -1,8 +1,9 @@
-using System;
 using MafiaAPI.Models;
+using System;
 
-namespace MafiaAPI.Service {
-    
+namespace MafiaAPI.Service
+{
+
     public interface IPerformingMissionService
     {
         long CreateAndGetId(long missionId, long agentId, DateTime finishTime);

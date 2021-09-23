@@ -26,14 +26,15 @@ namespace MafiaAPI.Models
         public virtual ICollection<Message> MessageToBosses { get; set; }
         public virtual ICollection<Report> ReportToBosses { get; set; }
 
-        public void AddMoney(int money) 
+        public void AddMoney(int money)
         {
             this.Money += money;
         }
 
         public void SpendMoney(int money)
         {
-            if(this.Money < money) {
+            if (this.Money < money)
+            {
                 throw new InvalidOperationException("Logfile cannot be read-only");
             }
             this.Money -= money;

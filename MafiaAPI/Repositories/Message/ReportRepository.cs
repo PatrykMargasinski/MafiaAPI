@@ -1,8 +1,8 @@
-﻿using MafiaAPI.Models;
-using System.Linq;
-using MafiaAPI.Database;
-using System.Collections.Generic;
+﻿using MafiaAPI.Database;
+using MafiaAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MafiaAPI.Repositories
 {
